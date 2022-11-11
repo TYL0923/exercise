@@ -1,0 +1,113 @@
+@import 'ant-design-vue/dist/antd.less';
+
+@primary-color: #06b6d4; // 全局主色
+@link-color: #06b6d4; // 链接色
+@success-color: #22c55e; // 成功色
+@warning-color: #f97316; // 警告色
+@error-color: #ef4444; // 错误色
+@font-size-base: 14px; // 主字号
+@heading-color: rgba(0, 0, 0, 0.85); // 标题色
+@text-color: rgba(0, 0, 0, 0.65); // 主文本色
+@text-color-secondary: rgba(0, 0, 0, 0.45); // 次文本色
+@disabled-color: rgba(0, 0, 0, 0.25); // 失效色
+@border-radius-base: 4px; // 组件/浮层圆角
+@border-color-base: #d9d9d9; // 边框色
+@box-shadow-base: 0 2px 8px rgba(0, 0, 0, 0.15); // 浮层阴影
+
+.ant-menu-horizontal {
+  border: none;
+}
+
+:root {
+  font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  color-scheme: light dark;
+  /* color: rgba(255, 255, 255, 0.87); */
+  /* background-color: #242424; */
+
+  /* font-synthesis: none; */
+  /* text-rendering: optimizeLegibility; */
+  /* -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%; */
+}
+* {
+  margin: 0;
+  padding: 0;
+  transition: color 0.3s;
+  transition: background-color 0.3s;
+  // &:hover {
+  //   &::-webkit-scrollbar-thumb {
+  //     background-color: #ddd;
+  //   }
+  // }
+  // &::-webkit-scrollbar {
+  //   width: 8px;
+  // }
+  // &::-webkit-scrollbar-thumb {
+  //   border-radius: 10px;
+  //   background-color: inherit;
+  // }
+  // &::-webkit-scrollbar-track {
+  //   border-radius: 0;
+  //   // background-color: #eee;
+  //   opacity: 0;
+  // }
+}
+a {
+  color: #fff;
+  text-decoration: none;
+  text-decoration: inherit;
+}
+h1 {
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+h2 {
+  font-size: 1.4rem;
+  font-weight: 400;
+}
+h3 {
+  font-size: 1.3rem;
+  font-weight: 400;
+}
+h4 {
+  font-size: 1.2rem;
+  font-weight: 400;
+}
+h5 {
+  font-size: 1.1rem;
+  font-weight: 400;
+}
+body {
+  /* display: flex; */
+  /* place-items: center; */
+  min-width: 320px;
+  min-height: 100vh;
+  font-family: Helvetica, "PingFang SC", "Microsoft Yahei";
+}
+#app {
+  /* max-width: 1280px; */
+  /* margin: 0 auto; */
+  /* padding: 2rem; */
+  /* text-align: center; */
+}
+.content {
+  padding: 16px;
+  background-color: var(--primary-bgc);
+  border-radius: 8px;
+}
+/* @media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
+} */
