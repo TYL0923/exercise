@@ -1,5 +1,5 @@
 import type { AxiosRequestConfig } from 'axios'
-import type { AddQuestionSetDto, IQuestionSet } from '@exercise/type'
+import type { AddQuestionSetDto, IQuestion, IQuestionSet } from '@exercise/type'
 import type { Return } from './request'
 import a from './request'
 export function identifyQuestionSet(
@@ -59,7 +59,7 @@ export function getQuestionSetDetail(
   id: string,
   account: string,
   delay = 0,
-): Return<IQuestionSet> {
+): Return<IQuestionSet & { questions: IQuestion[] }> {
   const url = 'http://127.0.0.1:8000/questionSet/detail'
   return new Promise((resolve) => {
     setTimeout(async () => {

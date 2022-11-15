@@ -20,6 +20,8 @@ const isError = computed(() => {
     flex flex-col justify-between
     w-80 h-48 rounded-2
     border border-gray-200 p-4
+    transition-all duration-300
+    hover="cursor-pointer shadow"
   >
     <div mb-4 flex items-center justify-between>
       <div>

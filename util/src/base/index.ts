@@ -13,7 +13,7 @@ export function pick<T extends object, K extends keyof T>(target: T | Array<T>, 
   if (!Array.isArray(k))
     k = [k]
 
-  target.map((item) => {
+  target.forEach((item) => {
     const res: Partial<T> = {}
     const keys = Object.keys(item)
     for (const key of keys) {
@@ -26,4 +26,15 @@ export function pick<T extends object, K extends keyof T>(target: T | Array<T>, 
     return resArr
 
   return resArr[0]
+}
+
+export function integration<T extends object, K extends keyof T>(list: Array<T>, key: K): Record<string, Array<T>> {
+  const set: Record<string, Array<T>> = {}
+  list.forEach((item) => {
+    const value = item[key]
+    if (!Object.prototype.hasOwnProperty.call(set, value as unknown as string))
+      set[value as unknown as string] = []
+    set[value as unknown as string].push(item)
+  })
+  return set
 }

@@ -3,6 +3,7 @@ import type { IQuestion } from '@exercise/type'
 import { useDebounceFn } from '@vueuse/core'
 const props = withDefaults(
   defineProps<{
+    idx: number
     status?: 'test' | 'edit' | 'done'
     question: IQuestion
   }>(),
@@ -30,7 +31,7 @@ const handleChangeTitle = useDebounceFn((e: InputEvent) => {
 <template>
   <div mb-10>
     <template v-if="status !== 'edit'">
-      <pre text-base text-gray-900>{{ question.title }}</pre>
+      <pre text-base text-gray-900>{{ `${idx + 1}.${question.title}` }}</pre>
       <template v-if="['select', 'judge'].includes(question.type)">
         <div flex items-end>
           <span text-xs>{{ `答案: ` }}</span>

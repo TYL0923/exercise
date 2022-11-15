@@ -114,6 +114,7 @@ importers:
     specifiers:
       '@exercise/api': workspace:^0.0.1
       '@exercise/type': workspace:^0.0.1
+      '@exercise/util': workspace:^0.0.1
       '@iconify/json': ^2.1.134
       '@types/node': ^18.7.18
       '@unocss/reset': ^0.46.3
@@ -132,6 +133,7 @@ importers:
       vue-tsc: ^0.40.4
     dependencies:
       '@exercise/api': link:../../api
+      '@exercise/util': link:../../util
       '@iconify/json': registry.npmmirror.com/@iconify/json/2.1.134
       '@vueuse/core': registry.npmmirror.com/@vueuse/core/9.4.0_vue@3.2.41
       ant-design-vue: registry.npmmirror.com/ant-design-vue/3.2.13_vue@3.2.41
