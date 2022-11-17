@@ -62,6 +62,16 @@ function handleOpenQuestionSet(questionSet: BaseReturnQuestionSet) {
   drawerVisible.value = true
   prepareOpenQuestionSet.value = questionSet
 }
+function handleStart() {
+  if (prepareOpenQuestionSet.value?.id) {
+    router.push({
+      path: '/paper',
+      query: {
+        id: prepareOpenQuestionSet.value?.id,
+      },
+    })
+  }
+}
 async function initCreateQuestionSet() {
   const [err, data] = await getMyQuestionSet(loginState.account.value)
   if (!err && data)
@@ -98,7 +108,7 @@ watchEffect(initCreateQuestionSet)
           <a-button w-20>
             取消
           </a-button>
-          <a-button w-20 type="primary">
+          <a-button w-20 type="primary" @click="handleStart">
             确定
           </a-button>
         </div>

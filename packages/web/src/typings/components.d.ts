@@ -16,6 +16,7 @@ declare module '@vue/runtime-core' {
     AInput: typeof import('ant-design-vue/es')['Input']
     AMenu: typeof import('ant-design-vue/es')['Menu']
     AMenuItem: typeof import('ant-design-vue/es')['MenuItem']
+    AnswerKey: typeof import('./../components/AnswerKey.vue')['default']
     AProgress: typeof import('ant-design-vue/es')['Progress']
     ARadioGroup: typeof import('ant-design-vue/es')['RadioGroup']
     ATextarea: typeof import('ant-design-vue/es')['Textarea']

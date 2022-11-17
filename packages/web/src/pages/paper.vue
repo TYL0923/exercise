@@ -14,16 +14,18 @@ const props = withDefaults(
     part: 'all',
   },
 )
+const route = useRoute()
+const router = useRouter()
 const loginState = useLogin()
 const questionSet = ref<IQuestionSet>()
 const questionList = ref<IQuestion[]>([])
 const { handleChangeAnswer } = useQuestion(questionList)
 
 function handleGoBack() {
-
+  router.push('/home/question-set')
 }
 async function initQuestionList() {
-  const [err, data] = await getQuestionSetDetail('ec190f3b-7890-452a-9676-cdc5ae689358', loginState.account.value)
+  const [err, data] = await getQuestionSetDetail(route.query.id as string, loginState.account.value)
   if (!err && data) {
     questionList.value = data.questions
     questionSet.value = data
@@ -62,8 +64,8 @@ watchEffect(initQuestionList)
           <QuestionSet status="test" :list="questionList || []" @change-answer="handleChangeAnswer" />
         </div>
         <div w-60>
-          <div bg-white rounded-1 p-2 sticky top-0>
-            答题卡
+          <div bg-white rounded-1 p-4 sticky top-0>
+            <AnswerKey :list="questionList" />
           </div>
         </div>
       </div>

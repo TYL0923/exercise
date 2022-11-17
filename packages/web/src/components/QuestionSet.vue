@@ -20,7 +20,7 @@ const questionTypeMap: Record<string, string> = {
   <div>
     <div v-for="set, index in questionSet" :key="index">
       <h5>{{ questionTypeMap[index] }}</h5>
-      <Question v-for="question, idx in set" v-bind="$attrs" :key="question.id" :idx="idx" :question="question" />
+      <Question v-for="question, idx in set" v-bind="$attrs" :key="question.id" :idx="idx" :question="question" :anchor="question.id" />
     </div>
   </div>
 </template>
