@@ -15,15 +15,19 @@ const props = withDefaults(
   },
 )
 const loginState = useLogin()
-const questionSet = ref<IQuestionSet & { questions: IQuestion[] }>()
+const questionSet = ref<IQuestionSet>()
+const questionList = ref<IQuestion[]>([])
+const { handleChangeAnswer } = useQuestion(questionList)
 
 function handleGoBack() {
 
 }
 async function initQuestionList() {
   const [err, data] = await getQuestionSetDetail('ec190f3b-7890-452a-9676-cdc5ae689358', loginState.account.value)
-  if (!err && data)
+  if (!err && data) {
+    questionList.value = data.questions
     questionSet.value = data
+  }
 }
 watchEffect(initQuestionList)
 </script>
@@ -31,7 +35,7 @@ watchEffect(initQuestionList)
 <template>
   <div relative w-screen h-screen bg-gray-50>
     <div
-      fixed top-0 left-0
+      fixed top-0 left-0 z-100
       w-screen h-12 px-4 box-border
       shadow shadow-slate-100 bg-white
       flex items-center
@@ -55,7 +59,7 @@ watchEffect(initQuestionList)
     >
       <div mb-8 class="w-90%" box-border flex self-start justify-between gap-x-6>
         <div bg-white rounded-2 flex-1 p-4>
-          <QuestionSet status="test" :list="questionSet?.questions || []" />
+          <QuestionSet status="test" :list="questionList || []" @change-answer="handleChangeAnswer" />
         </div>
         <div w-60>
           <div bg-white rounded-1 p-2 sticky top-0>

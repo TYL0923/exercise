@@ -5,10 +5,12 @@ const props = withDefaults(
   defineProps<{
     idx: number
     status?: 'test' | 'edit' | 'done'
+    mode?: 'exercise' | 'test'
     question: IQuestion
   }>(),
   {
     status: 'test',
+    mode: 'exercise',
   },
 )
 const emits = defineEmits<{
@@ -17,6 +19,21 @@ const emits = defineEmits<{
   (e: 'changeIsDo', id: string, isDo: 0 | 1): void
   (e: 'changeIsError', id: string, isError: 0 | 1): void
 }>()
+const answer = computed({
+  get: () => {
+    switch (props.mode) {
+      case 'exercise':
+        return props.question.exerciseAnswer
+      case 'test':
+        return props.question.testAnswer
+      default:
+        return props.question.exerciseAnswer
+    }
+  },
+  set: (value) => {
+    emits('changeAnswer', props.question.id, value, props.mode)
+  },
+})
 
 const handleChangeAnswer = useDebounceFn((e: InputEvent, answerType: 'correct' | 'test' | 'exercise') => {
   const answer = e.data || ''
@@ -32,14 +49,7 @@ const handleChangeTitle = useDebounceFn((e: InputEvent) => {
   <div mb-10>
     <template v-if="status !== 'edit'">
       <pre text-base text-gray-900>{{ `${idx + 1}.${question.title}` }}</pre>
-      <template v-if="['select', 'judge'].includes(question.type)">
-        <div flex items-end>
-          <span text-xs>{{ `答案: ` }}</span>
-          <span border-b-1 border-gray-300 ml-2>
-            <a-input p-0 :bordered="false" @input="handleChangeAnswer($event, 'exercise')" />
-          </span>
-        </div>
-      </template>
+      <QuestionAnswer v-model:value="answer" :type="question.type" />
     </template>
 
     <!-- edit -->
