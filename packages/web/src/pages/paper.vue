@@ -2,33 +2,39 @@
 import { getQuestionSetDetail } from '@exercise/api'
 import type { IQuestion, IQuestionSet } from '@exercise/type'
 
-const props = withDefaults(
-  defineProps<{
-    mode?: 'exercise' | 'test'
-    start?: 'continue' | 'restart'
-    part?: 'all' | 'error' | 'not'
-  }>(),
-  {
-    mode: 'exercise',
-    start: 'continue',
-    part: 'all',
-  },
-)
 const route = useRoute()
 const router = useRouter()
 const loginState = useLogin()
-const questionSet = ref<IQuestionSet>()
-const questionList = ref<IQuestion[]>([])
-const { handleChangeAnswer } = useQuestion(questionList)
+
+onBeforeRouteLeave((to, from) => {
+  const answer = window.confirm('离开将结束考试,是否离开?')
+  if (!answer)
+    return false
+})
+onMounted(() => {
+  window.addEventListener('beforeunload', (event) => {
+    event.preventDefault()
+    event.returnValue = ''
+  })
+})
+
+// const paperStatus = ref<'do' | 'done'>((route.query.status as 'do' | 'done') || 'do')
+const paperStatus = ref<'do' | 'done'>('do')
+const questionSet = ref<IQuestionSet & { questions: IQuestion[] }>()
+const questions = ref<IQuestion[]>([])
+const { handleChangeAnswer } = useQuestion(questions, { isSync: true })
 
 function handleGoBack() {
   router.push('/home/question-set')
 }
+function handleSubmitPaper() {
+
+}
 async function initQuestionList() {
   const [err, data] = await getQuestionSetDetail(route.query.id as string, loginState.account.value)
   if (!err && data) {
-    questionList.value = data.questions
     questionSet.value = data
+    questions.value = data.questions
   }
 }
 watchEffect(initQuestionList)
@@ -60,12 +66,18 @@ watchEffect(initQuestionList)
       flex justify-center
     >
       <div mb-8 class="w-90%" box-border flex self-start justify-between gap-x-6>
-        <div bg-white rounded-2 flex-1 p-4>
-          <QuestionSet status="test" :list="questionList || []" @change-answer="handleChangeAnswer" />
+        <div bg-white rounded-2 flex-1 p-6>
+          <QuestionSet :status="paperStatus" mode="test" :list="questions || []" @change-answer="handleChangeAnswer" />
+          <div flex items-center justify-center gap-x-20 my-10>
+            <a-button type="primary" @click="handleSubmitPaper">
+              提交
+            </a-button>
+            <a-button>检查</a-button>
+          </div>
         </div>
         <div w-60>
           <div bg-white rounded-1 p-4 sticky top-0>
-            <AnswerKey :list="questionList" />
+            <AnswerKey :list="questions" />
           </div>
         </div>
       </div>

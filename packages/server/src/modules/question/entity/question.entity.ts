@@ -84,7 +84,7 @@ export class Question implements IQuestion {
     }, [] as Question[]);
   }
   constructor(question: Omit<Question, 'answerKey'>) {
-    if(question) {
+    if (question) {
       this.id = question.id || '';
       this.title = question.title || '';
       this.isDo = question.isDo || 0;

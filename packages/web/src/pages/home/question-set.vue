@@ -58,10 +58,12 @@ function handleGotoCreateQuestionSet() {
     },
   })
 }
+
 function handleOpenQuestionSet(questionSet: BaseReturnQuestionSet) {
   drawerVisible.value = true
   prepareOpenQuestionSet.value = questionSet
 }
+
 function handleStart() {
   if (prepareOpenQuestionSet.value?.id) {
     router.push({

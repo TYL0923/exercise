@@ -12,12 +12,15 @@ export class QuestionService {
   updateQuestion(
     updateQuestionDto: UpdateQuestionDto,
   ): Promise<Question | null> {
-    return new Promise(async (resolve, reject) => {
+    return new Promise(async (resolve) => {
       const newQuestion = this.questionRepository.create({
         id: updateQuestionDto.id,
         isDo: updateQuestionDto.isDo,
+        type: updateQuestionDto.type,
+        title: updateQuestionDto.title,
         isError: updateQuestionDto.isError,
         testAnswer: updateQuestionDto.testAnswer,
+        correctAnswer: updateQuestionDto.correctAnswer,
         exerciseAnswer: updateQuestionDto.exerciseAnswer,
       });
       const res = await this.questionRepository.save(newQuestion);

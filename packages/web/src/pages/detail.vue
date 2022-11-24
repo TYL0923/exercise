@@ -15,7 +15,7 @@ const questionSetForm = ref<Pick<IQuestionSet, 'title' | 'author'>>({
   author: loginState.account.value || '',
 })
 const questionList = ref<IQuestion[]>([])
-const { handleChangeAnswer } = useQuestion(questionList)
+const { handleChangeAnswer } = useQuestion(questionList, { isSync: false })
 
 function handlecancel() {
   status.value = 'add'

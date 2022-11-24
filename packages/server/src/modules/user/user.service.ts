@@ -87,6 +87,7 @@ export class UserService {
               title: cur.title,
               isActive: 1,
               createTime: cur.createTime,
+              author: account,
               endTime: cur.endTime,
               questions: cur.answerKeys.find(
                 (answerKey) => answerKey.user.account === account,
@@ -115,7 +116,7 @@ export class UserService {
           ],
         })
         .then((res) => {
-          console.log(res.myAnswerKey);
+          // console.log(res.myAnswerKey);
           resolve(
             res.myAnswerKey.reduce((pre, cur) => {
               // 自己创建的题目集不算在加入题目集中
@@ -131,7 +132,7 @@ export class UserService {
                 });
               }
               return pre;
-            }, [] as (BaseReturnQuestionSet & { author: string })[]),
+            }, [] as BaseReturnQuestionSet[]),
           );
         });
     });

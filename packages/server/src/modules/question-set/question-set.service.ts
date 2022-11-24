@@ -109,7 +109,7 @@ export class QuestionSetService {
   updateQuestionSet(
     updateQuestionSetDto: UpdateQuestionSetDto,
   ): Promise<BaseReturnQuestionSet | null> {
-    return new Promise(async (resolve, reject) => {
+    return new Promise(async (resolve) => {
       const promiseArr: Promise<Question | QuestionSet>[] = [];
       promiseArr.push(
         this.questionSetRepository.save({
@@ -183,7 +183,7 @@ export class QuestionSetService {
     });
   }
   exitQuestionSetById(id: string, account: string): Promise<boolean> {
-    return new Promise(async (resolve, reject) => {
+    return new Promise(async (resolve) => {
       const user = await this.userRepository.findOne({
         where: { account },
       });
@@ -252,7 +252,7 @@ export class QuestionSetService {
   querryQuestionSetSimpleById(
     id: string,
   ): Promise<Omit<BaseReturnQuestionSet, 'questions'> | null> {
-    return new Promise(async (resolve, reject) => {
+    return new Promise(async (resolve) => {
       const res = await this.questionSetRepository.findOne({
         where: { id },
         relations: ['author'],
@@ -299,7 +299,7 @@ export class QuestionSetService {
     });
   }
   joinQuestionSet(joinQuestionSetDto: JoinQuestionSetDto): Promise<boolean> {
-    return new Promise(async (resolve, reject) => {
+    return new Promise(async (resolve) => {
       Promise.all([
         this.questionSetRepository.findOne({
           where: { id: joinQuestionSetDto.questionSetId },

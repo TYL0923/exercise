@@ -39,12 +39,12 @@ const isError = computed(() => {
       <div flex flex-col items-center>
         <img w-20 h-20 rounded-full src="/using.jpeg" alt="">
         <p mt-2>
-          TYL0923
+          {{ questionSet.author || '-' }}
         </p>
       </div>
     </div>
     <a-tooltip>
-      <a-progress :show-info="false" :percent="isDo / total" :success="{ percent: isError / total, strokeColor: '#ef4444' }" />
+      <a-progress :show-info="false" :percent="100 * isDo / total" :success="{ percent: 100 * isError / total, strokeColor: '#ef4444' }" />
     </a-tooltip>
   </div>
 </template>

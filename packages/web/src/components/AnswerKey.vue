@@ -37,7 +37,12 @@ function handleClick(id: string) {
     <div v-for="set, index in answerKey" :key="index" mb-6>
       <h5>{{ questionTypeMap[index] }}</h5>
       <div class="grid-container">
-        <a-button v-for="item, idx in set" :key="item.id" size="small" @click="handleClick(item.id)">
+        <a-button
+          v-for="item, idx in set" :key="item.id"
+          size="small"
+          :type="item.isDo ? 'primary' : 'default'"
+          @click="handleClick(item.id)"
+        >
           {{ idx + 1 }}
         </a-button>
       </div>
