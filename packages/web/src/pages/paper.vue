@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { getQuestionSetDetail } from '@exercise/api'
+import { getQuestionSetDetail, resetQuestion } from '@exercise/api'
 import type { IQuestion, IQuestionSet } from '@exercise/type'
 
 const route = useRoute()
@@ -18,8 +18,8 @@ onMounted(() => {
   })
 })
 
-// const paperStatus = ref<'do' | 'done'>((route.query.status as 'do' | 'done') || 'do')
-const paperStatus = ref<'do' | 'done'>('do')
+// const paperStatus = ref<'do' | 'done'>('done')
+const paperStatus = ref<'do' | 'done'>((route.query.status as 'do' | 'done') || 'do')
 const questionSet = ref<IQuestionSet & { questions: IQuestion[] }>()
 const questions = ref<IQuestion[]>([])
 const { handleChangeAnswer } = useQuestion(questions, { isSync: true })
@@ -27,14 +27,18 @@ const { handleChangeAnswer } = useQuestion(questions, { isSync: true })
 function handleGoBack() {
   router.push('/home/question-set')
 }
+
 function handleSubmitPaper() {
 
 }
 async function initQuestionList() {
-  const [err, data] = await getQuestionSetDetail(route.query.id as string, loginState.account.value)
-  if (!err && data) {
-    questionSet.value = data
-    questions.value = data.questions
+  const [e, d] = await resetQuestion(route.query.id as string, loginState.account.value, 'test')
+  if (!e && d) {
+    const [err, data] = await getQuestionSetDetail(route.query.id as string, loginState.account.value)
+    if (!err && data) {
+      questionSet.value = data
+      questions.value = data.questions
+    }
   }
 }
 watchEffect(initQuestionList)

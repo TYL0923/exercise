@@ -8,8 +8,12 @@ const drawerVisible = ref<boolean>(false)
 const createQuestionSet = ref<BaseReturnQuestionSet[]>([])
 const prepareOpenQuestionSet = ref<BaseReturnQuestionSet>()
 
-const filter = reactive({
-  mode: 'exercise',
+const filter = reactive<{
+  mode: 'exercise' | 'test'
+  start: 'continue' | 'restart'
+  part: 'all' | 'error' | 'not'
+}>({
+  mode: 'test',
   start: 'continue',
   part: 'all',
 })
@@ -66,12 +70,16 @@ function handleOpenQuestionSet(questionSet: BaseReturnQuestionSet) {
 
 function handleStart() {
   if (prepareOpenQuestionSet.value?.id) {
-    router.push({
-      path: '/paper',
-      query: {
-        id: prepareOpenQuestionSet.value?.id,
-      },
-    })
+    if (filter.mode === 'test') {
+      router.push({
+        path: '/paper',
+        query: {
+          id: prepareOpenQuestionSet.value?.id,
+          status: 'do',
+        },
+      })
+    }
+    // todo goto exercise
   }
 }
 async function initCreateQuestionSet() {

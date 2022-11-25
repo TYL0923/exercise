@@ -40,7 +40,7 @@ function handleClick(id: string) {
         <a-button
           v-for="item, idx in set" :key="item.id"
           size="small"
-          :type="item.isDo ? 'primary' : 'default'"
+          :type="item.testAnswer.length > 0 ? 'primary' : 'default'"
           @click="handleClick(item.id)"
         >
           {{ idx + 1 }}

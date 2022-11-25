@@ -55,6 +55,14 @@ export class QuestionSetController {
       updateQuestionSetDto,
     );
   }
+  @Put('reset')
+  async reset(
+    @Body('id') id: string,
+    @Body('account') account: string,
+    @Body('mode') mode: 'test' | 'exercise',
+  ) {
+    return await this.questionSetService.resetQuestion(id, account, mode);
+  }
   @Put('remove')
   async remove(@Body('id') id: string, @Body('account') account: string) {
     return await this.questionSetService.deleteQuestionSetById(id, account);

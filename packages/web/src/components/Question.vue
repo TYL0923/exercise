@@ -23,10 +23,9 @@ const handleChangeAnswer = useDebounceFn((answer: string) => {
   emits('changeAnswer', props.question.id, answer, props.mode)
 }, 0)
 
-const handleChangeCorrectAnswer = useDebounceFn((e: InputEvent) => {
-  const answer = e.data || ''
+const handleChangeCorrectAnswer = useDebounceFn((answer: string) => {
   emits('changeAnswer', props.question.id, answer, 'correct')
-}, 350)
+}, 0)
 const handleChangeTitle = useDebounceFn((e: InputEvent) => {
   const title = e.data || ''
   emits('changeTitle', props.question.id, title)
@@ -47,15 +46,16 @@ const handleChangeTitle = useDebounceFn((e: InputEvent) => {
       <QuestionAnswer :question="question" :status="status" :mode="mode" @change-answer="handleChangeAnswer" />
     </template>
 
-    <!-- edit -->
     <template v-else>
       <a-textarea :rows="4" :value="question.title" @input="handleChangeTitle" />
-      <div flex items-end mt-2>
-        <span text-xs>{{ `正确答案: ` }}</span>
-        <span v-if="['select', 'judge'].includes(question.type)" border-b-1 border-gray-300 ml-2>
-          <a-input p-0 :bordered="false" @input="handleChangeCorrectAnswer($event)" />
-        </span>
-        <a-textarea v-else :rows="4" :value="question.title" @input="handleChangeCorrectAnswer($event)" />
+      <div flex items-center mt-2>
+        <span text-xs mr-2>{{ `正确答案: ` }}</span>
+        <div>
+          <QuestionAnswer
+            :question="question" :status="status" :mode="mode"
+            @change-correct-answer="handleChangeCorrectAnswer"
+          />
+        </div>
       </div>
     </template>
   </div>

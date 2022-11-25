@@ -106,6 +106,39 @@ export class QuestionSetService {
     });
   }
 
+  resetQuestion(
+    id: string,
+    account: string,
+    mode: 'test' | 'exercise',
+  ): Promise<boolean> {
+    return new Promise(async (resolve) => {
+      const { answerKeys } = await this.questionSetRepository.findOne({
+        where: { id },
+        relations: ['answerKeys.questions', 'answerKeys.user'],
+      });
+      const questions =
+        answerKeys.find((answer) => answer.user.account === account)
+          ?.questions || [];
+      const promiseArr: Promise<any>[] = [];
+      questions.map((question) => {
+        const promise =
+          mode === 'exercise'
+            ? this.questionRepository.save({
+                id: question.id,
+                exerciseAnswer: '',
+              })
+            : this.questionRepository.save({
+                id: question.id,
+                testAnswer: '',
+              });
+        promiseArr.push(promise);
+      });
+      Promise.all(promiseArr)
+        .then(() => resolve(true))
+        .catch(() => resolve(false));
+    });
+  }
+
   updateQuestionSet(
     updateQuestionSetDto: UpdateQuestionSetDto,
   ): Promise<BaseReturnQuestionSet | null> {

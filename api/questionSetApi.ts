@@ -80,6 +80,19 @@ export function updateQuestionSet(
     }, 350)
   })
 }
+export function resetQuestion(
+  id: string,
+  account: string,
+  mode: 'test' | 'exercise',
+): Return<IQuestionSet> {
+  const url = 'http://127.0.0.1:8000/questionSet/reset'
+  return new Promise((resolve) => {
+    setTimeout(async () => {
+      const res = await a.put(url, { id, account, mode })
+      resolve([undefined, res.data])
+    }, 350)
+  })
+}
 
 export function queryJoinableQuestionSet(options: {
   id?: string | undefined
