@@ -37,6 +37,7 @@ function handleClick(key: string) {
     </header>
     <div w-screen h-screen pt-24 pb-10 px-10 box-border overflow-x-hidden>
       <router-view />
+      <!-- <Skeleton type="questionSetCard" /> -->
     </div>
   </div>
 </template>

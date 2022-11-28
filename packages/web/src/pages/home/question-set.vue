@@ -5,6 +5,13 @@ import type { BaseReturnQuestionSet } from '@exercise/type'
 const router = useRouter()
 const loginState = useLogin()
 const drawerVisible = ref<boolean>(false)
+const isLoad = reactive<{
+  my: boolean
+  join: boolean
+}>({
+  my: false,
+  join: false,
+})
 const createQuestionSet = ref<BaseReturnQuestionSet[]>([])
 const prepareOpenQuestionSet = ref<BaseReturnQuestionSet>()
 
@@ -83,9 +90,11 @@ function handleStart() {
   }
 }
 async function initCreateQuestionSet() {
+  isLoad.my = true
   const [err, data] = await getMyQuestionSet(loginState.account.value)
   if (!err && data)
     createQuestionSet.value = data
+  isLoad.my = false
 }
 watchEffect(initCreateQuestionSet)
 </script>
@@ -99,11 +108,16 @@ watchEffect(initCreateQuestionSet)
         </a-button>
       </template>
       <div class="grid-container">
-        <QuestionSetCard
-          v-for="questionSet in createQuestionSet" :key="questionSet.id"
-          :question-set="questionSet"
-          @click="handleOpenQuestionSet(questionSet)"
-        />
+        <template v-if="isLoad.my">
+          <Skeleton v-for="i in 4" :key="i" />
+        </template>
+        <template v-else>
+          <QuestionSetCard
+            v-for="questionSet in createQuestionSet" :key="questionSet.id"
+            :question-set="questionSet"
+            @click="handleOpenQuestionSet(questionSet)"
+          />
+        </template>
       </div>
     </a-card>
     <a-drawer

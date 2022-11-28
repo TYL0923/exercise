@@ -42,7 +42,7 @@ export function getMyQuestionSet(account: string): Return<BaseReturnQuestionSet[
     setTimeout(async () => {
       const res = await a.get(url, { params: { account } })
       resolve([undefined, res.data])
-    }, 0)
+    }, 550)
   })
 }
 export function getMyJoinQuestionSet(account: string): Return<BaseReturnQuestionSet[]> {

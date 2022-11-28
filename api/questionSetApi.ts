@@ -58,14 +58,13 @@ export function getQuestionSetSimple(
 export function getQuestionSetDetail(
   id: string,
   account: string,
-  delay = 0,
 ): Return<IQuestionSet & { questions: IQuestion[] }> {
   const url = 'http://127.0.0.1:8000/questionSet/detail'
   return new Promise((resolve) => {
     setTimeout(async () => {
       const res = await a.get(url, { params: { id, account } })
       resolve([undefined, res.data])
-    }, delay)
+    }, 350)
   })
 }
 
