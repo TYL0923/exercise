@@ -12,7 +12,7 @@ const props = withDefaults(
 <template>
   <div class="container">
     <template v-if="type === 'questionSetCard'">
-      <div grid grid-rows-4 grid-cols-3 gap-4 border border-gray-200 p-4 w-80 h-48 rounded-2>
+      <div grid grid-rows-4 grid-cols-3 gap-4 border border-gray-200 p-4 rounded-2>
         <main row-start-1 col-start-1 row-end-2 col-end-3 rounded-1 />
         <main row-start-2 col-start-1 row-end-4 col-end-3 rounded-1 />
         <main row-start-1 col-start-3 row-end-4 col-end-4 rounded-1 />

@@ -9,5 +9,8 @@ export class QueryQuestionSetOptionsDto {
   readonly keyWord: string;
   @IsString()
   @IsOptional()
+  readonly author: string;
+  @IsString()
+  @IsOptional()
   readonly account: string;
 }

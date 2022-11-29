@@ -27,7 +27,7 @@ export function addQuestionSet(
   })
 }
 
-export function joinQuestionSet(
+export function joinQuestionSetById(
   questionSetId: string,
   account: string,
 ): Return<boolean> {
@@ -97,6 +97,7 @@ export function queryJoinableQuestionSet(options: {
   id?: string | undefined
   keyWord?: string | undefined
   author?: string | undefined
+  account?: string | undefined
 }): Return<IQuestionSet[] | null> {
   const url = 'http://127.0.0.1:8000/questionSet/joinable'
   return new Promise((resolve) => {

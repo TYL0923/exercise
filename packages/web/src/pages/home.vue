@@ -1,5 +1,6 @@
 <script setup lang="ts">
 const router = useRouter()
+const loginState = useLogin()
 const selectedKeys = ref<Array<string>>([])
 const navOptions = [
   {
@@ -18,6 +19,10 @@ const navOptions = [
 function handleClick(key: string) {
   router.push(key)
 }
+function handleLogout() {
+  loginState.logout()
+  router.replace('/')
+}
 </script>
 
 <template>
@@ -33,7 +38,21 @@ function handleClick(key: string) {
           </a-menu-item>
         </a-menu>
       </div>
-      <div w-80 />
+      <div w-80 flex flex-row-reverse>
+        <a-dropdown :trigger="['click']">
+          <div cursor-pointer>
+            <img w-10 h-10 rounded-full bg-cover bg-center src="/using.jpeg" alt="">
+            <span mx-1>{{ loginState.account.value }}</span>
+          </div>
+          <template #overlay>
+            <a-menu>
+              <a-menu-item @click="handleLogout">
+                <span>退出登录</span>
+              </a-menu-item>
+            </a-menu>
+          </template>
+        </a-dropdown>
+      </div>
     </header>
     <div w-screen h-screen pt-24 pb-10 px-10 box-border overflow-x-hidden>
       <router-view />

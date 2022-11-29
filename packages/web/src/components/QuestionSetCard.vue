@@ -18,7 +18,7 @@ const isError = computed(() => {
 <template>
   <div
     flex flex-col justify-between
-    w-80 h-48 rounded-2
+    rounded-2
     border border-gray-200 p-4
     transition-all duration-300
     hover="cursor-pointer shadow"

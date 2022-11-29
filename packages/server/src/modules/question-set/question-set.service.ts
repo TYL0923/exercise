@@ -248,6 +248,14 @@ export class QuestionSetService {
     options: QueryQuestionSetOptionsDto,
   ): Promise<Omit<BaseReturnQuestionSet, 'questions'>[] | null> {
     return new Promise(async (resolve) => {
+      const user = await this.userRepository.findOne({
+        relations: [
+          'myAnswerKey',
+          'myAnswerKey.questionSet',
+          'myAnswerKey.questions',
+        ],
+        where: { account: options.account },
+      });
       let builder =
         this.questionSetRepository.createQueryBuilder('questionSet');
       builder = builder.innerJoinAndSelect('questionSet.author', 'author');
@@ -257,11 +265,19 @@ export class QuestionSetService {
         (builder = builder.where('questionSet.title Like :title', {
           title: `%${options.keyWord}%`,
         }));
-      options.account &&
+      options.author &&
         (builder = builder.where('author.account = :account', {
-          account: options.account,
+          account: options.author,
         }));
-      const res = await builder.getMany();
+      let res = await builder.getMany();
+      // 排除已加入
+      res = res.filter((questionSet) =>
+        user.myAnswerKey.find(
+          (answerKey) => answerKey.questionSet.id === questionSet.id,
+        )
+          ? false
+          : true,
+      );
       if (res) {
         resolve(
           res.reduce((pre, cur) => {
@@ -348,6 +364,10 @@ export class QuestionSetService {
         }),
       ])
         .then(([questionSet, user]) => {
+          const isJoin = questionSet.answerKeys.find(
+            (answer) => answer.user.id === user.id,
+          );
+          if (isJoin) resolve(false);
           if (questionSet && user) {
             this.answerKeyRepository
               .insert({

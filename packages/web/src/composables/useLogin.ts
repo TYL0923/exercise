@@ -7,7 +7,7 @@ interface LoginState {
 }
 const loginState: Ref<LoginState> = useStorage('login', {
   account: '',
-  token: ''
+  token: '',
 })
 const useLogin = () => {
   const login = (account: string, token: string) => {
@@ -21,7 +21,7 @@ const useLogin = () => {
   return {
     ...toRefs(loginState.value),
     login,
-    logout
+    logout,
   }
 }
 
