@@ -1,9 +1,17 @@
 <script setup lang="ts">
+type FilterProps = 'mode' | 'start' | 'part'
 const props = defineProps<{
-  options: Record<string, Array<Record<'label' | 'key', string>>>
-  filter: Record<string, string>
+  options: Record<FilterProps, Array<Record<'label' | 'key', string>>>
+  filter: Record<FilterProps, string>
 }>()
-function handleChangeFilter(index: string, value: string) {
+const optionGroup = computed(() => {
+  return {
+    mode: props.options.mode,
+    start: props.filter.mode === 'test' ? [] : props.options.start,
+    part: props.filter.mode === 'test' ? [] : props.options.part,
+  }
+})
+function handleChangeFilter(index: FilterProps, value: string) {
   props.filter[index]! = value
 }
 </script>
@@ -11,7 +19,7 @@ function handleChangeFilter(index: string, value: string) {
 <template>
   <div flex flex-col my-4>
     <div
-      v-for="group, index in options" :key="index"
+      v-for="group, index in optionGroup" :key="index"
       flex items-center my-4 gap-6
     >
       <span
