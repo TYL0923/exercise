@@ -9,9 +9,11 @@ export function identifyQuestionSet(
   },
 ): Return {
   const url = 'http://127.0.0.1:8000/questionSet/identify'
-  return new Promise(async (resolve) => {
-    const res = await a.post(url, options.param, options.config)
-    resolve([undefined, res.data])
+  return new Promise((resolve) => {
+    setTimeout(async () => {
+      const res = await a.post(url, options.param, options.config)
+      resolve([undefined, res.data])
+    }, 0)
   })
 }
 
@@ -55,6 +57,13 @@ export function getQuestionSetSimple(
     }, delay)
   })
 }
+
+/**
+ * 获取题库详情
+ * @param id 题库id
+ * @param account 账号
+ * @returns 题库详情
+ */
 export function getQuestionSetDetail(
   id: string,
   account: string,
@@ -79,11 +88,19 @@ export function updateQuestionSet(
     }, 350)
   })
 }
+
+/**
+ * 清空题目集答案
+ * @param id 题目集id
+ * @param account 账号
+ * @param mode 模式
+ * @returns treu or false
+ */
 export function resetQuestion(
   id: string,
   account: string,
   mode: 'test' | 'exercise',
-): Return<IQuestionSet> {
+): Return<boolean> {
   const url = 'http://127.0.0.1:8000/questionSet/reset'
   return new Promise((resolve) => {
     setTimeout(async () => {

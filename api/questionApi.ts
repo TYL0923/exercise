@@ -7,6 +7,6 @@ export function updateQuestionAnswer(options: Partial<IQuestion>): Return {
     setTimeout(async () => {
       const res = await a.put(url, options)
       resolve([undefined, res.data])
-    }, 0)
+    }, 350)
   })
 }

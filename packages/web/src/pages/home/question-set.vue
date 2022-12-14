@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { getMyJoinQuestionSet, getMyQuestionSet, joinQuestionSetById, queryJoinableQuestionSet } from '@exercise/api'
+import { getMyJoinQuestionSet, getMyQuestionSet, joinQuestionSetById, queryJoinableQuestionSet, resetQuestion } from '@exercise/api'
 import type { BaseReturnQuestionSet, IQuestion, IQuestionSet } from '@exercise/type'
 import { useDebounceFn } from '@vueuse/core'
 import { Modal, message } from 'ant-design-vue'
@@ -146,18 +146,30 @@ function handleJoinQuestionSet(question: IQuestion & { author: string }) {
     // class: 'test',
   })
 }
-function handleStart() {
-  if (prepareOpenQuestionSet.value?.id) {
-    if (filter.mode === 'test') {
-      router.push({
-        path: '/paper',
-        query: {
-          id: prepareOpenQuestionSet.value?.id,
-          status: 'do',
-        },
-      })
+async function handleStart() {
+  if (!prepareOpenQuestionSet.value?.id)
+    return
+  if (filter.mode === 'test') {
+    router.push({
+      path: '/paper',
+      query: {
+        id: prepareOpenQuestionSet.value.id,
+        status: 'do',
+      },
+    })
+  }
+  // todo goto exercise
+  else {
+    if (filter.start === 'restart') {
+      const [, isReset] = await resetQuestion(prepareOpenQuestionSet.value.id, loginState.account.value, 'exercise')
     }
-    // todo goto exercise
+    router.push({
+      path: '/exercise',
+      query: {
+        id: prepareOpenQuestionSet.value.id,
+        part: filter.part,
+      },
+    })
   }
 }
 

@@ -52,20 +52,6 @@ const useQuestion = (questions: Ref<IQuestion[]>, option: { isSync: boolean }) =
       }
     })
   }
-  const reset = (mode: 'test' | 'exercise', sync: boolean) => {
-    return new Promise((resolve, reject) => {
-      questions.value.forEach((question) => {
-        if (mode === 'test') {
-          question.testAnswer = ''
-          sync && updateQuestionAnswer({ id: question.id, testAnswer: '' })
-        }
-        else {
-          question.exerciseAnswer = ''
-          sync && updateQuestionAnswer({ id: question.id, exerciseAnswer: '' })
-        }
-      })
-    })
-  }
   const judgeisError = (id: string, answerType: 'test' | 'exercise' = 'test', type: 'select' | 'judge'): 1 | 0 => {
     const handle: Record<
       'test' | 'exercise',

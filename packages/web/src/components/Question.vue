@@ -26,8 +26,8 @@ const handleChangeAnswer = useDebounceFn((answer: string) => {
 const handleChangeCorrectAnswer = useDebounceFn((answer: string) => {
   emits('changeAnswer', props.question.id, answer, 'correct')
 }, 0)
-const handleChangeTitle = useDebounceFn((e: InputEvent) => {
-  const title = e.data || ''
+const handleChangeTitle = useDebounceFn((e: Event) => {
+  const title = (e as InputEvent).data || ''
   emits('changeTitle', props.question.id, title)
 }, 350)
 </script>
@@ -46,6 +46,7 @@ const handleChangeTitle = useDebounceFn((e: InputEvent) => {
       <QuestionAnswer :question="question" :status="status" :mode="mode" @change-answer="handleChangeAnswer" />
     </template>
 
+    <!--  -->
     <template v-else>
       <a-textarea :rows="4" :value="question.title" @input="handleChangeTitle" />
       <div flex items-center mt-2>
