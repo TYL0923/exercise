@@ -183,7 +183,7 @@ export class QuestionSetService {
     id: string,
     account: string,
   ): Promise<QuestionSet | null> {
-    return new Promise(async (resolve, reject) => {
+    return new Promise(async (resolve) => {
       const user = await this.userRepository.findOne({
         where: { account },
       });
