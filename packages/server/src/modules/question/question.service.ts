@@ -31,7 +31,21 @@ export class QuestionService {
       }
     });
   }
-
+  updateQuestions(questions: Question[]): Promise<boolean> {
+    return new Promise(async (resolve) => {
+      const promiseArr = [];
+      questions.forEach((question) => {
+        const promise = this.updateQuestion(question);
+        promiseArr.push(promise);
+      });
+      const res = await Promise.all(promiseArr);
+      if (res) {
+        resolve(true);
+      } else {
+        resolve(false);
+      }
+    });
+  }
   // deleteQuestionById(id: string): Promise<boolean> {
   //   return new Promise(async (resolve, reject) => {
   //     const res = await this.questionRepository.delete(id);

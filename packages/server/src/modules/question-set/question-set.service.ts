@@ -126,6 +126,8 @@ export class QuestionSetService {
             ? this.questionRepository.save({
                 id: question.id,
                 exerciseAnswer: '',
+                isDo: 0,
+                isError: 0,
               })
             : this.questionRepository.save({
                 id: question.id,
