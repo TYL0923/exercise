@@ -10,3 +10,12 @@ export function updateQuestionAnswer(options: Partial<IQuestion>): Return {
     }, 350)
   })
 }
+export function updateQuestions(questions: IQuestion[]): Return {
+  const url = '/question/update-list'
+  return new Promise((resolve) => {
+    setTimeout(async () => {
+      const res = await a.put(url, questions)
+      resolve([undefined, res.data])
+    }, 350)
+  })
+}

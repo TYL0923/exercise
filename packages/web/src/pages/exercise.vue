@@ -1,12 +1,13 @@
 <script setup lang="ts">
-import { getQuestionSetDetail, resetQuestion, updateQuestionAnswer } from '@exercise/api'
+import { getQuestionSetDetail, updateQuestionAnswer, updateQuestions } from '@exercise/api'
 import type { IQuestion, IQuestionSet } from '@exercise/type'
-
-type QuestionStart = 'continue' | 'restart'
-type QuestionPart = 'all' | 'error'
+import { message } from 'ant-design-vue'
+type QuestionPart = 'all' | 'error' | 'not'
 const router = useRouter()
 const route = useRoute()
 const loginState = useLogin()
+
+const diff = ref<boolean>(true)
 const isSave = ref<boolean>(false)
 const questionSet = ref<IQuestionSet & { questions: IQuestion[] }>()
 const currectIdx = ref(0)
@@ -14,7 +15,7 @@ const exerciseState = ref<{
   id: string
   part: QuestionPart
 }>({
-  id: route.query.id as string || '6d828da8-ef16-418f-aff7-f9e3d9cc9295',
+  id: route.query.id as string,
   part: route.query.part as QuestionPart || 'all',
 })
 const question = computed(() => {
@@ -28,35 +29,91 @@ function handleChangeAnswer(id: string, answer: string) {
   questionSet.value?.questions.forEach(async (question) => {
     if (question.id === id) {
       question.exerciseAnswer = answer
+      // 已做
+      question.isDo = 1
+      // 判断是否做错
+      if (question.exerciseAnswer !== question.correctAnswer)
+        question.isError = 1
+
       isSave.value = true
       await updateQuestionAnswer({ id, exerciseAnswer: answer })
       isSave.value = false
     }
   })
 }
-function handleRefresh(event: Event) {
-  event.preventDefault()
-}
 
 function handleGoBack() {
   router.push('/home/question-set')
 }
-
+async function saveQuestion() {
+  message.loading({
+    content: '保存中,请稍等',
+    key: 'save',
+  })
+  if (!questionSet.value?.questions)
+    return true
+  const [, data] = await updateQuestions(questionSet.value?.questions)
+  message.success({
+    content: '保存成功',
+    key: 'save',
+    duration: 1,
+  })
+  return data
+}
 async function initQuestionList() {
   const [err, data] = await getQuestionSetDetail(exerciseState.value.id, loginState.account.value)
-  if (!err && data)
-    questionSet.value = data
+  if (!err && data) {
+    if (exerciseState.value.part === 'error') {
+      data.questions = data.questions.filter(question => question.isError)
+      data.questions.forEach((question) => {
+        // todo
+        question.isError = 0
+        question.isDo = 0
+        question.exerciseAnswer = ''
+      })
+    }
+    else if (exerciseState.value.part === 'not') {
+      data.questions = data.questions.filter(question => !question.isDo)
+    }
+  }
+  questionSet.value = data
 }
-onBeforeRouteLeave((to, from) => {
-  const answer = window.confirm('是否离开?')
-  if (!answer)
+onBeforeRouteLeave(async (to, from) => {
+  const res = window.confirm('是否离开?')
+  if (!res)
     return false
+  await saveQuestion()
+  return true
 })
+
+/**
+ * firefox
+ */
+function handleBeforeunload(event: Event) {
+  event.returnValue = true
+  diff.value = false
+}
+async function handleUnload() {
+  if (diff) {
+    // 浏览器刷新
+  }
+  else {
+    // 浏览器关闭
+    await saveQuestion()
+  }
+}
+function handleLoad() {
+  diff.value = true
+}
 onMounted(() => {
-  window.addEventListener('beforeunload', handleRefresh)
+  window.addEventListener('beforeunload', handleBeforeunload)
+  window.addEventListener('unload', handleUnload)
+  window.addEventListener('load', handleLoad)
 })
 onUnmounted(() => {
-  window.removeEventListener('beforeunload', handleRefresh)
+  window.removeEventListener('beforeunload', handleBeforeunload)
+  window.removeEventListener('unload', handleUnload)
+  window.removeEventListener('load', handleLoad)
 })
 watchEffect(initQuestionList)
 </script>

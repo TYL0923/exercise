@@ -8,7 +8,7 @@ const optionGroup = computed(() => {
   return {
     mode: props.options.mode,
     start: props.filter.mode === 'test' ? [] : props.options.start,
-    part: props.filter.mode === 'test' ? [] : props.options.part,
+    part: props.filter.mode === 'test' ? [] : props.filter.start === 'restart' ? [] : props.options.part,
   }
 })
 function handleChangeFilter(index: FilterProps, value: string) {
