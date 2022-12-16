@@ -9,7 +9,6 @@ const route = useRoute()
 const oForm = ref<FormInstance | null>(null)
 const loginState = useLogin()
 const status = ref<'edit' | 'add'>(route.query.status as 'edit' | 'add')
-const fileList = ref([])
 const questionSetForm = ref<Pick<IQuestionSet, 'title' | 'author'>>({
   title: '',
   author: loginState.account.value || '',
@@ -57,12 +56,16 @@ function handleSubmit() {
     })
     .catch(() => {})
 }
-
-function handleChange(info: UploadChangeParam) {
-
-}
 async function customRequest(file: any) {
-  // console.log('开始上传')
+  const type = file.file.name.split('.').pop()
+  if (!['txt', 'docx'].includes(type)) {
+    message.error({
+      content: '请选择正确文件格式',
+      key: 'upload',
+      duration: 1,
+    })
+    return false
+  }
   const form = new FormData()
   form.append('file', file.file)
   form.append('contractName', file.file.name)
@@ -71,8 +74,17 @@ async function customRequest(file: any) {
     param: form,
   })
   if (!err && data) {
-    questionList.value = data
-    status.value = 'edit'
+    if (data.length > 0) {
+      questionList.value = data
+      status.value = 'edit'
+    }
+    else {
+      message.error({
+        content: '没有识别到题目，请检查题目格式是否正确',
+        key: 'identify',
+        duration: 1,
+      })
+    }
   }
 }
 </script>
@@ -93,9 +105,7 @@ async function customRequest(file: any) {
       <div flex-1 text-center>
         创建题库
       </div>
-      <div w-60>
-        --
-      </div>
+      <div w-60 />
     </div>
     <template v-if="status === 'add'">
       <div
@@ -103,10 +113,9 @@ async function customRequest(file: any) {
         class="top-50% left-50% -translate-x-1/2 -translate-y-1/2"
       >
         <a-upload-dragger
-          :file-list="fileList"
+          :show-upload-list="false"
           :headers="{ 'Content-Type': 'multipart/form-data' }"
           :custom-request="customRequest"
-          @change="handleChange"
         >
           <p>
             点击或拖拽上传
@@ -140,7 +149,7 @@ async function customRequest(file: any) {
               label="作者"
               name="author"
             >
-              <a-input disabled :value="questionSetForm.author" />
+              <a-input disabled :value="questionSetForm.author as string" />
             </a-form-item>
           </a-form>
         </div>
