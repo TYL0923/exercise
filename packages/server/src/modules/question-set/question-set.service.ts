@@ -11,7 +11,7 @@ import { QueryQuestionSetOptionsDto } from './dto/queryQuestionSet.dto';
 import { UpdateQuestionSetDto } from './dto/updateQuestionSet.sto';
 import { QuestionSet } from './entity/question-set.entity';
 import type { BaseReturnQuestionSet } from '@exercise/type';
-
+import { extract, remove, save } from 'src/shared/identify';
 @Injectable()
 export class QuestionSetService {
   constructor(
@@ -25,23 +25,22 @@ export class QuestionSetService {
     private readonly answerKeyRepository: Repository<AnswerKey>,
   ) {}
 
-  private handleFile(file: any) {
-    const handle = {
-      txt: (buffer: Buffer) => {
-        const str = buffer.toString();
-        return str;
-      },
-      docx: (buffer: Buffer) => {
-        // TODO
-      },
-    };
-    const fileTypeName = file.originalname.split('.').pop();
-    return handle[fileTypeName](file.buffer);
+  private async handleFile(file: any): Promise<string> {
+    const type = file.originalname.split('.').pop();
+    let name = '',
+      str = '';
+    try {
+      name = await save(file);
+      str = await extract(name, type);
+    } finally {
+      remove(name);
+      return str.trim();
+    }
   }
 
   identifyQuestionSet(file: any): Promise<Question[] | null> {
-    return new Promise((resolve) => {
-      const questionStr = this.handleFile(file);
+    return new Promise(async (resolve) => {
+      const questionStr = await this.handleFile(file);
       const questionArr = Question.formatQuestionArray(questionStr);
       resolve(questionArr);
     });
