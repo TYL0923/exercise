@@ -1,16 +1,12 @@
-import { IsOptional, IsString } from 'class-validator';
+import { IsOptional } from 'class-validator';
 
 export class QueryQuestionSetOptionsDto {
-  @IsString()
   @IsOptional()
   readonly id: string;
-  @IsString()
   @IsOptional()
   readonly keyWord: string;
-  @IsString()
   @IsOptional()
   readonly author: string;
-  @IsString()
   @IsOptional()
   readonly account: string;
 }

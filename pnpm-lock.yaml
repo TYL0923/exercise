@@ -45,7 +45,9 @@ importers:
       unocss-preset-weapp: ^0.2.5
       unplugin-auto-import: ^0.11.2
       unplugin-vue-components: ^0.22.7
+      vant: ^4.0.3
       vite: ^3.2.4
+      vite-plugin-style-import: 1.4.1
       vue: ^3.2.45
       vue-i18n: ^9.1.9
     dependencies:
@@ -61,6 +63,7 @@ importers:
       '@dcloudio/uni-mp-toutiao': registry.npmmirror.com/@dcloudio/uni-mp-toutiao/3.0.0-alpha-3061020221121002_vue@3.2.45
       '@dcloudio/uni-mp-weixin': registry.npmmirror.com/@dcloudio/uni-mp-weixin/3.0.0-alpha-3061020221121002_vue@3.2.45
       '@dcloudio/uni-quickapp-webview': registry.npmmirror.com/@dcloudio/uni-quickapp-webview/3.0.0-alpha-3061020221121002_vue@3.2.45
+      vant: registry.npmmirror.com/vant/4.0.3_vue@3.2.45
       vue: registry.npmmirror.com/vue/3.2.45
       vue-i18n: registry.npmmirror.com/vue-i18n/9.2.2_vue@3.2.45
     devDependencies:
@@ -75,6 +78,7 @@ importers:
       unplugin-auto-import: registry.npmmirror.com/unplugin-auto-import/0.11.5
       unplugin-vue-components: registry.npmmirror.com/unplugin-vue-components/0.22.12_vue@3.2.45
       vite: registry.npmmirror.com/vite/3.2.5
+      vite-plugin-style-import: registry.npmmirror.com/vite-plugin-style-import/1.4.1_vite@3.2.5
 
   packages/server:
     specifiers:
@@ -3294,6 +3298,18 @@ packages:
       - rollup
     dev: true
 
+  registry.npmmirror.com/@vant/popperjs/1.3.0:
+    resolution: {integrity: sha512-hB+czUG+aHtjhaEmCJDuXOep0YTZjdlRR+4MSmIFnkCQIxJaXLQdSsR90XWvAI2yvKUI7TCGqR8pQg2RtvkMHw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@vant/popperjs/-/popperjs-1.3.0.tgz}
+    name: '@vant/popperjs'
+    version: 1.3.0
+    dev: false
+
+  registry.npmmirror.com/@vant/use/1.4.3:
+    resolution: {integrity: sha512-rSnETN7P9qT1WbItMpQxBqe3cHeK2ZFYp1sCxWUXaTeI71TqA8sOdzC36ledZ36NQgFNTch9fsRPYOkrCgZfQA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@vant/use/-/use-1.4.3.tgz}
+    name: '@vant/use'
+    version: 1.4.3
+    dev: false
+
   registry.npmmirror.com/@vitejs/plugin-legacy/2.3.1_terser@5.16.1+vite@3.2.5:
     resolution: {integrity: sha512-J5KaGBlSt2tEYPVjM/C8dA6DkRzkFkbPe+Xb4IX5G+XOV5OGbVAfkMjKywdrkO3gGynO8S98i71Lmsff4cWkCQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@vitejs/plugin-legacy/-/plugin-legacy-2.3.1.tgz}
     id: registry.npmmirror.com/@vitejs/plugin-legacy/2.3.1
@@ -4370,6 +4386,15 @@ packages:
     engines: {node: '>=6'}
     dev: true
 
+  registry.npmmirror.com/camel-case/4.1.2:
+    resolution: {integrity: sha512-gxGWBrTT1JuMx6R+o5PTXMmUnhnVzLQ9SNutD4YqKtI6ap897t3tKECYla6gCWEkplXnlNybEkZg9GEGxKFCgw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/camel-case/-/camel-case-4.1.2.tgz}
+    name: camel-case
+    version: 4.1.2
+    dependencies:
+      pascal-case: registry.npmmirror.com/pascal-case/3.1.2
+      tslib: registry.npmmirror.com/tslib/2.4.1
+    dev: true
+
   registry.npmmirror.com/camelcase/5.3.1:
     resolution: {integrity: sha512-L28STB170nwWS63UjtlEOE3dldQApaJXZkOI1uMFfzf3rRuPegHaHesyee+YxQ+W6SvRDQV6UrdOdRiR153wJg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/camelcase/-/camelcase-5.3.1.tgz}
     name: camelcase
@@ -4388,6 +4413,16 @@ packages:
     resolution: {integrity: sha512-1MgUzEkoMO6gKfXflStpYgZDlFM7M/ck/bgfVCACO5vnAf0fXoNVHdWtqGU+MYca+4bL9Z5bpOVmR33cWW9G2A==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/caniuse-lite/-/caniuse-lite-1.0.30001439.tgz}
     name: caniuse-lite
     version: 1.0.30001439
+
+  registry.npmmirror.com/capital-case/1.0.4:
+    resolution: {integrity: sha512-ds37W8CytHgwnhGGTi88pcPyR15qoNkOpYwmMMfnWqqWgESapLqvDx6huFjQ5vqWSn2Z06173XNA7LtMOeUh1A==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/capital-case/-/capital-case-1.0.4.tgz}
+    name: capital-case
+    version: 1.0.4
+    dependencies:
+      no-case: registry.npmmirror.com/no-case/3.0.4
+      tslib: registry.npmmirror.com/tslib/2.4.1
+      upper-case-first: registry.npmmirror.com/upper-case-first/2.0.2
+    dev: true
 
   registry.npmmirror.com/chalk/2.4.2:
     resolution: {integrity: sha512-Mti+f9lpJNcwF4tWV8/OrTTtF1gZi+f8FqlyAdouralcFWFQWF2+NgCHShjkCb+IFBLq9buZwE1xckQU4peSuQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/chalk/-/chalk-2.4.2.tgz}
@@ -4417,6 +4452,25 @@ packages:
     dependencies:
       ansi-styles: registry.npmmirror.com/ansi-styles/4.3.0
       supports-color: registry.npmmirror.com/supports-color/7.2.0
+
+  registry.npmmirror.com/change-case/4.1.2:
+    resolution: {integrity: sha512-bSxY2ws9OtviILG1EiY5K7NNxkqg/JnRnFxLtKQ96JaviiIxi7djMrSd0ECT9AC+lttClmYwKw53BWpOMblo7A==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/change-case/-/change-case-4.1.2.tgz}
+    name: change-case
+    version: 4.1.2
+    dependencies:
+      camel-case: registry.npmmirror.com/camel-case/4.1.2
+      capital-case: registry.npmmirror.com/capital-case/1.0.4
+      constant-case: registry.npmmirror.com/constant-case/3.0.4
+      dot-case: registry.npmmirror.com/dot-case/3.0.4
+      header-case: registry.npmmirror.com/header-case/2.0.4
+      no-case: registry.npmmirror.com/no-case/3.0.4
+      param-case: registry.npmmirror.com/param-case/3.0.4
+      pascal-case: registry.npmmirror.com/pascal-case/3.1.2
+      path-case: registry.npmmirror.com/path-case/3.0.4
+      sentence-case: registry.npmmirror.com/sentence-case/3.0.4
+      snake-case: registry.npmmirror.com/snake-case/3.0.4
+      tslib: registry.npmmirror.com/tslib/2.4.1
+    dev: true
 
   registry.npmmirror.com/char-regex/1.0.2:
     resolution: {integrity: sha512-kWWXztvZ5SBQV+eRgKFeh8q5sLuZY2+8WUIzlxWVTg+oGwY14qylx1KbKzHd8P6ZYkAg0xyIDU9JMHhyJMZ1jw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/char-regex/-/char-regex-1.0.2.tgz}
@@ -4703,6 +4757,16 @@ packages:
     resolution: {integrity: sha512-9vAdYbHj6x2fLKC4+oPH0kFzY/orMZyG2Aj+kNylHxKGJ/Ed4dpNyAQYwJOdqO4zdM7XpVHmyejQDcQHrnuXbw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/consola/-/consola-2.15.3.tgz}
     name: consola
     version: 2.15.3
+
+  registry.npmmirror.com/constant-case/3.0.4:
+    resolution: {integrity: sha512-I2hSBi7Vvs7BEuJDr5dDHfzb/Ruj3FyvFyh7KLilAjNQw3Be+xgqUBA2W6scVEcL0hL1dwPRtIqEPVUCKkSsyQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/constant-case/-/constant-case-3.0.4.tgz}
+    name: constant-case
+    version: 3.0.4
+    dependencies:
+      no-case: registry.npmmirror.com/no-case/3.0.4
+      tslib: registry.npmmirror.com/tslib/2.4.1
+      upper-case: registry.npmmirror.com/upper-case/2.0.2
+    dev: true
 
   registry.npmmirror.com/content-disposition/0.5.4:
     resolution: {integrity: sha512-FveZTNuGw04cxlAiWbzi6zTAL/lhehaWbTtgluJh4/E95DqMwTmha3KZN1aAWA8cFIhHzMZUvLevkw5Rqk+tSQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/content-disposition/-/content-disposition-0.5.4.tgz}
@@ -5135,6 +5199,15 @@ packages:
       dom-serializer: registry.npmmirror.com/dom-serializer/2.0.0
       domelementtype: registry.npmmirror.com/domelementtype/2.3.0
       domhandler: registry.npmmirror.com/domhandler/5.0.3
+    dev: true
+
+  registry.npmmirror.com/dot-case/3.0.4:
+    resolution: {integrity: sha512-Kv5nKlh6yRrdrGvxeJ2e5y2eRUpkUosIW4A2AS38zwSz27zu7ufDwQPi5Jhs3XAlGNetl3bmnGhQsMtkKJnj3w==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/dot-case/-/dot-case-3.0.4.tgz}
+    name: dot-case
+    version: 3.0.4
+    dependencies:
+      no-case: registry.npmmirror.com/no-case/3.0.4
+      tslib: registry.npmmirror.com/tslib/2.4.1
     dev: true
 
   registry.npmmirror.com/dotenv/10.0.0:
@@ -6737,6 +6810,15 @@ packages:
     name: hash-sum
     version: 2.0.0
 
+  registry.npmmirror.com/header-case/2.0.4:
+    resolution: {integrity: sha512-H/vuk5TEEVZwrR0lp2zed9OCo1uAILMlx0JEMgC26rzyJJ3N1v6XkwHHXJQdR2doSjcGPM6OKPYoJgf0plJ11Q==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/header-case/-/header-case-2.0.4.tgz}
+    name: header-case
+    version: 2.0.4
+    dependencies:
+      capital-case: registry.npmmirror.com/capital-case/1.0.4
+      tslib: registry.npmmirror.com/tslib/2.4.1
+    dev: true
+
   registry.npmmirror.com/hexoid/1.0.0:
     resolution: {integrity: sha512-QFLV0taWQOZtvIRIAdBChesmogZrtuXvVWsFHZTk2SU+anspqZ2vMnoLg7IE1+Uk16N19APic1BuF8bC8c2m5g==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/hexoid/-/hexoid-1.0.0.tgz}
     name: hexoid
@@ -8187,6 +8269,14 @@ packages:
       underscore: registry.npmmirror.com/underscore/1.13.6
     dev: false
 
+  registry.npmmirror.com/lower-case/2.0.2:
+    resolution: {integrity: sha512-7fm3l3NAF9WfN6W3JOmf5drwpVqX78JtoGJ3A6W0a6ZnldM41w2fV5D490psKFTpMds8TJse/eHLFFsNHHjHgg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/lower-case/-/lower-case-2.0.2.tgz}
+    name: lower-case
+    version: 2.0.2
+    dependencies:
+      tslib: registry.npmmirror.com/tslib/2.4.1
+    dev: true
+
   registry.npmmirror.com/lru-cache/6.0.0:
     resolution: {integrity: sha512-Jo6dJ04CmSjuznwJSS3pUeWmd/H0ffTlkXXgwZi+eq1UCmqQwCh+eLsYOYCwY991i2Fah4h1BEMCx4qThGbsiA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/lru-cache/-/lru-cache-6.0.0.tgz}
     name: lru-cache
@@ -8620,6 +8710,15 @@ packages:
       rxjs: registry.npmmirror.com/rxjs/6.6.7
     dev: false
 
+  registry.npmmirror.com/no-case/3.0.4:
+    resolution: {integrity: sha512-fgAN3jGAh+RoxUGZHTSOLJIqUc2wmoBwGR4tbpNAKmmovFoWq0OdRkb0VkldReO2a2iBT/OEulG9XSUc10r3zg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/no-case/-/no-case-3.0.4.tgz}
+    name: no-case
+    version: 3.0.4
+    dependencies:
+      lower-case: registry.npmmirror.com/lower-case/2.0.2
+      tslib: registry.npmmirror.com/tslib/2.4.1
+    dev: true
+
   registry.npmmirror.com/node-emoji/1.11.0:
     resolution: {integrity: sha512-wo2DpQkQp7Sjm2A0cq+sN7EHKO6Sl0ctXeBdFZrL9T9+UywORbufTcTZxom8YqpLQt/FqNMUkOpkZrJVYSKD3A==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/node-emoji/-/node-emoji-1.11.0.tgz}
     name: node-emoji
@@ -8901,6 +9000,15 @@ packages:
     version: 1.0.11
     dev: false
 
+  registry.npmmirror.com/param-case/3.0.4:
+    resolution: {integrity: sha512-RXlj7zCYokReqWpOPH9oYivUzLYZ5vAPIfEmCTNViosC78F8F0H9y7T7gG2M39ymgutxF5gcFEsyZQSph9Bp3A==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/param-case/-/param-case-3.0.4.tgz}
+    name: param-case
+    version: 3.0.4
+    dependencies:
+      dot-case: registry.npmmirror.com/dot-case/3.0.4
+      tslib: registry.npmmirror.com/tslib/2.4.1
+    dev: true
+
   registry.npmmirror.com/parent-module/1.0.1:
     resolution: {integrity: sha512-GQ2EWRpQV8/o+Aw8YqtfZZPfNRWZYkbidE9k5rpl/hC3vtHHBfGm2Ifi6qWV+coDGkrUKZAxE3Lot5kcsRlh+g==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/parent-module/-/parent-module-1.0.1.tgz}
     name: parent-module
@@ -8988,6 +9096,24 @@ packages:
     name: parseurl
     version: 1.3.3
     engines: {node: '>= 0.8'}
+
+  registry.npmmirror.com/pascal-case/3.1.2:
+    resolution: {integrity: sha512-uWlGT3YSnK9x3BQJaOdcZwrnV6hPpd8jFH1/ucpiLRPh/2zCVJKS19E4GvYHvaCcACn3foXZ0cLB9Wrx1KGe5g==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/pascal-case/-/pascal-case-3.1.2.tgz}
+    name: pascal-case
+    version: 3.1.2
+    dependencies:
+      no-case: registry.npmmirror.com/no-case/3.0.4
+      tslib: registry.npmmirror.com/tslib/2.4.1
+    dev: true
+
+  registry.npmmirror.com/path-case/3.0.4:
+    resolution: {integrity: sha512-qO4qCFjXqVTrcbPt/hQfhTQ+VhFsqNKOPtytgNKkKxSoEp3XPUQ8ObFuePylOIok5gjn69ry8XiULxCwot3Wfg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/path-case/-/path-case-3.0.4.tgz}
+    name: path-case
+    version: 3.0.4
+    dependencies:
+      dot-case: registry.npmmirror.com/dot-case/3.0.4
+      tslib: registry.npmmirror.com/tslib/2.4.1
+    dev: true
 
   registry.npmmirror.com/path-exists/4.0.0:
     resolution: {integrity: sha512-ak9Qy5Q7jYb2Wwcey5Fpvg2KoAc/ZIhLSLOSBmRmygPsGwkVVt0fZa0qrtMz+m6tJTAHfZQ8FnmB4MG4LWy7/w==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/path-exists/-/path-exists-4.0.0.tgz}
@@ -9735,6 +9861,16 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
+  registry.npmmirror.com/sentence-case/3.0.4:
+    resolution: {integrity: sha512-8LS0JInaQMCRoQ7YUytAo/xUu5W2XnQxV2HI/6uM6U7CITS1RqPElr30V6uIqyMKM9lJGRVFy5/4CuzcixNYSg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/sentence-case/-/sentence-case-3.0.4.tgz}
+    name: sentence-case
+    version: 3.0.4
+    dependencies:
+      no-case: registry.npmmirror.com/no-case/3.0.4
+      tslib: registry.npmmirror.com/tslib/2.4.1
+      upper-case-first: registry.npmmirror.com/upper-case-first/2.0.2
+    dev: true
+
   registry.npmmirror.com/serialize-javascript/6.0.0:
     resolution: {integrity: sha512-Qr3TosvguFt8ePWqsvRfrKyQXIiW+nGbYpy8XK24NQHE83caxWt+mIymTT19DGFbNWNLfEwsrkSmN64lVWB9ag==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/serialize-javascript/-/serialize-javascript-6.0.0.tgz}
     name: serialize-javascript
@@ -9848,6 +9984,15 @@ packages:
     name: slash
     version: 3.0.0
     engines: {node: '>=8'}
+    dev: true
+
+  registry.npmmirror.com/snake-case/3.0.4:
+    resolution: {integrity: sha512-LAOh4z89bGQvl9pFfNF8V146i7o7/CqFPbqzYgP+yYzDIDeS9HaNFtXABamRW+AQzEVODcvE79ljJ+8a9YSdMg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/snake-case/-/snake-case-3.0.4.tgz}
+    name: snake-case
+    version: 3.0.4
+    dependencies:
+      dot-case: registry.npmmirror.com/dot-case/3.0.4
+      tslib: registry.npmmirror.com/tslib/2.4.1
     dev: true
 
   registry.npmmirror.com/source-map-js/1.0.2:
@@ -10972,6 +11117,22 @@ packages:
       escalade: registry.npmmirror.com/escalade/3.1.1
       picocolors: registry.npmmirror.com/picocolors/1.0.0
 
+  registry.npmmirror.com/upper-case-first/2.0.2:
+    resolution: {integrity: sha512-514ppYHBaKwfJRK/pNC6c/OxfGa0obSnAl106u97Ed0I625Nin96KAjttZF6ZL3e1XLtphxnqrOi9iWgm+u+bg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/upper-case-first/-/upper-case-first-2.0.2.tgz}
+    name: upper-case-first
+    version: 2.0.2
+    dependencies:
+      tslib: registry.npmmirror.com/tslib/2.4.1
+    dev: true
+
+  registry.npmmirror.com/upper-case/2.0.2:
+    resolution: {integrity: sha512-KgdgDGJt2TpuwBUIjgG6lzw2GWFRCW9Qkfkiv0DxqHHLYJHmtmdUIKcZd8rHgFSjopVTlw6ggzCm1b8MFQwikg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/upper-case/-/upper-case-2.0.2.tgz}
+    name: upper-case
+    version: 2.0.2
+    dependencies:
+      tslib: registry.npmmirror.com/tslib/2.4.1
+    dev: true
+
   registry.npmmirror.com/uri-js/4.4.1:
     resolution: {integrity: sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/uri-js/-/uri-js-4.4.1.tgz}
     name: uri-js
@@ -11029,6 +11190,19 @@ packages:
     version: 13.7.0
     engines: {node: '>= 0.10'}
 
+  registry.npmmirror.com/vant/4.0.3_vue@3.2.45:
+    resolution: {integrity: sha512-rBQCSdMyYxO9I3weQmdTxY28OkVLM7MSIjMx3qwMTsFONek6bodVGEYXF0+mzh/5EBMVXjqtHj6CvD6QphKkCg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/vant/-/vant-4.0.3.tgz}
+    id: registry.npmmirror.com/vant/4.0.3
+    name: vant
+    version: 4.0.3
+    peerDependencies:
+      vue: ^3.0.0
+    dependencies:
+      '@vant/popperjs': registry.npmmirror.com/@vant/popperjs/1.3.0
+      '@vant/use': registry.npmmirror.com/@vant/use/1.4.3
+      vue: registry.npmmirror.com/vue/3.2.45
+    dev: false
+
   registry.npmmirror.com/vary/1.1.2:
     resolution: {integrity: sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/vary/-/vary-1.1.2.tgz}
     name: vary
@@ -11057,6 +11231,25 @@ packages:
       picocolors: registry.npmmirror.com/picocolors/1.0.0
       vite: registry.npmmirror.com/vite/3.2.5_p2e7be343i2iab65kyde7hr34m
       yaml: registry.npmmirror.com/yaml/2.1.3
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
+  registry.npmmirror.com/vite-plugin-style-import/1.4.1_vite@3.2.5:
+    resolution: {integrity: sha512-lJCRvm7+So0hHdnSJiJPg9gD5mxtL6YY0jmhEph+k7ArpsyvqOh6han2kG5htbWWDZxHkUN9d1BuTFL//yCLLQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/vite-plugin-style-import/-/vite-plugin-style-import-1.4.1.tgz}
+    id: registry.npmmirror.com/vite-plugin-style-import/1.4.1
+    name: vite-plugin-style-import
+    version: 1.4.1
+    peerDependencies:
+      vite: '>=2.0.0'
+    dependencies:
+      '@rollup/pluginutils': registry.npmmirror.com/@rollup/pluginutils/4.2.1
+      change-case: registry.npmmirror.com/change-case/4.1.2
+      debug: registry.npmmirror.com/debug/4.3.4
+      es-module-lexer: registry.npmmirror.com/es-module-lexer/0.9.3
+      fs-extra: registry.npmmirror.com/fs-extra/10.1.0
+      magic-string: registry.npmmirror.com/magic-string/0.25.9
+      vite: registry.npmmirror.com/vite/3.2.5
     transitivePeerDependencies:
       - supports-color
     dev: true

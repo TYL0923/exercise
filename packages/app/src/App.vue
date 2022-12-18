@@ -8,4 +8,6 @@ onHide(() => {
 })
 </script>
 
-<style></style>
+<style>
+@import "@/wxcomponents/vant/dist/common/index.wxss";
+</style>
