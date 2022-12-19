@@ -1,5 +1,5 @@
 import type { AxiosRequestConfig } from 'axios'
-import type { AddQuestionSetDto, IQuestion, IQuestionSet } from '@exercise/type'
+import type { QuestionSet } from '@exercise/type'
 import type { Return } from './request'
 import a from './request'
 export function identifyQuestionSet(
@@ -18,7 +18,7 @@ export function identifyQuestionSet(
 }
 
 export function addQuestionSet(
-  questionSet: AddQuestionSetDto,
+  questionSet: Pick<QuestionSet, 'title' | 'createTime' | 'questions'> & { account: string },
 ): Return<boolean> {
   const url = 'http://127.0.0.1:8000/questionSet/add'
   return new Promise((resolve) => {
@@ -45,10 +45,28 @@ export function joinQuestionSetById(
   })
 }
 
+export function getCreatedQuestionSet(account: string): Return<QuestionSet[]> {
+  const url = 'http://127.0.0.1:8000/questionSet/created'
+  return new Promise((resolve) => {
+    setTimeout(async () => {
+      const res = await a.get(url, { params: { account } })
+      resolve([undefined, res.data])
+    }, 450)
+  })
+}
+export function getJoinedQuestionSet(account: string): Return<QuestionSet[]> {
+  const url = 'http://127.0.0.1:8000/questionSet/joined'
+  return new Promise((resolve) => {
+    setTimeout(async () => {
+      const res = await a.get(url, { params: { account } })
+      resolve([undefined, res.data])
+    }, 450)
+  })
+}
 export function getQuestionSetSimple(
   id: string,
   delay = 0,
-): Return<IQuestionSet> {
+): Return<Omit<QuestionSet, 'questions'>> {
   const url = 'http://127.0.0.1:8000/questionSet/simple'
   return new Promise((resolve) => {
     setTimeout(async () => {
@@ -67,7 +85,7 @@ export function getQuestionSetSimple(
 export function getQuestionSetDetail(
   id: string,
   account: string,
-): Return<IQuestionSet & { questions: IQuestion[] }> {
+): Return<QuestionSet> {
   const url = 'http://127.0.0.1:8000/questionSet/detail'
   return new Promise((resolve) => {
     setTimeout(async () => {
@@ -78,8 +96,8 @@ export function getQuestionSetDetail(
 }
 
 export function updateQuestionSet(
-  questionSet: Omit<IQuestionSet, 'createTime' | 'author'> & { account: string },
-): Return<IQuestionSet> {
+  questionSet: Omit<QuestionSet, 'createTime'>,
+): Return<QuestionSet> {
   const url = 'http://127.0.0.1:8000/questionSet/update'
   return new Promise((resolve) => {
     setTimeout(async () => {
@@ -115,7 +133,7 @@ export function queryJoinableQuestionSet(options: {
   keyWord?: string | undefined
   author?: string | undefined
   account?: string | undefined
-}): Return<IQuestionSet[] | null> {
+}): Return<QuestionSet[]> {
   const url = 'http://127.0.0.1:8000/questionSet/joinable'
   return new Promise((resolve) => {
     setTimeout(async () => {
@@ -127,7 +145,7 @@ export function queryJoinableQuestionSet(options: {
 export function removeQuestionSet(options: {
   id: string
   account: string
-}): Return<IQuestionSet | null> {
+}): Return<QuestionSet> {
   const url = 'http://127.0.0.1:8000/questionSet/remove'
   return new Promise((resolve) => {
     setTimeout(async () => {

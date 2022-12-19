@@ -1,7 +1,7 @@
-import type { IQuestion } from '@exercise/type'
+import type { Question } from '@exercise/type'
 import type { Return } from './request'
 import a from './request'
-export function updateQuestionAnswer(options: Partial<IQuestion>): Return {
+export function updateQuestionAnswer(options: Partial<Question>): Return {
   const url = '/question/update'
   return new Promise((resolve) => {
     setTimeout(async () => {
@@ -10,7 +10,7 @@ export function updateQuestionAnswer(options: Partial<IQuestion>): Return {
     }, 350)
   })
 }
-export function updateQuestions(questions: IQuestion[]): Return {
+export function updateQuestions(questions: Question[]): Return {
   const url = '/question/update-list'
   return new Promise((resolve) => {
     setTimeout(async () => {
