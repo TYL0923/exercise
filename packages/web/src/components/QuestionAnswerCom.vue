@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import type { IQuestion, QuestionType } from '@exercise/type'
+import type { Question, QuestionType } from '@exercise/type'
 
 const props = withDefaults(
   defineProps<{
     status: 'do' | 'done' | 'edit'
     mode: 'test' | 'exercise'
-    question: IQuestion
+    question: Question
   }>(),
   {},
 )

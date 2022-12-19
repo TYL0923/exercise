@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { getMyJoinQuestionSet, getMyQuestionSet, joinQuestionSetById, queryJoinableQuestionSet, resetQuestion } from '@exercise/api'
-import type { BaseReturnQuestionSet, IQuestion, IQuestionSet } from '@exercise/type'
+import { getCreatedQuestionSet, getJoinedQuestionSet, joinQuestionSetById, queryJoinableQuestionSet, resetQuestion } from '@exercise/api'
+import type { QuestionSet } from '@exercise/type'
 import { useDebounceFn } from '@vueuse/core'
 import { Modal, message } from 'ant-design-vue'
 
@@ -39,10 +39,10 @@ const isLoad = reactive<{
   joinable: false,
 })
 
-const createQuestionSet = ref<BaseReturnQuestionSet[]>([])
-const joinQuestionSet = ref<BaseReturnQuestionSet[]>([])
-const searchQuestionSet = ref<IQuestionSet[]>([])
-const prepareOpenQuestionSet = ref<BaseReturnQuestionSet>()
+const createQuestionSet = ref<QuestionSet[]>([])
+const joinQuestionSet = ref<QuestionSet[]>([])
+const searchQuestionSet = ref<QuestionSet[]>([])
+const prepareOpenQuestionSet = ref<QuestionSet>()
 
 const filter = reactive<{
   mode: 'exercise' | 'test'
@@ -109,11 +109,11 @@ function handleGotoCreateQuestionSet() {
   })
 }
 
-function handleOpenQuestionSet(questionSet: BaseReturnQuestionSet) {
+function handleOpenQuestionSet(questionSet: QuestionSet) {
   drawerVisible.value = true
   prepareOpenQuestionSet.value = questionSet
 }
-function handleJoinQuestionSet(question: IQuestion & { author: string }) {
+function handleJoinQuestionSet(question: QuestionSet) {
   Modal.confirm({
     title: '是否加入题库',
     okText: '确认',
@@ -158,7 +158,6 @@ async function handleStart() {
       },
     })
   }
-  // todo goto exercise
   else {
     if (filter.start === 'restart') {
       const [, isReset] = await resetQuestion(prepareOpenQuestionSet.value.id, loginState.account.value, 'exercise')
@@ -179,7 +178,7 @@ function openJoinQuestionSetModal() {
 }
 async function initCreateQuestionSet() {
   isLoad.my = true
-  const [err, data] = await getMyQuestionSet(loginState.account.value)
+  const [err, data] = await getCreatedQuestionSet(loginState.account.value)
   if (!err && data)
     createQuestionSet.value = data
   isLoad.my = false
@@ -187,7 +186,7 @@ async function initCreateQuestionSet() {
 
 async function initJoinQuestionSet() {
   isLoad.join = true
-  const [err, data] = await getMyJoinQuestionSet(loginState.account.value)
+  const [err, data] = await getJoinedQuestionSet(loginState.account.value)
   if (!err && data)
     joinQuestionSet.value = data
   isLoad.join = false
@@ -218,10 +217,10 @@ watchEffect(initJoinQuestionSet)
       </template>
       <div class="grid-container">
         <template v-if="isLoad.my">
-          <Skeleton v-for="i in 4" :key="i" type="questionSetCard" />
+          <SkeletonCom v-for="i in 4" :key="i" type="questionSetCard" />
         </template>
         <template v-else>
-          <QuestionSetCard
+          <QuestionSetCardCom
             v-for="questionSet in createQuestionSet" :key="questionSet.id"
             :question-set="questionSet"
             @click="handleOpenQuestionSet(questionSet)"
@@ -237,10 +236,10 @@ watchEffect(initJoinQuestionSet)
       </template>
       <div class="grid-container">
         <template v-if="isLoad.join">
-          <Skeleton v-for="i in 4" :key="i" type="questionSetCard" />
+          <SkeletonCom v-for="i in 4" :key="i" type="questionSetCard" />
         </template>
         <template v-else>
-          <QuestionSetCard
+          <QuestionSetCardCom
             v-for="questionSet in joinQuestionSet" :key="questionSet.id"
             :question-set="questionSet"
             @click="handleOpenQuestionSet(questionSet)"
@@ -253,8 +252,8 @@ watchEffect(initJoinQuestionSet)
       title="刷题设置"
       placement="right"
     >
-      <QuestionSetCard v-if="prepareOpenQuestionSet" :question-set="prepareOpenQuestionSet" />
-      <Filter :options="filterOptions" :filter="filter" />
+      <QuestionSetCardCom v-if="prepareOpenQuestionSet" :question-set="prepareOpenQuestionSet" />
+      <FilterCom :options="filterOptions" :filter="filter" />
       <template #footer>
         <div flex items-center justify-end gap-8>
           <a-button w-20>
@@ -281,7 +280,7 @@ watchEffect(initJoinQuestionSet)
           <template #renderItem="{ item }">
             <a-list-item>
               <a-list-item-meta
-                :description="item.author"
+                :description="item.author.name"
               >
                 <template #title>
                   {{ item.title }}

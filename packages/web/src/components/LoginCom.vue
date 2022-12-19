@@ -12,7 +12,7 @@ interface LoginForm {
 const router = useRouter()
 const loginState = useLogin()
 const loginForm = reactive<LoginForm>({
-  account: 'admin',
+  account: '16684818923',
   password: 'admin',
   isLocal: false,
 })
@@ -31,7 +31,7 @@ const onFinish = async (values: LoginForm) => {
       key: 'login',
       duration: 1,
     })
-    loginState.login(data.account, data.token)
+    loginState.login(data.account, data.name, data.token)
     router.push('/home')
   }
   else {

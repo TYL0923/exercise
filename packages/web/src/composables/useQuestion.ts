@@ -1,15 +1,7 @@
-import type { IQuestion } from '@exercise/type'
+import type { Question, QuestionType } from '@exercise/type'
 import type { Ref } from 'vue'
 import { updateQuestionAnswer } from '@exercise/api'
-const useQuestion = (questions: Ref<IQuestion[]>, option: { isSync: boolean }) => {
-  const handleChangeIsDo = (id: string, isDo: 0 | 1) => {
-    questions.value.forEach((question) => {
-      if (question.id === id && question.isDo !== isDo) {
-        question.isDo = isDo
-        option.isSync && updateQuestionAnswer({ id, isDo })
-      }
-    })
-  }
+const useQuestion = (questions: Ref<Question[]>, option: { isSync: boolean }) => {
   const handleChangeAnswer = (id: string, answer: string, answerType: 'correct' | 'test' | 'exercise') => {
     questions.value.forEach((question) => {
       if (question.id === id) {
@@ -20,12 +12,10 @@ const useQuestion = (questions: Ref<IQuestion[]>, option: { isSync: boolean }) =
             break
           case 'test':
             question.testAnswer = answer
-            handleChangeIsDo(id, 1)
             option.isSync && updateQuestionAnswer({ id, testAnswer: answer })
             break
           case 'exercise':
             question.exerciseAnswer = answer
-            handleChangeIsDo(id, 1)
             option.isSync && updateQuestionAnswer({ id, exerciseAnswer: answer })
             break
           default:
@@ -56,23 +46,23 @@ const useQuestion = (questions: Ref<IQuestion[]>, option: { isSync: boolean }) =
     const handle: Record<
       'test' | 'exercise',
       Record<
-        'select' | 'judge',
-        (question: IQuestion) => boolean
+        QuestionType,
+        (question: Question) => boolean
       >
     > = {
       test: {
-        select: (question: IQuestion) => {
+        select: (question: Question) => {
           return question.correctAnswer.toLocaleUpperCase().trim() === question.testAnswer.toLocaleUpperCase().trim()
         },
-        judge: (question: IQuestion) => {
+        judge: (question: Question) => {
           return question.correctAnswer === question.testAnswer
         },
       },
       exercise: {
-        select: (question: IQuestion) => {
+        select: (question: Question) => {
           return question.correctAnswer.toLocaleUpperCase().trim() === question.exerciseAnswer.toLocaleUpperCase().trim()
         },
-        judge: (question: IQuestion) => {
+        judge: (question: Question) => {
           return question.correctAnswer === question.exerciseAnswer
         },
       },
@@ -87,7 +77,6 @@ const useQuestion = (questions: Ref<IQuestion[]>, option: { isSync: boolean }) =
   return {
     handleChangeAnswer,
     handleChangeTitle,
-    handleChangeIsDo,
     handleChangeIsError,
     judgeisError,
   }

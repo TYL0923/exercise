@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { getQuestionSetDetail, resetQuestion } from '@exercise/api'
-import type { IQuestion, IQuestionSet } from '@exercise/type'
+import type { Question, QuestionSet } from '@exercise/type'
+
 import { Modal } from 'ant-design-vue'
 
 const route = useRoute()
@@ -9,8 +10,8 @@ const loginState = useLogin()
 // const paperStatus = ref<'do' | 'done'>('done')
 const isLoad = ref<boolean>(true)
 const paperStatus = ref<'do' | 'done'>((route.query.status as 'do' | 'done') || 'do')
-const questionSet = ref<IQuestionSet & { questions: IQuestion[] }>()
-const questions = ref<IQuestion[]>([])
+const questionSet = ref<QuestionSet>()
+const questions = ref<Question[]>([])
 const { handleChangeAnswer } = useQuestion(questions, { isSync: true })
 
 function handleGoBack() {
@@ -104,7 +105,7 @@ onUnmounted(() => {
     >
       <div mb-8 class="w-90%" box-border flex self-start justify-between gap-x-6>
         <div bg-white rounded-2 flex-1 p-6>
-          <QuestionSet :status="paperStatus" mode="test" :list="questions || []" @change-answer="handleChangeAnswer" />
+          <QuestionSetCom :status="paperStatus" mode="test" :list="questions || []" @change-answer="handleChangeAnswer" />
           <div flex items-center justify-center gap-x-20 my-10>
             <template v-if="paperStatus === 'do'">
               <a-button type="primary" @click="handleSubmitPaper">
@@ -124,7 +125,7 @@ onUnmounted(() => {
         </div>
         <div w-60>
           <div bg-white rounded-1 p-4 sticky top-0>
-            <AnswerKey :list="questions" mode="test" :status="paperStatus" />
+            <AnswerKeyCom :list="questions" mode="test" :status="paperStatus" />
           </div>
         </div>
       </div>

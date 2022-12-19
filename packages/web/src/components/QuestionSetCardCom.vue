@@ -1,12 +1,9 @@
 <script setup lang="ts">
-import type { BaseReturnQuestionSet } from '@exercise/type'
+import type { QuestionSet } from '@exercise/type'
 
 const props = defineProps<{
-  questionSet: BaseReturnQuestionSet
+  questionSet: QuestionSet
 }>()
-const total = computed(() => {
-  return props.questionSet.questions.length
-})
 const isDo = computed(() => {
   return props.questionSet.questions.reduce((pre, cur) => { return pre + (cur.isDo === 1 ? 1 : 0) }, 0)
 })
@@ -27,24 +24,24 @@ const isError = computed(() => {
       <div>
         <h3>{{ questionSet.title }}</h3>
         <p mb-1>
-          共{{ total }}题
+          {{ `共 ${questionSet.num} 题` }}
         </p>
         <p mb-1>
-          已做{{ isDo }}题
+          {{ `已做 ${isDo} 题` }}
         </p>
         <p mb-0>
-          做错{{ isError }}题
+          {{ `做错 ${isError} 题` }}
         </p>
       </div>
       <div flex flex-col items-center>
-        <img w-20 h-20 rounded-full src="/using.jpeg" alt="">
+        <img w-16 h-16 rounded-full src="/using.jpeg" alt="">
         <p mt-2>
-          {{ questionSet.author || '-' }}
+          {{ questionSet.author.name || '-' }}
         </p>
       </div>
     </div>
     <a-tooltip>
-      <a-progress :show-info="false" :percent="100 * isDo / total" :success="{ percent: 100 * isError / total, strokeColor: '#ef4444' }" />
+      <a-progress :show-info="false" :percent="100 * isDo / questionSet.num" :success="{ percent: 100 * isError / questionSet.num, strokeColor: '#ef4444' }" />
     </a-tooltip>
   </div>
 </template>

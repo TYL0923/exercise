@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { getQuestionSetDetail, updateQuestionAnswer, updateQuestions } from '@exercise/api'
-import type { IQuestion, IQuestionSet } from '@exercise/type'
+import type { Question, QuestionSet } from '@exercise/type'
+
 import { message } from 'ant-design-vue'
 type QuestionPart = 'all' | 'error' | 'not'
 const router = useRouter()
@@ -9,7 +10,7 @@ const loginState = useLogin()
 
 const diff = ref<boolean>(true)
 const isSave = ref<boolean>(false)
-const questionSet = ref<IQuestionSet & { questions: IQuestion[] }>()
+const questionSet = ref<QuestionSet>()
 const currectIdx = ref(0)
 const exerciseState = ref<{
   id: string
@@ -22,7 +23,7 @@ const question = computed(() => {
   return questionSet.value?.questions[currectIdx.value]
 })
 const questionStatus = computed(() => {
-  return (question: IQuestion) => question.exerciseAnswer.length > 0 ? 'done' : 'do'
+  return (question: Question) => question.exerciseAnswer.length > 0 ? 'done' : 'do'
 })
 
 function handleChangeAnswer(id: string, answer: string) {
@@ -147,7 +148,7 @@ watchEffect(initQuestionList)
       </div>
     </div>
     <div bg-white p-10 shadow rounded-1>
-      <Question
+      <QuestionCom
         v-if="question"
         :question="question"
         :idx="currectIdx"

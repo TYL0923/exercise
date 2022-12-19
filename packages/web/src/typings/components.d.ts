@@ -7,7 +7,6 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
-    AAvatar: typeof import('ant-design-vue/es')['Avatar']
     AButton: typeof import('ant-design-vue/es')['Button']
     ACard: typeof import('ant-design-vue/es')['Card']
     ACheckbox: typeof import('ant-design-vue/es')['Checkbox']
@@ -23,7 +22,7 @@ declare module '@vue/runtime-core' {
     AMenu: typeof import('ant-design-vue/es')['Menu']
     AMenuItem: typeof import('ant-design-vue/es')['MenuItem']
     AModal: typeof import('ant-design-vue/es')['Modal']
-    AnswerKey: typeof import('./../components/AnswerKey.vue')['default']
+    AnswerKeyCom: typeof import('./../components/AnswerKeyCom.vue')['default']
     AProgress: typeof import('ant-design-vue/es')['Progress']
     ARadio: typeof import('ant-design-vue/es')['Radio']
     ARadioButton: typeof import('ant-design-vue/es')['RadioButton']
@@ -34,16 +33,14 @@ declare module '@vue/runtime-core' {
     ATextarea: typeof import('ant-design-vue/es')['Textarea']
     ATooltip: typeof import('ant-design-vue/es')['Tooltip']
     AUploadDragger: typeof import('ant-design-vue/es')['UploadDragger']
-    DownOutlined: typeof import('@ant-design/icons-vue')['DownOutlined']
-    Filter: typeof import('./../components/Filter.vue')['default']
-    InboxOutlined: typeof import('@ant-design/icons-vue')['InboxOutlined']
-    Login: typeof import('./../components/Login.vue')['default']
-    Question: typeof import('./../components/Question.vue')['default']
-    QuestionAnswer: typeof import('./../components/QuestionAnswer.vue')['default']
-    QuestionSet: typeof import('./../components/QuestionSet.vue')['default']
-    QuestionSetCard: typeof import('./../components/QuestionSetCard.vue')['default']
+    FilterCom: typeof import('./../components/FilterCom.vue')['default']
+    LoginCom: typeof import('./../components/LoginCom.vue')['default']
+    QuestionAnswerCom: typeof import('./../components/QuestionAnswerCom.vue')['default']
+    QuestionCom: typeof import('./../components/QuestionCom.vue')['default']
+    QuestionSetCardCom: typeof import('./../components/QuestionSetCardCom.vue')['default']
+    QuestionSetCom: typeof import('./../components/QuestionSetCom.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    Skeleton: typeof import('./../components/Skeleton.vue')['default']
+    SkeletonCom: typeof import('./../components/SkeletonCom.vue')['default']
   }
 }

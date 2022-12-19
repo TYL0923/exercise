@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import type { IQuestion } from '@exercise/type'
+import type { Question } from '@exercise/type'
 import { integration } from '@exercise/util'
 
 const props = withDefaults(
   defineProps<{
-    list: IQuestion[]
+    list: Question[]
     status: 'do' | 'done'
     mode: 'exercise' | 'test'
   }>(),
@@ -18,17 +18,19 @@ const questionTypeMap: Record<string, string> = {
   judge: '判断题',
 }
 const buttonType = computed(() => {
-  if (props.status === 'do') {
-    if (props.mode === 'test')
-      return (question: IQuestion) => question.testAnswer.length > 0 ? 'primary' : 'default'
-    else
-      return (question: IQuestion) => question.exerciseAnswer.length > 0 ? 'primary' : 'default'
-  }
-  else {
-    if (props.mode === 'test')
-      return (question: IQuestion) => question.correctAnswer === question.testAnswer ? 'success' : 'error'
-    else
-      return (question: IQuestion) => question.correctAnswer === question.exerciseAnswer ? 'success' : 'error'
+  return (question: Question) => props.status !== 'do'
+    ? 'primary'
+    : props.mode === 'test'
+      ? question.testAnswer.length > 0 ? 'primary' : 'default'
+      : question.exerciseAnswer.length > 0 ? 'primary' : 'default'
+})
+const doneClass = computed(() => {
+  return (question: Question) => {
+    return props.status === 'do'
+      ? ''
+      : props.mode === 'test'
+        ? question.testAnswer !== question.correctAnswer || question.testAnswer === '' ? 'error' : 'success'
+        : question.exerciseAnswer !== question.correctAnswer || question.exerciseAnswer === '' ? 'error' : 'success'
   }
 })
 const gotoAnchor = (id: string) => {
@@ -57,6 +59,7 @@ function handleClick(id: string) {
           v-for="item, idx in set" :key="item.id"
           size="small"
           :type="buttonType(item)"
+          :class="doneClass(item)"
           @click="handleClick(item.id)"
         >
           {{ idx + 1 }}
@@ -72,14 +75,18 @@ function handleClick(id: string) {
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-gap: 1rem;
 }
-.ant-btn-success {
-  background-color: #22c55e;
-  border-color: #22c55e;
-  color: #fff;
-}
-.ant-btn-error {
-  background-color: #ef4444;
-  border-color: #ef4444;
-  color: #fff;
+.ant-btn {
+  &.success {
+    background-color: #22c55e;
+    border-color: #22c55e;
+    color: #fff;
+
+  }
+  &.error {
+
+    background-color: #ef4444;
+    border-color: #ef4444;
+    color: #fff;
+  }
 }
 </style>

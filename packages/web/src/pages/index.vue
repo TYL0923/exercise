@@ -47,7 +47,7 @@ function handlePageScroll(e: Event) {
       </div>
     </div>
     <div relative bg-gray-50 box-border w-screen h-screen>
-      <Login :is-show="true" />
+      <LoginCom :is-show="true" />
     </div>
     <div h-200px />
   </div>

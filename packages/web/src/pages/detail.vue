@@ -2,18 +2,21 @@
 import type { FormInstance, UploadChangeParam } from 'ant-design-vue/es'
 import { message } from 'ant-design-vue/es'
 import { addQuestionSet, identifyQuestionSet } from '@exercise/api'
-import type { IQuestion, IQuestionSet } from '@exercise/type'
+import type { Question } from '@exercise/type'
 import router from '../router'
 
 const route = useRoute()
 const oForm = ref<FormInstance | null>(null)
 const loginState = useLogin()
 const status = ref<'edit' | 'add'>(route.query.status as 'edit' | 'add')
-const questionSetForm = ref<Pick<IQuestionSet, 'title' | 'author'>>({
+const questionSetForm = ref<{
+  title: string
+  author: string
+}>({
   title: '',
   author: loginState.account.value || '',
 })
-const questionList = ref<IQuestion[]>([])
+const questionList = ref<Question[]>([])
 const { handleChangeAnswer } = useQuestion(questionList, { isSync: false })
 
 function handlecancel() {
@@ -34,8 +37,7 @@ function handleSubmit() {
       const [err, data] = await addQuestionSet({
         title: value.title,
         createTime: new Date().toLocaleString(),
-        endTime: new Date().toLocaleString(), // todo
-        author: (value.author as string) || '',
+        account: (value.author as string) || '',
         questions: questionList.value,
       })
       if (!err && data) {
@@ -155,7 +157,7 @@ async function customRequest(file: any) {
         </div>
         <div border-t-1 border-gray-100 mt-10 pt-4>
           <h5>题目列表</h5>
-          <QuestionSet status="edit" :list="questionList" @change-answer="handleChangeAnswer" />
+          <QuestionSetCom status="edit" :list="questionList" @change-answer="handleChangeAnswer" />
         </div>
         <div flex items-center justify-center gap-10 mb-4>
           <a-button type="primary" @click="handleSubmit">

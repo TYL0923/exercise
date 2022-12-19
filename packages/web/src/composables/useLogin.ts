@@ -3,20 +3,24 @@ import { useStorage } from '@vueuse/core'
 
 interface LoginState {
   account: string
+  name: string
   token: string
 }
 const loginState: Ref<LoginState> = useStorage('login', {
   account: '',
+  name: '',
   token: '',
 })
 const useLogin = () => {
-  const login = (account: string, token: string) => {
+  const login = (account: string, name: string, token: string) => {
     loginState.value.account = account
+    loginState.value.name = name
     loginState.value.token = token
   }
   const logout = () => {
     loginState.value.account = ''
     loginState.value.token = ''
+    loginState.value.name = ''
   }
   return {
     ...toRefs(loginState.value),

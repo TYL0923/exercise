@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import type { IQuestion, QuestionType } from '@exercise/type'
+import type { Question, QuestionType } from '@exercise/type'
 import { useDebounceFn } from '@vueuse/core'
 const props = withDefaults(
   defineProps<{
     idx: number
     status?: 'do' | 'edit' | 'done'
     mode?: 'exercise' | 'test'
-    question: IQuestion
+    question: Question
   }>(), {
     status: 'do',
     mode: 'test',
@@ -37,13 +37,13 @@ const handleChangeTitle = useDebounceFn((e: Event) => {
     <!-- test -->
     <template v-if="status === 'do'">
       <pre text-base text-gray-900>{{ `${idx + 1}.${question.title}` }}</pre>
-      <QuestionAnswer :question="question" :status="status" :mode="mode" @change-answer="handleChangeAnswer" />
+      <QuestionAnswerCom :question="question" :status="status" :mode="mode" @change-answer="handleChangeAnswer" />
     </template>
 
     <!-- done -->
     <template v-else-if="status === 'done'">
       <pre text-base text-gray-900>{{ `${idx + 1}.${question.title}` }}</pre>
-      <QuestionAnswer :question="question" :status="status" :mode="mode" @change-answer="handleChangeAnswer" />
+      <QuestionAnswerCom :question="question" :status="status" :mode="mode" @change-answer="handleChangeAnswer" />
     </template>
 
     <!--  -->
@@ -52,7 +52,7 @@ const handleChangeTitle = useDebounceFn((e: Event) => {
       <div flex items-center mt-2>
         <span text-xs mr-2>{{ `正确答案: ` }}</span>
         <div>
-          <QuestionAnswer
+          <QuestionAnswerCom
             :question="question" :status="status" :mode="mode"
             @change-correct-answer="handleChangeCorrectAnswer"
           />

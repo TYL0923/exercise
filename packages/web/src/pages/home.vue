@@ -42,7 +42,7 @@ function handleLogout() {
         <a-dropdown :trigger="['click']">
           <div cursor-pointer>
             <img w-10 h-10 rounded-full bg-cover bg-center src="/using.jpeg" alt="">
-            <span mx-1>{{ loginState.account.value }}</span>
+            <span mx-1>{{ loginState.name.value }}</span>
           </div>
           <template #overlay>
             <a-menu>
@@ -56,7 +56,6 @@ function handleLogout() {
     </header>
     <div w-screen h-screen pt-24 pb-10 px-10 box-border overflow-x-hidden>
       <router-view />
-      <!-- <Skeleton type="questionSetCard" /> -->
     </div>
   </div>
 </template>
