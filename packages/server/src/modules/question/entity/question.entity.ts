@@ -1,10 +1,9 @@
 import { AnswerKey } from 'src/modules/answer-key/entity/answer-key.entity';
 import { MySqlDatabaseColumn } from 'src/typing/databaseColumn.type';
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { IQuestion } from '@exercise/type';
 import type { QuestionType } from '@exercise/type';
 @Entity('question')
-export class Question implements IQuestion {
+export class Question {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 

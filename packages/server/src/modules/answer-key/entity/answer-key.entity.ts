@@ -2,9 +2,8 @@ import { QuestionSet } from 'src/modules/question-set/entity/question-set.entity
 import { Question } from 'src/modules/question/entity/question.entity';
 import { User } from 'src/modules/user/entity/user.entity';
 import { Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { IAnswerKey } from '@exercise/type';
 @Entity('answer_key')
-export class AnswerKey implements IAnswerKey {
+export class AnswerKey {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -13,6 +12,6 @@ export class AnswerKey implements IAnswerKey {
   @ManyToOne(() => QuestionSet, (questionSet) => questionSet.answerKeys)
   questionSet: QuestionSet;
 
-  @ManyToOne(() => User, (user) => user.myAnswerKey)
+  @ManyToOne(() => User, (user) => user.answerKeys)
   user: User;
 }

@@ -5,7 +5,6 @@ import { AppService } from './app.service';
 
 import { UserModule } from './modules/user/user.module';
 import { QuestionModule } from './modules/question/question.module';
-import { NavModule } from './modules/nav/nav.module';
 import { QuestionSetModule } from './modules/question-set/question-set.module';
 import { AnswerKeyModule } from './modules/answer-key/answer-key.module';
 @Module({
@@ -22,7 +21,6 @@ import { AnswerKeyModule } from './modules/answer-key/answer-key.module';
     }),
     UserModule,
     QuestionModule,
-    NavModule,
     QuestionSetModule,
     AnswerKeyModule,
   ],

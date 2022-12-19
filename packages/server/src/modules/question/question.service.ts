@@ -13,36 +13,44 @@ export class QuestionService {
     updateQuestionDto: UpdateQuestionDto,
   ): Promise<Question | null> {
     return new Promise(async (resolve) => {
-      const newQuestion = this.questionRepository.create({
-        id: updateQuestionDto.id,
-        isDo: updateQuestionDto.isDo,
-        type: updateQuestionDto.type,
-        title: updateQuestionDto.title,
-        isError: updateQuestionDto.isError,
-        testAnswer: updateQuestionDto.testAnswer,
-        correctAnswer: updateQuestionDto.correctAnswer,
-        exerciseAnswer: updateQuestionDto.exerciseAnswer,
-      });
-      const res = await this.questionRepository.save(newQuestion);
-      if (res) {
-        resolve(res);
-      } else {
-        resolve(null);
+      try {
+        const newQuestion = this.questionRepository.create({
+          id: updateQuestionDto.id,
+          isDo: updateQuestionDto.isDo,
+          type: updateQuestionDto.type,
+          title: updateQuestionDto.title,
+          isError: updateQuestionDto.isError,
+          testAnswer: updateQuestionDto.testAnswer,
+          correctAnswer: updateQuestionDto.correctAnswer,
+          exerciseAnswer: updateQuestionDto.exerciseAnswer,
+        });
+        const res = await this.questionRepository.save(newQuestion);
+        if (res) {
+          return resolve(res);
+        } else {
+          return resolve(null);
+        }
+      } catch (err) {
+        throw new Error(err);
       }
     });
   }
   updateQuestions(questions: Question[]): Promise<boolean> {
     return new Promise(async (resolve) => {
-      const promiseArr = [];
-      questions.forEach((question) => {
-        const promise = this.updateQuestion(question);
-        promiseArr.push(promise);
-      });
-      const res = await Promise.all(promiseArr);
-      if (res) {
-        resolve(true);
-      } else {
-        resolve(false);
+      try {
+        const promiseArr = [];
+        questions.forEach((question) => {
+          const promise = this.updateQuestion(question);
+          promiseArr.push(promise);
+        });
+        const res = await Promise.all(promiseArr);
+        if (res) {
+          return resolve(true);
+        } else {
+          return resolve(false);
+        }
+      } catch (err) {
+        throw new Error(err);
       }
     });
   }

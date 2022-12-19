@@ -5,11 +5,9 @@ export class AddQuestionSetDto {
   @IsString()
   readonly title: string;
   @IsNotEmpty()
-  readonly createTime: number | string;
-  @IsNotEmpty()
-  readonly endTime: number | string;
+  readonly createTime: string;
   @IsString()
-  readonly author: string;
+  readonly account: string;
   @IsArray()
   readonly questions: Question[];
 }

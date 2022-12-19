@@ -5,10 +5,8 @@ enum MySqlDatabaseColumn {
   INT = 'int',
   MEDIUMINT = 'mediumint',
   SMALLINT = 'smallint',
-  TINYINT = 'tinyint', 
+  TINYINT = 'tinyint',
   DECIMAL = 'decimal',
-  DATE_TIME = 'datetime'
+  DATE_TIME = 'datetime',
 }
-export {
-  MySqlDatabaseColumn
-}
+export { MySqlDatabaseColumn };
