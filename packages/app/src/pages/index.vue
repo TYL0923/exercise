@@ -1,18 +1,18 @@
 <script setup lang="ts">
 import { ref, watchEffect } from 'vue'
 import { getRecommendQuestionSet } from '../lib/api'
-const tabActive = ref('recommend')
-const tabOptions = ref([
-  {
-    name: 'recommend',
-    title: '推荐',
-  },
-  {
-    name: 'test',
-    title: '软考',
-  },
-])
+import SkeletonCom from '../components/SkeletonCom.vue'
+const current = ref(0)
 const recommendQuestionSetList = ref<any>([])
+const items = ref(['推荐', '软考'])
+function handleClickItem(item: any) {
+  current.value = item.currentIndex
+}
+function handleGotoSearch() {
+  uni.navigateTo({
+    url: '/pages/search',
+  })
+}
 async function initRecommendQuestionList() {
   const { err, data } = await getRecommendQuestionSet()
   if (!err && data)
@@ -24,23 +24,19 @@ watchEffect(initRecommendQuestionList)
 <template>
   <view bg-gray-100 h-screen box-border>
     <view>
-      <van-search placeholder="搜索题库" />
-      <van-tabs :active="tabActive" color="#0ea5e9">
-        <van-tab v-for="tab in tabOptions" :key="tab.name" :title="tab.title" :name="tab.name">
-          <view p-2>
-            <template v-if="tabActive === 'recommend'">
-              <view v-for="questionSet, index in recommendQuestionSetList" :key="index" p-2>
-                <view flex items-end>
-                  <h3>{{ questionSet.title }}</h3>
-                  <h4>{{ questionSet.questions.length }}</h4>
-                </view>
-                <view />
-                <view />
-              </view>
-            </template>
-          </view>
-        </van-tab>
-      </van-tabs>
+      <!-- <SkeletonCom /> -->
+      <view bg-white @click="handleGotoSearch">
+        <uni-search-bar readonly placeholder="搜索题库" bg-color="#EEEEEE" />
+      </view>
+      <view py-1 rounded-2 bg-white>
+        <uni-segmented-control
+          :current="current"
+          :values="items"
+          style-type="text"
+          active-color="#007aff"
+          @click-item="handleClickItem"
+        />
+      </view>
     </view>
   </view>
 </template>

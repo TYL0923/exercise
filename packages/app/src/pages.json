@@ -9,7 +9,19 @@
 		{
 			"path": "pages/my",
 			"style": {
-				"navigationBarTitleText": "uni-app"
+				"navigationBarTitleText": "我的"
+			}
+		},
+		{
+			"path": "pages/login",
+			"style": {
+				"navigationBarTitleText": "登录"
+			}
+		},
+		{
+			"path": "pages/search",
+			"style": {
+				"navigationBarTitleText": "搜索"
 			}
 		}
 	],
@@ -40,7 +52,14 @@
       "van-search": "/wxcomponents/vant/dist/search/index",
       "van-tabs": "/wxcomponents/vant/dist/tabs/index",
       "van-tab": "/wxcomponents/vant/dist/tab/index",
-      "van-icon": "/wxcomponents/vant/dist/icon/index"
+      "van-icon": "/wxcomponents/vant/dist/icon/index",
+      "van-field": "/wxcomponents/vant/dist/field/index"
     }
+	},
+  "easycom": {
+		"autoscan": true,
+		"custom": {
+			"^uni-(.*)": "@dcloudio/uni-ui/lib/uni-$1/uni-$1.vue"
+		}
 	}
 }

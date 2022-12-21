@@ -1,4 +1,5 @@
 const baseUrl = 'http://127.0.0.1:8000'
+const duration = 350 // ms
 interface Return {
   err?: string
   data: any
@@ -29,6 +30,41 @@ function get(url: string, params?: Record<string, string>): Promise<Return> {
     })
   })
 }
+function post(url: string, params?: Record<string, string>): Promise<Return> {
+  return new Promise((resolve, reject) => {
+    uni.request({
+      url: `${baseUrl}${url}`,
+      method: 'POST',
+      data: params || {},
+      success(res: any) {
+        if (['200', '201'].includes(res.statusCode.toString()) && res.data) {
+          resolve({
+            data: res.data.data,
+          })
+        }
+        else {
+          resolve({
+            // todo code generate err
+            err: '请求失败',
+            data: res.data.data,
+          })
+        }
+      },
+      fail(err: any) {
+        reject(err)
+      },
+    })
+  })
+}
+export function passwordLogin(account: string, password: string): Promise<Return> {
+  const url = '/user/login'
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      const res = post(url, { account, password })
+      resolve(res)
+    }, duration)
+  })
+}
 
 export async function getRecommendQuestionSet(): Promise<Return> {
   const url = '/questionSet/joinable'
@@ -36,6 +72,38 @@ export async function getRecommendQuestionSet(): Promise<Return> {
     setTimeout(() => {
       const res = get(url)
       resolve(res)
-    }, 350)
+    }, duration)
+  })
+}
+export async function getCreatedQuestionSet(account: string): Promise<Return> {
+  const url = '/questionSet/created'
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      const res = get(url, { account })
+      resolve(res)
+    }, duration)
+  })
+}
+export async function getJoinedQuestionSet(account: string): Promise<Return> {
+  const url = '/questionSet/joined'
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      const res = get(url, { account })
+      resolve(res)
+    }, duration)
+  })
+}
+export function queryJoinableQuestionSet(options: {
+  id?: string | undefined
+  keyWord?: string | undefined
+  author?: string | undefined
+  account?: string | undefined
+}): Promise<Return> {
+  const url = '/questionSet/joinable'
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      const res = get(url, { ...options })
+      return resolve(res)
+    }, duration)
   })
 }
