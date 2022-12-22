@@ -19,6 +19,7 @@ export interface QuestionSet {
   isActive: 0 | 1
   num: number
   createTime: string
+  tags: string
   author: User
   questions: Question[]
 }
