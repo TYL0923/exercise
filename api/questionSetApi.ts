@@ -18,7 +18,7 @@ export function identifyQuestionSet(
 }
 
 export function addQuestionSet(
-  questionSet: Pick<QuestionSet, 'title' | 'createTime' | 'questions'> & { account: string },
+  questionSet: Pick<QuestionSet, 'title' | 'createTime' | 'questions' | 'tags'> & { account: string },
 ): Return<boolean> {
   const url = 'http://127.0.0.1:8000/questionSet/add'
   return new Promise((resolve) => {
