@@ -64,6 +64,7 @@ export class QuestionSetService {
           title: addQuestionSetDto.title,
           createTime: addQuestionSetDto.createTime.toString(),
           num: addQuestionSetDto.questions.length,
+          tags: addQuestionSetDto.tags.toString(),
           author: author,
         });
         const addAnswerKeyRes = await this.answerKeyRepository.insert({
@@ -189,6 +190,7 @@ export class QuestionSetService {
                   num: cur.questionSet.num,
                   isActive: cur.questionSet.isActive,
                   createTime: cur.questionSet.createTime,
+                  tags: cur.questionSet.tags,
                   author: {
                     account: cur.questionSet.author.account,
                     name: cur.questionSet.author.name,
@@ -238,6 +240,7 @@ export class QuestionSetService {
                 isActive: cur.isActive,
                 num: cur.num,
                 createTime: cur.createTime,
+                tags: cur.tags,
                 author: {
                   account: cur.author.account,
                   name: cur.author.name,
@@ -307,6 +310,7 @@ export class QuestionSetService {
                 num: cur.num,
                 createTime: cur.createTime,
                 isActive: cur.isActive,
+                tags: cur.tags,
                 author: {
                   account: cur.author.account,
                   name: cur.author.name,
@@ -345,6 +349,7 @@ export class QuestionSetService {
             num: res.num,
             createTime: res.createTime,
             isActive: res.isActive,
+            tags: res.tags,
             author: {
               account: res.author.account,
               name: res.author.name,
@@ -382,6 +387,7 @@ export class QuestionSetService {
             num: res.num,
             createTime: res.createTime,
             isActive: res.isActive,
+            tags: res.tags,
             author: {
               account: res.author.account,
               name: res.author.name,

@@ -37,8 +37,17 @@ export class QuestionSet {
   })
   createTime: string;
 
+  @Column({
+    type: MySqlDatabaseColumn.VARCHAR,
+    length: 300,
+  })
+  tags: string;
+
   @ManyToOne(() => User, (user) => user.questionSets)
   author: User;
   @OneToMany(() => AnswerKey, (answerKey) => answerKey.questionSet)
   answerKeys: AnswerKey[];
+  // @ManyToMany(() => Tag, (tag) => tag.questionSets)
+  // @JoinTable()
+  // tags: Tag[];
 }

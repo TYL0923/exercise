@@ -8,6 +8,8 @@ export class AddQuestionSetDto {
   readonly createTime: string;
   @IsString()
   readonly account: string;
+  @IsString()
+  readonly tags: string;
   @IsArray()
   readonly questions: Question[];
 }
