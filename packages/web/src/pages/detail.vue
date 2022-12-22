@@ -9,16 +9,42 @@ const route = useRoute()
 const oForm = ref<FormInstance | null>(null)
 const loginState = useLogin()
 const status = ref<'edit' | 'add'>(route.query.status as 'edit' | 'add')
+const isAddTag = ref<boolean>(false)
 const questionSetForm = ref<{
   title: string
   author: string
+  tags: string[]
 }>({
   title: '',
   author: loginState.account.value || '',
+  tags: ['123', '456'],
 })
 const questionList = ref<Question[]>([])
 const { handleChangeAnswer } = useQuestion(questionList, { isSync: false })
-
+function addTag(eventTarget: any) {
+  const tag = eventTarget.value.trim() || ''
+  if (!!tag.length && !questionSetForm.value.tags.includes(tag)) {
+    const res = questionSetForm.value.tags.push(tag)
+    if (res) {
+      message.success({
+        content: '添加成功',
+        key: 'addTag',
+        duration: 1,
+      })
+    }
+    else {
+      message.error({
+        content: '添加失败',
+        key: 'addTag',
+        duration: 1,
+      })
+    }
+  }
+  isAddTag.value = false
+}
+function removeTag(tag: string) {
+  questionSetForm.value.tags = questionSetForm.value.tags.filter(item => item !== tag)
+}
 function handlecancel() {
   status.value = 'add'
   questionList.value = []
@@ -34,10 +60,16 @@ function handleSubmit() {
         content: '创建中',
         key: 'create-question-set',
       })
+      const tagStr = questionSetForm.value.tags.reduce((pre, cur, index) => {
+        if (!index)
+          return `${pre}${cur}`
+        else return `${pre},${cur}`
+      }, '')
       const [err, data] = await addQuestionSet({
         title: value.title,
         createTime: new Date().toLocaleString(),
         account: (value.author as string) || '',
+        tags: tagStr,
         questions: questionList.value,
       })
       if (!err && data) {
@@ -130,11 +162,13 @@ async function customRequest(file: any) {
     </template>
     <template v-else>
       <div
-        bg-white rounded-2 p-4
+        bg-white rounded-2 px-8 py-4
         class="w-4/5 mt-15 mb-10 mx-auto"
       >
-        <div>
-          <h5>基本信息</h5>
+        <a-divider>
+          基本信息
+        </a-divider>
+        <div py-4>
           <a-form
             ref="oForm"
             layout="inline"
@@ -155,8 +189,32 @@ async function customRequest(file: any) {
             </a-form-item>
           </a-form>
         </div>
-        <div border-t-1 border-gray-100 mt-10 pt-4>
-          <h5>题目列表</h5>
+        <a-divider>
+          题库标签
+        </a-divider>
+        <div py-4>
+          <a-tag
+            v-for="tag in questionSetForm.tags"
+            :key="tag"
+            color="blue"
+            closable
+            @close="removeTag(tag)"
+          >
+            {{ tag }}
+          </a-tag>
+          <a-tag v-if="!isAddTag" color="blue" @click="isAddTag = true">
+            添加标签+
+          </a-tag>
+          <a-input
+            v-else
+            @keyup.enter="($event.target as any).blur()"
+            @blur="addTag($event.target!)"
+          />
+        </div>
+        <a-divider>
+          题目列表
+        </a-divider>
+        <div py-4>
           <QuestionSetCom status="edit" :list="questionList" @change-answer="handleChangeAnswer" />
         </div>
         <div flex items-center justify-center gap-10 mb-4>
