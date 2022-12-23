@@ -107,3 +107,19 @@ export function queryJoinableQuestionSet(options: {
     }, duration)
   })
 }
+
+export function joinQuestionSetById(
+  questionSetId: string,
+  account: string,
+): Promise<Return> {
+  const url = '/questionSet/join'
+  return new Promise((resolve) => {
+    setTimeout(async () => {
+      const res = await post(url, {
+        questionSetId,
+        joinAccount: account,
+      })
+      resolve(res)
+    }, duration)
+  })
+}

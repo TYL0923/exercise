@@ -8,7 +8,7 @@ const mode = ref<LoginMode>('password')
 const isLogin = ref<boolean>(false)
 const formRef = ref<null | any>(null)
 const loginFrom = reactive({
-  account: '16684818923',
+  account: '15285504708',
   password: 'admin',
   verificationCode: '',
 })
