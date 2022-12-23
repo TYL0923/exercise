@@ -285,9 +285,13 @@ export class QuestionSetService {
         options.id &&
           (builder = builder.where('questionSet.id = :id', { id: options.id }));
         options.keyWord &&
-          (builder = builder.where('questionSet.title Like :title', {
-            title: `%${options.keyWord}%`,
-          }));
+          (builder = builder
+            .where('questionSet.title Like :title', {
+              title: `%${options.keyWord}%`,
+            })
+            .orWhere('questionSet.tags Like :tags', {
+              tags: `%${options.keyWord}%`,
+            }));
         options.author &&
           (builder = builder.where('author.account = :account', {
             account: options.author,
