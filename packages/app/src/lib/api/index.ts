@@ -1,10 +1,12 @@
+import type { Question } from '@exercise/type'
+
 const baseUrl = 'http://127.0.0.1:8000'
 const duration = 350 // ms
 interface Return {
   err?: string
   data: any
 }
-function get(url: string, params?: Record<string, string>): Promise<Return> {
+function get(url: string, params?: Record<string, any>): Promise<Return> {
   return new Promise((resolve, reject) => {
     uni.request({
       url: `${baseUrl}${url}`,
@@ -30,11 +32,37 @@ function get(url: string, params?: Record<string, string>): Promise<Return> {
     })
   })
 }
-function post(url: string, params?: Record<string, string>): Promise<Return> {
+function post(url: string, params?: Record<string, any>): Promise<Return> {
   return new Promise((resolve, reject) => {
     uni.request({
       url: `${baseUrl}${url}`,
       method: 'POST',
+      data: params || {},
+      success(res: any) {
+        if (['200', '201'].includes(res.statusCode.toString()) && res.data) {
+          resolve({
+            data: res.data.data,
+          })
+        }
+        else {
+          resolve({
+            // todo code generate err
+            err: '请求失败',
+            data: res.data.data,
+          })
+        }
+      },
+      fail(err: any) {
+        reject(err)
+      },
+    })
+  })
+}
+function put(url: string, params?: Record<string, any>): Promise<Return> {
+  return new Promise((resolve, reject) => {
+    uni.request({
+      url: `${baseUrl}${url}`,
+      method: 'PUT',
       data: params || {},
       success(res: any) {
         if (['200', '201'].includes(res.statusCode.toString()) && res.data) {
@@ -121,5 +149,28 @@ export function joinQuestionSetById(
       })
       resolve(res)
     }, duration)
+  })
+}
+
+export function getQuestionSetDetail(
+  id: string,
+  account: string,
+): Promise<Return> {
+  const url = '/questionSet/detail'
+  return new Promise((resolve) => {
+    setTimeout(async () => {
+      const res = await get(url, { id, account })
+      resolve(res)
+    }, duration)
+  })
+}
+
+export function updateQuestionAnswer(options: Partial<Question>): Promise<Return> {
+  const url = '/question/update'
+  return new Promise((resolve) => {
+    setTimeout(async () => {
+      const res = await put(url, { ...options })
+      resolve(res)
+    }, 350)
   })
 }

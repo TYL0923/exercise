@@ -6,8 +6,10 @@ import { getCreatedQuestionSet, getJoinedQuestionSet } from '../lib/api'
 // import { QuestionSetCardCom } from '../components'
 import QuestionSetCardCom from '../components/QuestionSetCardCom.vue'
 import SkeletonCom from '../components/SkeletonCom.vue'
+import FilterCom from '../components/FilterCom.vue'
 const loginState = useLoginState()
-const popupRef = ref<any>(null)
+const moreOperationPopupRef = ref<any>(null)
+const openQuestionSetPopupRef = ref<any>(null)
 const logoutPopupRef = ref<any>(null)
 const isLogin = computed(() => !!loginState.account)
 const current = ref<number>(0)
@@ -21,6 +23,52 @@ const isLoading = ref<{
 })
 const createdQuestionSetList = ref<QuestionSet[]>([])
 const joinedQuestionSetList = ref<QuestionSet[]>([])
+const openQuestionSet = ref<QuestionSet>()
+const filter = reactive<{
+  mode: 'exercise' | 'test'
+  start: 'continue' | 'restart'
+  part: 'all' | 'error' | 'not'
+}>({
+  mode: 'test',
+  start: 'continue',
+  part: 'all',
+})
+const filterOptions = reactive({
+  mode: [
+    {
+      label: '刷题模式',
+      key: 'exercise',
+    },
+    {
+      label: '考试模式',
+      key: 'test',
+    },
+  ],
+  start: [
+    {
+      label: '继续刷题',
+      key: 'continue',
+    },
+    {
+      label: '重新开始',
+      key: 'restart',
+    },
+  ],
+  part: [
+    {
+      label: '全部',
+      key: 'all',
+    },
+    {
+      label: '错题',
+      key: 'error',
+    },
+    {
+      label: '未做',
+      key: 'not',
+    },
+  ],
+})
 
 function handleGotoLogin() {
   uni.navigateTo({
@@ -40,12 +88,18 @@ function handleClickItem(item: { currentIndex: number }) {
       break
   }
 }
+function handleOpenQuestionSet(questionSet: QuestionSet) {
+  openQuestionSet.value = questionSet
+  openQuestionSetPopupRef.value.open('bottom')
+}
+function handleStart() {
+}
 function handleOpenPopup() {
-  popupRef.value!.open('bottom')
+  moreOperationPopupRef.value!.open('bottom')
 }
 function handleLogout() {
   loginState.logout()
-  popupRef.value!.close()
+  moreOperationPopupRef.value!.close()
 }
 async function initCreatedQuestionSetList() {
   if (!isLogin.value) {
@@ -110,7 +164,12 @@ watchEffect(initJoinedQuestionSetList)
             <SkeletonCom v-for="i in 3" :key="i" type="questionSetCard" />
           </template>
           <template v-else>
-            <QuestionSetCardCom v-for="questionSet in createdQuestionSetList" :key="questionSet.id" :data="questionSet" />
+            <QuestionSetCardCom
+              v-for="questionSet in createdQuestionSetList"
+              :key="questionSet.id"
+              :data="questionSet"
+              @click="handleOpenQuestionSet"
+            />
           </template>
         </view>
         <view v-else-if="current === 1">
@@ -118,17 +177,38 @@ watchEffect(initJoinedQuestionSetList)
             <SkeletonCom v-for="i in 3" :key="i" type="questionSetCard" />
           </template>
           <template v-else>
-            <QuestionSetCardCom v-for="questionSet in joinedQuestionSetList" :key="questionSet.id" :data="questionSet" />
+            <QuestionSetCardCom
+              v-for="questionSet in joinedQuestionSetList"
+              :key="questionSet.id"
+              :data="questionSet"
+              @click="handleOpenQuestionSet"
+            />
           </template>
         </view>
       </view>
     </view>
-    <uni-popup ref="popupRef" background-color="#fff">
+    <uni-popup ref="moreOperationPopupRef" background-color="#fff">
       <view p-4 flex flex-col items-center gap-y-4>
         <view>编辑资料</view>
         <view text-red-500 my-4 @click="logoutPopupRef.open()">
           退出登录
         </view>
+      </view>
+    </uni-popup>
+    <uni-popup ref="openQuestionSetPopupRef" background-color="#fff">
+      <view p-4>
+        <view flex items-center justify-between gap-x-4 pb-4 border-b-1 border-gray-200>
+          <button size="mini" @click="openQuestionSetPopupRef.close()">
+            取消
+          </button>
+          <button bg-sky-500 text-white size="mini" @click="handleStart">
+            开始
+          </button>
+        </view>
+        <view h-300>
+          <FilterCom :filter="filter" :options="filterOptions" />
+        </view>
+        <QuestionSetCardCom v-if="openQuestionSet" :data="openQuestionSet" />
       </view>
     </uni-popup>
     <uni-popup ref="logoutPopupRef" type="dialog">

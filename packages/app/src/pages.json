@@ -23,6 +23,12 @@
 			"style": {
 				"navigationBarTitleText": "搜索"
 			}
+		},
+		{
+			"path": "pages/exercise",
+			"style": {
+				"navigationBarTitleText": "练习模式"
+			}
 		}
 	],
   "tabBar": {
