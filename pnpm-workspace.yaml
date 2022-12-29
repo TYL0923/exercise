@@ -3,3 +3,4 @@ packages:
   - 'type/**'
   - 'util/**'
   - 'api/**'
+  - 'shared/**'

@@ -7,6 +7,8 @@ export interface Question {
   id: string
   type: QuestionType
   title: string
+  completeTitle: string
+  options?: string[] | string
   isDo: 0 | 1
   isError: 0 | 1
   testAnswer: string
