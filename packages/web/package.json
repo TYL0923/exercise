@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@ant-design/icons-vue": "^6.1.0",
     "@exercise/api": "workspace:^0.0.1",
     "@exercise/util": "workspace:^0.0.1",
     "@iconify/json": "^2.1.134",

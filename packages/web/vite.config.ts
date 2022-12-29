@@ -21,7 +21,7 @@ export default defineConfig({
     ComponentS({
       dts: path.resolve(pathSrc, 'typings/components.d.ts'),
       resolvers: [
-        AntDesignVueResolver({ importStyle: false, resolveIcons: true }),
+        AntDesignVueResolver({ importStyle: false, resolveIcons: false }),
       ],
     }),
     AutoImport({

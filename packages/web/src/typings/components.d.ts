@@ -34,6 +34,7 @@ declare module '@vue/runtime-core' {
     ATextarea: typeof import('ant-design-vue/es')['Textarea']
     ATooltip: typeof import('ant-design-vue/es')['Tooltip']
     AUploadDragger: typeof import('ant-design-vue/es')['UploadDragger']
+    CheckOutlined: typeof import('@ant-design/icons-vue')['CheckOutlined']
     FilterCom: typeof import('./../components/FilterCom.vue')['default']
     LoginCom: typeof import('./../components/LoginCom.vue')['default']
     QuestionAnswerCom: typeof import('./../components/QuestionAnswerCom.vue')['default']
