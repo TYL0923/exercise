@@ -9,8 +9,9 @@ import { AddQuestionSetDto } from './dto/addQuestionSet.dto';
 import { JoinQuestionSetDto } from './dto/joinQuestionSet.dto';
 import { QueryQuestionSetOptionsDto } from './dto/queryQuestionSet.dto';
 import { QuestionSet } from './entity/question-set.entity';
-import { extract, remove, save } from 'src/shared/identify';
+import { extract, remove, save } from '../../shared/identify';
 import { BaseReturnQuestionSet } from 'src/typing/base.type';
+import { extractQuestion } from '../../shared/identify/extract';
 @Injectable()
 export class QuestionSetService {
   constructor(
@@ -26,13 +27,14 @@ export class QuestionSetService {
 
   private async handleFile(file: any): Promise<string> {
     const type = file.originalname.split('.').pop();
+    const prefixPath = 'upload';
     let name = '',
       str = '';
     try {
-      name = await save(file);
-      str = await extract(name, type);
+      name = await save(prefixPath, file);
+      str = await extract(prefixPath, name, type);
     } finally {
-      remove(name);
+      remove(prefixPath, name);
       return str.trim();
     }
   }
@@ -41,7 +43,9 @@ export class QuestionSetService {
     return new Promise(async (resolve) => {
       try {
         const questionStr = await this.handleFile(file);
-        const questionArr = Question.formatQuestionArray(questionStr);
+        const questionArr = extractQuestion(questionStr);
+        // extractJudge(questionStr);
+        // const questionArr = Question.formatQuestionArray(questionStr);
         return resolve(questionArr);
       } catch (err) {
         throw new Error(err);
@@ -78,7 +82,11 @@ export class QuestionSetService {
           const questionList: Omit<Question, 'id'>[] =
             addQuestionSetDto.questions.reduce((pre, cur) => {
               pre.push({
-                ...objectWipe(cur, ['id' as any, 'answerKey']),
+                ...objectWipe(cur, ['id' as any, 'answerKey', 'options']),
+                options: (cur.options as string[]).reduce((pre, cur, index) => {
+                  if (!index) return `${pre}${cur}`;
+                  else return `${pre},${cur}`;
+                }, ''),
                 answerKey: addAnswerKeyRes.identifiers[0].id,
               });
               return pre;

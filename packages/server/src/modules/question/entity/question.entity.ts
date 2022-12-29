@@ -20,6 +20,18 @@ export class Question {
   title: string;
 
   @Column({
+    type: MySqlDatabaseColumn.VARCHAR,
+    length: 400,
+  })
+  completeTitle: string;
+
+  @Column({
+    type: MySqlDatabaseColumn.VARCHAR,
+    length: 400,
+  })
+  options?: string[] | string;
+
+  @Column({
     type: MySqlDatabaseColumn.TINYINT,
     default: 0,
   })
@@ -50,48 +62,48 @@ export class Question {
   correctAnswer: string;
 
   @ManyToOne(() => AnswerKey, (answerKey) => answerKey.questions)
-  answerKey: AnswerKey;
+  answerKey?: AnswerKey;
 
-  private static judgeQuestionType(questionStr: string): QuestionType {
-    const SELECT = /[A|B|C|D]+[、|.]+/g;
-    if (questionStr.match(SELECT)?.length > 0) {
-      return 'select';
-    } else {
-      return 'judge';
-    }
-  }
+  // private static judgeQuestionType(questionStr: string): QuestionType {
+  //   const SELECT = /[A|B|C|D]+[、|.]+/g;
+  //   if (questionStr.match(SELECT)?.length > 0) {
+  //     return 'select';
+  //   } else {
+  //     return 'judge';
+  //   }
+  // }
 
-  static formatQuestionArray(questionStr: string): Question[] {
-    const questionArr = questionStr.split(/[0-9]+[、|.]/);
-    return questionArr.reduce((pre, item, index) => {
-      if (item.trim().length === 0) {
-        return pre;
-      }
-      const questionType = this.judgeQuestionType(item);
-      const question = new Question({
-        id: 'identify-' + index,
-        title: item,
-        isDo: 0,
-        isError: 0,
-        testAnswer: '',
-        exerciseAnswer: '',
-        correctAnswer: '',
-        type: questionType,
-      });
-      pre.push(question);
-      return pre;
-    }, [] as Question[]);
-  }
-  constructor(question: Omit<Question, 'answerKey'>) {
-    if (question) {
-      this.id = question.id || '';
-      this.title = question.title || '';
-      this.isDo = question.isDo || 0;
-      this.isError = question.isError || 0;
-      this.testAnswer = question.testAnswer || '';
-      this.exerciseAnswer = question.exerciseAnswer || '';
-      this.correctAnswer = question.correctAnswer || '';
-      this.type = question.type || 'judge';
-    }
-  }
+  // static formatQuestionArray(questionStr: string): Question[] {
+  //   const questionArr = questionStr.split(/[0-9]+[、|.]/);
+  //   return questionArr.reduce((pre, item, index) => {
+  //     if (item.trim().length === 0) {
+  //       return pre;
+  //     }
+  //     const questionType = this.judgeQuestionType(item);
+  //     const question = new Question({
+  //       id: 'identify-' + index,
+  //       title: item,
+  //       isDo: 0,
+  //       isError: 0,
+  //       testAnswer: '',
+  //       exerciseAnswer: '',
+  //       correctAnswer: '',
+  //       type: questionType,
+  //     });
+  //     pre.push(question);
+  //     return pre;
+  //   }, [] as Question[]);
+  // }
+  // constructor(question: Omit<Question, 'answerKey'>) {
+  //   if (question) {
+  //     this.id = question.id || '';
+  //     this.title = question.title || '';
+  //     this.isDo = question.isDo || 0;
+  //     this.isError = question.isError || 0;
+  //     this.testAnswer = question.testAnswer || '';
+  //     this.exerciseAnswer = question.exerciseAnswer || '';
+  //     this.correctAnswer = question.correctAnswer || '';
+  //     this.type = question.type || 'judge';
+  //   }
+  // }
 }
