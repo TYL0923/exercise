@@ -27,7 +27,7 @@
 		{
 			"path": "pages/exercise",
 			"style": {
-				"navigationBarTitleText": "练习模式"
+				"navigationStyle": "custom"
 			}
 		}
 	],

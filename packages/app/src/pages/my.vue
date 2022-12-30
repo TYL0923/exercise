@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import { computed, reactive, ref, watchEffect } from 'vue'
 import type { QuestionSet } from '@exercise/type'
+import { onShow } from '@dcloudio/uni-app'
 import { useLoginState } from '../composables'
-import { getCreatedQuestionSet, getJoinedQuestionSet } from '../lib/api'
-// import { QuestionSetCardCom } from '../components'
+import { getCreatedQuestionSet, getJoinedQuestionSet, resetQuestion } from '../lib/api'
 import QuestionSetCardCom from '../components/QuestionSetCardCom.vue'
 import SkeletonCom from '../components/SkeletonCom.vue'
 import FilterCom from '../components/FilterCom.vue'
+
 const loginState = useLoginState()
 const moreOperationPopupRef = ref<any>(null)
 const openQuestionSetPopupRef = ref<any>(null)
@@ -14,6 +15,7 @@ const logoutPopupRef = ref<any>(null)
 const isLogin = computed(() => !!loginState.account)
 const current = ref<number>(0)
 const items = reactive(['创建的题库', '加入的题库'])
+
 const isLoading = ref<{
   created: boolean
   joined: boolean
@@ -92,7 +94,31 @@ function handleOpenQuestionSet(questionSet: QuestionSet) {
   openQuestionSet.value = questionSet
   openQuestionSetPopupRef.value.open('bottom')
 }
-function handleStart() {
+async function handleStart() {
+  if (!openQuestionSet.value?.id)
+    return
+  if (filter.mode === 'test') {
+    // router.push({
+    //   path: '/paper',
+    //   query: {
+    //     id: prepareOpenQuestionSet.value.id,
+    //     status: 'do',
+    //   },
+    // })
+  }
+  else {
+    if (filter.start === 'restart') {
+      uni.showLoading({
+        title: '加载中',
+      })
+      const res = await resetQuestion(openQuestionSet.value.id, loginState.account, 'exercise')
+      uni.hideLoading()
+    }
+    uni.navigateTo({
+      url: `/pages/exercise?id=${openQuestionSet.value.id}&part=${filter.part}`,
+    })
+  }
+  openQuestionSetPopupRef.value.close()
 }
 function handleOpenPopup() {
   moreOperationPopupRef.value!.open('bottom')
@@ -123,6 +149,10 @@ async function initJoinedQuestionSetList() {
     joinedQuestionSetList.value = data
   isLoading.value.joined = false
 }
+onShow(() => {
+  initCreatedQuestionSetList()
+  initJoinedQuestionSetList()
+})
 watchEffect(initCreatedQuestionSetList)
 watchEffect(initJoinedQuestionSetList)
 </script>

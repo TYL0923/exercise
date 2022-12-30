@@ -171,6 +171,35 @@ export function updateQuestionAnswer(options: Partial<Question>): Promise<Return
     setTimeout(async () => {
       const res = await put(url, { ...options })
       resolve(res)
+    }, duration)
+  })
+}
+export function updateQuestions(questions: Question[]): Promise<Return> {
+  const url = '/question/update-list'
+  return new Promise((resolve) => {
+    setTimeout(async () => {
+      const res = await put(url, questions)
+      resolve(res)
     }, 350)
+  })
+}
+/**
+ * 清空题目集答案
+ * @param id 题目集id
+ * @param account 账号
+ * @param mode 模式
+ * @returns treu or false
+ */
+export function resetQuestion(
+  id: string,
+  account: string,
+  mode: 'test' | 'exercise',
+): Promise<Return> {
+  const url = '/questionSet/reset'
+  return new Promise((resolve) => {
+    setTimeout(async () => {
+      const res = await put(url, { id, account, mode })
+      resolve(res)
+    }, duration)
   })
 }

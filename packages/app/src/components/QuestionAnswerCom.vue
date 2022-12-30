@@ -67,7 +67,7 @@ const options = computed(() => {
           h-80 px-4
           class="question-option"
           flex items-center hover="bg-sky-50 cursor-pointer"
-          :class="isSelected(option[1]) ? 'selected' : ''"
+          :class="{ selected: isSelected(option[1]) }"
           @click="emits('changeAnswer', option[1])"
         >
           <view flex-1>
@@ -85,7 +85,7 @@ const options = computed(() => {
           :key="option[0]" class="question-option"
           h-10 px-4
           flex items-center hover="bg-sky-50 cursor-pointer"
-          :class="isSelected(option[1]) ? 'border-l-1' : ''"
+          :class="{ selected: isSelected(option[1]) }"
           @click="emits('changeCorrectAnswer', option[1])"
         >
           <view flex-1>
@@ -163,34 +163,4 @@ const options = computed(() => {
     }
   }
 }
-// .error {
-//   .ant-radio-inner {
-//     border-color: #ef4444;
-//     &::after {
-//       background-color: #ef4444;
-//     }
-//   }
-//   &.ant-radio-button-wrapper {
-//     border-color: #ef4444 !important;
-//     color: #ef4444;
-//     &::before {
-//       background-color: #ef4444;
-//     }
-//   }
-// }
-// .success {
-//   .ant-radio-inner {
-//     border-color: #22c55e;
-//     &::after {
-//       background-color: #22c55e;
-//     }
-//   }
-//   &.ant-radio-button-wrapper {
-//     border-color: #22c55e !important;
-//     color: #22c55e;
-//     &::before {
-//       background-color: #22c55e;
-//     }
-//   }
-// }
 </style>
