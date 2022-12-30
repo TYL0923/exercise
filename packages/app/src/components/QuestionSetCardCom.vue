@@ -9,10 +9,10 @@ const emits = defineEmits<{
   (e: 'click', questionSet: QuestionSet): void
 }>()
 const isDo = computed(() => {
-  return props.data.questions.reduce((pre, cur) => { return pre + (cur.isDo === 1 ? 1 : 0) }, 0)
+  return props.data.questions ? props.data.questions.reduce((pre, cur) => { return pre + (cur.isDo === 1 ? 1 : 0) }, 0) : 0
 })
 const isError = computed(() => {
-  return props.data.questions.reduce((pre, cur) => { return pre + (cur.isError === 1 ? 1 : 0) }, 0)
+  return props.data.questions ? props.data.questions.reduce((pre, cur) => { return pre + (cur.isError === 1 ? 1 : 0) }, 0) : 0
 })
 const tagArr = computed(() => {
   return props.data.tags.length === 0 ? ['暂无标签'] : props.data.tags.split(',').slice(0, 3)
@@ -45,7 +45,7 @@ const tagArr = computed(() => {
         </view>
       </view>
     </view>
-    <view mt-4>
+    <view v-if="data.questions" mt-4>
       <view flex items-center gap-x-3 text-xs text-gray-500>
         <view>
           {{ ` 共 ${data.num} 题 ` }}
