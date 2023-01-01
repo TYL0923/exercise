@@ -98,13 +98,14 @@ async function handleStart() {
   if (!openQuestionSet.value?.id)
     return
   if (filter.mode === 'test') {
-    // router.push({
-    //   path: '/paper',
-    //   query: {
-    //     id: prepareOpenQuestionSet.value.id,
-    //     status: 'do',
-    //   },
-    // })
+    uni.showLoading({
+      title: '生成试卷中',
+    })
+    await resetQuestion(openQuestionSet.value.id, loginState.account, 'test')
+    uni.hideLoading()
+    uni.navigateTo({
+      url: `/pages/test?id=${openQuestionSet.value.id}`,
+    })
   }
   else {
     if (filter.start === 'restart') {

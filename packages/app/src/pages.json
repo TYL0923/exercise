@@ -29,6 +29,12 @@
 			"style": {
 				"navigationStyle": "custom"
 			}
+		},
+		{
+			"path": "pages/test",
+			"style": {
+				"navigationStyle": "custom"
+			}
 		}
 	],
   "tabBar": {
