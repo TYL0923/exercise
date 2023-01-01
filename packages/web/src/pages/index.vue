@@ -30,7 +30,7 @@ function showLogin(id: string) {
         <span cursor-pointer to="about">关于</span>
       </div>
       <div w-80 flex items-center justify-center>
-        <a href="https://github.com/TYL0923/exercise-web" target="_blank">
+        <a href="https://github.com/TYL0923/exercise" target="_blank">
           <i text-gray-900 text-2xl class="fa-brands fa-github" />
         </a>
       </div>
