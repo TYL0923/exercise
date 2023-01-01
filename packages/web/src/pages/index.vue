@@ -9,6 +9,13 @@ function handlePageScroll(e: Event) {
   else
     headerIsShow.value = false
 }
+function showLogin(id: string) {
+  const oLogin = document.querySelector(`*[anchor='${id}']`)
+  oLogin?.scrollIntoView({
+    behavior: 'smooth',
+    block: 'center',
+  })
+}
 </script>
 
 <template>
@@ -18,35 +25,36 @@ function handlePageScroll(e: Event) {
         在线练习平台
       </h1>
       <div flex-1 text-sm flex justify-center gap-x-8>
-        <span to="home">首页</span>
-        <span to="login">登录</span>
-        <span to="about">关于</span>
+        <span cursor-pointer to="home" @click="showLogin('index')">首页</span>
+        <span cursor-pointer to="login" @click="showLogin('login')">登录</span>
+        <span cursor-pointer to="about">关于</span>
       </div>
-      <div w-80>
+      <div w-80 flex items-center justify-center>
         <a href="https://github.com/TYL0923/exercise-web" target="_blank">
-          <i class="fa-brands fa-github" />
+          <i text-gray-900 text-2xl class="fa-brands fa-github" />
         </a>
       </div>
     </header>
-    <div pt-60 px-40 box-border h-screen flex flex-col items-center>
-      <div>
+    <div pt-60 px-40 box-border h-screen flex flex-col items-center anchor="index">
+      <div class="title" relative>
+        <div class="mask w-105%" z-10 h-11 bg-white absolute top-14 left-0 />
         <p text-4xl tracking-widest mb-4>
           随时随地
         </p>
-        <p text-4xl tracking-widest>
+        <p text-4xl tracking-widest mb-0>
           创建你的在线题库
         </p>
       </div>
-      <div w-80 flex justify-between>
+      <div w-80 mt-10 flex justify-between>
         <a-button w-30 size="large" type="primary">
           开始
         </a-button>
-        <a-button w-30 size="large" type="primary">
+        <a-button w-30 size="large" type="primary" @click="showLogin('login')">
           登录
         </a-button>
       </div>
     </div>
-    <div relative bg-gray-50 box-border w-screen h-screen>
+    <div relative bg-gray-50 box-border w-screen h-screen anchor="login">
       <LoginCom :is-show="true" />
     </div>
     <div h-200px />
@@ -62,6 +70,32 @@ function handlePageScroll(e: Event) {
   to {
     transform: translateY(0);
     opacity: 1;
+  }
+}
+@keyframes typewriter {
+  0% {
+    left: 0;
+    opacity: 1;
+  }
+  50% {
+    left: 100%;
+    opacity: 1;
+  }
+  55% {
+    left: 100%;
+    opacity: 0;
+  }
+  100% {
+    left: 100%;
+    opacity: 0;
+  }
+}
+@keyframes disappear {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
   }
 }
 .login-enter-active {
@@ -90,6 +124,47 @@ function handlePageScroll(e: Event) {
     box-shadow: 0 2px 10px 2px rgba(0, 0, 0, 0.1);
     i {
       color: #333;
+    }
+  }
+}
+.title {
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    right: -5px;
+    display: inline-block;
+    height: 40%;
+    width: 4px;
+    background-color: #000;
+    border-radius: 4px;
+
+    animation-name: disappear;
+    animation-duration: .8s;
+    animation-timing-function: linear;
+    animation-delay: 0;
+    animation-iteration-count: infinite;
+    animation-fill-mode: none;
+    animation-direction: normal;
+  }
+  .mask {
+    animation-name: typewriter;
+    animation-duration: 6s;
+    animation-timing-function: steps(8);
+    animation-delay: 0;
+    animation-iteration-count: infinite;
+    animation-fill-mode: forwards;
+    animation-direction: normal;
+    &::after {
+      content: "";
+      position: absolute;
+      top: 1px;
+      left: 1px;
+      display: inline-block;
+      height: 90%;
+      width: 4px;
+      background-color: #000;
+      border-radius: 4px;
     }
   }
 }
