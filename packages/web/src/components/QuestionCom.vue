@@ -49,9 +49,6 @@ const handleChangeTitle = useDebounceFn((e: Event) => {
     <!-- edit -->
     <template v-else>
       <a-textarea :rows="4" :value="question.title" @input="handleChangeTitle" />
-      <!-- <div text-xs mt-2>
-        {{ `正确答案: ` }}
-      </div> -->
       <div mt-2>
         <QuestionAnswerCom
           :question="question" :status="status" :mode="mode"

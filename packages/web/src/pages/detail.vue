@@ -17,7 +17,7 @@ const questionSetForm = ref<{
 }>({
   title: '',
   author: loginState.account.value || '',
-  tags: ['123', '456'],
+  tags: [],
 })
 const questionList = ref<Question[]>([])
 const { handleChangeAnswer } = useQuestion(questionList, { isSync: false })
@@ -207,6 +207,7 @@ async function customRequest(file: any) {
           </a-tag>
           <a-input
             v-else
+            w-200px
             @keyup.enter="($event.target as any).blur()"
             @blur="addTag($event.target!)"
           />

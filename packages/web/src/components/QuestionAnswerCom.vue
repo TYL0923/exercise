@@ -84,7 +84,7 @@ const options = computed(() => {
           :key="option[0]" class="question-option"
           h-10 px-4
           flex items-center hover="bg-sky-50 cursor-pointer"
-          :class="isSelected(option[1]) ? 'border-l-1' : ''"
+          :class="{ selected: isSelected(option[1]) }"
           @click="emits('changeCorrectAnswer', option[1])"
         >
           <div flex-1>
