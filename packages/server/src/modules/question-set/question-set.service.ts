@@ -27,14 +27,14 @@ export class QuestionSetService {
 
   private async handleFile(file: any): Promise<string> {
     const type = file.originalname.split('.').pop();
-    const prefixPath = 'upload';
+    const dirName = 'upload';
     let name = '',
       str = '';
     try {
-      name = await save(prefixPath, file);
-      str = await extract(prefixPath, name, type);
+      name = await save(dirName, file);
+      str = await extract(dirName, name, type);
     } finally {
-      remove(prefixPath, name);
+      remove(dirName, name);
       return str.trim();
     }
   }

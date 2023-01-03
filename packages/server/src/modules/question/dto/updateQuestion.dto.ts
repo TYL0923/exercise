@@ -1,4 +1,4 @@
-import { QuestionType } from '@exercise/type';
+import { QuestionType } from '../../../typing/base.type';
 import { IsIn, IsOptional, IsString } from 'class-validator';
 
 export class UpdateQuestionDto {

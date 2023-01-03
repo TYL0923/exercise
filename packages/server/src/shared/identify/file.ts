@@ -2,8 +2,21 @@ const fs = require('fs');
 const mammoth = require('mammoth');
 // const prefixPath = 'upload'
 
+function isExist(dirName: string) {
+  return new Promise((resolve) => {
+    fs.stat(dirName, function (err, stats) {
+      if (!stats) {
+        fs.mkdir(dirName, { recursive: true }, (err) => {
+          if (!err) return resolve(true);
+          else return resolve(false);
+        });
+      } else return resolve(true);
+    });
+  });
+}
 export function save(path: string, file: any): Promise<string> {
-  return new Promise((resolve, reject) => {
+  return new Promise(async (resolve, reject) => {
+    await isExist(path);
     const name = `${Date.now().toString()}.${file.originalname
       .split('.')
       .pop()}`;

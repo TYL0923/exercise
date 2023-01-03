@@ -1,7 +1,7 @@
 import { AnswerKey } from 'src/modules/answer-key/entity/answer-key.entity';
 import { MySqlDatabaseColumn } from 'src/typing/databaseColumn.type';
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-import type { QuestionType } from '@exercise/type';
+import type { QuestionType } from '../../../typing/base.type';
 @Entity('question')
 export class Question {
   @PrimaryGeneratedColumn('uuid')

@@ -9,3 +9,4 @@ export type BaseReturnQuestionSet = Omit<
   author: string | Omit<User, 'password' | 'questionSets' | 'answerKeys'>;
   questions: Question[];
 };
+export type QuestionType = 'select' | 'judge';

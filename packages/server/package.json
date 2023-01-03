@@ -21,8 +21,6 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
-    "@exercise/shared": "workspace:^0.0.1",
-    "@exercise/type": "workspace:^0.0.1",
     "@nestjs/common": "^8.0.0",
     "@nestjs/core": "^8.0.0",
     "@nestjs/platform-express": "^8.4.7",
@@ -32,6 +30,7 @@
     "compressing": "^1.6.2",
     "crypto-js": "^4.1.1",
     "fs": "^0.0.1-security",
+    "mammoth": "^1.5.1",
     "nestjs-config": "^1.4.10",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
