@@ -12,8 +12,8 @@ interface LoginForm {
 const router = useRouter()
 const loginState = useLogin()
 const loginForm = reactive<LoginForm>({
-  account: '16684818923',
-  password: 'admin',
+  account: 'admin1',
+  password: 'admin1',
   isLocal: false,
 })
 const onFinish = async (values: LoginForm) => {

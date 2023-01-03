@@ -1,7 +1,9 @@
 import type { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
 import axios from 'axios'
+const DEV_URL = 'http://127.0.0.1:8000'
+const PRO_URL = 'http://47.113.144.160:8000'
 const a: AxiosInstance = axios.create({
-  baseURL: 'http://127.0.0.1:8000',
+  baseURL: PRO_URL,
   timeout: 10000,
 })
 

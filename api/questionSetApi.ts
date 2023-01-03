@@ -8,7 +8,7 @@ export function identifyQuestionSet(
     config?: AxiosRequestConfig | undefined
   },
 ): Return {
-  const url = 'http://127.0.0.1:8000/questionSet/identify'
+  const url = '/questionSet/identify'
   return new Promise((resolve) => {
     setTimeout(async () => {
       const res = await a.post(url, options.param, options.config)
@@ -20,7 +20,7 @@ export function identifyQuestionSet(
 export function addQuestionSet(
   questionSet: Pick<QuestionSet, 'title' | 'createTime' | 'questions' | 'tags'> & { account: string },
 ): Return<boolean> {
-  const url = 'http://127.0.0.1:8000/questionSet/add'
+  const url = '/questionSet/add'
   return new Promise((resolve) => {
     setTimeout(async () => {
       const res = await a.post(url, questionSet)
@@ -33,7 +33,7 @@ export function joinQuestionSetById(
   questionSetId: string,
   account: string,
 ): Return<boolean> {
-  const url = 'http://127.0.0.1:8000/questionSet/join'
+  const url = '/questionSet/join'
   return new Promise((resolve) => {
     setTimeout(async () => {
       const res = await a.post(url, {
@@ -46,7 +46,7 @@ export function joinQuestionSetById(
 }
 
 export function getCreatedQuestionSet(account: string): Return<QuestionSet[]> {
-  const url = 'http://127.0.0.1:8000/questionSet/created'
+  const url = '/questionSet/created'
   return new Promise((resolve) => {
     setTimeout(async () => {
       const res = await a.get(url, { params: { account } })
@@ -55,7 +55,7 @@ export function getCreatedQuestionSet(account: string): Return<QuestionSet[]> {
   })
 }
 export function getJoinedQuestionSet(account: string): Return<QuestionSet[]> {
-  const url = 'http://127.0.0.1:8000/questionSet/joined'
+  const url = '/questionSet/joined'
   return new Promise((resolve) => {
     setTimeout(async () => {
       const res = await a.get(url, { params: { account } })
@@ -67,7 +67,7 @@ export function getQuestionSetSimple(
   id: string,
   delay = 0,
 ): Return<Omit<QuestionSet, 'questions'>> {
-  const url = 'http://127.0.0.1:8000/questionSet/simple'
+  const url = '/questionSet/simple'
   return new Promise((resolve) => {
     setTimeout(async () => {
       const res = await a.get(url, { params: { id } })
@@ -86,7 +86,7 @@ export function getQuestionSetDetail(
   id: string,
   account: string,
 ): Return<QuestionSet> {
-  const url = 'http://127.0.0.1:8000/questionSet/detail'
+  const url = '/questionSet/detail'
   return new Promise((resolve) => {
     setTimeout(async () => {
       const res = await a.get(url, { params: { id, account } })
@@ -98,7 +98,7 @@ export function getQuestionSetDetail(
 export function updateQuestionSet(
   questionSet: Omit<QuestionSet, 'createTime'>,
 ): Return<QuestionSet> {
-  const url = 'http://127.0.0.1:8000/questionSet/update'
+  const url = '/questionSet/update'
   return new Promise((resolve) => {
     setTimeout(async () => {
       const res = await a.put(url, questionSet)
@@ -119,7 +119,7 @@ export function resetQuestion(
   account: string,
   mode: 'test' | 'exercise',
 ): Return<boolean> {
-  const url = 'http://127.0.0.1:8000/questionSet/reset'
+  const url = '/questionSet/reset'
   return new Promise((resolve) => {
     setTimeout(async () => {
       const res = await a.put(url, { id, account, mode })
@@ -134,7 +134,7 @@ export function queryJoinableQuestionSet(options: {
   author?: string | undefined
   account?: string | undefined
 }): Return<QuestionSet[]> {
-  const url = 'http://127.0.0.1:8000/questionSet/joinable'
+  const url = '/questionSet/joinable'
   return new Promise((resolve) => {
     setTimeout(async () => {
       const res = await a.get(url, { params: { ...options } })
@@ -146,7 +146,7 @@ export function removeQuestionSet(options: {
   id: string
   account: string
 }): Return<QuestionSet> {
-  const url = 'http://127.0.0.1:8000/questionSet/remove'
+  const url = '/questionSet/remove'
   return new Promise((resolve) => {
     setTimeout(async () => {
       const res = await a.put(url, options)
@@ -158,7 +158,7 @@ export function exitQuestionSet(options: {
   id: string
   account: string
 }): Return<boolean> {
-  const url = 'http://127.0.0.1:8000/questionSet/exit'
+  const url = '/questionSet/exit'
   return new Promise((resolve) => {
     setTimeout(async () => {
       const res = await a.put(url, options)
