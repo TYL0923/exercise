@@ -26,7 +26,7 @@ const tagArr = computed(() => {
 </script>
 
 <template>
-  <view
+  <div
     :class="{
       'shadow': isShadow,
       'border-1 border-gray-100': !isShadow,
@@ -35,41 +35,43 @@ const tagArr = computed(() => {
     flex flex-col
     @click="emits('click', data)"
   >
-    <view flex justify-between>
-      <view>
-        <view font-medium mb-2>
+    <div flex justify-between>
+      <div>
+        <div font-medium mb-2>
           {{ data.title }}
-        </view>
-        <view>
-          <uni-tag
+        </div>
+        <div>
+          <van-tag
             v-for="tag in tagArr" :key="tag"
-            mr-2 size="small" type="primary"
-            inverted :text="tag"
-          />
-        </view>
-      </view>
-      <view flex flex-col items-center>
-        <image w-70 h-70 rounded-full src="../static/logo.png" />
-        <view text-xs text-gray-600 mt-2>
+            mr-2 size="medium"
+            color="#e0f2fe" text-color="#0ea5e9"
+          >
+            {{ tag }}
+          </van-tag>
+        </div>
+      </div>
+      <div flex flex-col items-center>
+        <img w-70 h-70 rounded-full src="../static/logo.png">
+        <div text-xs text-gray-600 mt-2>
           {{ data.author.name }}
-        </view>
-      </view>
-    </view>
-    <view v-if="data.questions" mt-4>
-      <view flex items-center gap-x-3 text-xs text-gray-500>
-        <view>
+        </div>
+      </div>
+    </div>
+    <div v-if="data.questions" mt-4>
+      <div flex items-center gap-x-3 text-xs text-gray-500>
+        <div>
           {{ ` 共 ${data.num} 题 ` }}
-        </view>
-        <view>
+        </div>
+        <div>
           {{ ` 已做 ${isDo} 题 ` }}
-        </view>
-        <view>
+        </div>
+        <div>
           {{ ` 做错 ${isError} 题 ` }}
-        </view>
-      </view>
-      <view mt-1>
-        <progress :percent="100 * isDo / data.num" border-radius="4" activeColor="#007aff" />
-      </view>
-    </view>
-  </view>
+        </div>
+      </div>
+      <div mt-1>
+        <van-progress :percentage="100 * isDo / data.num" :show-pivot="false" />
+      </div>
+    </div>
+  </div>
 </template>

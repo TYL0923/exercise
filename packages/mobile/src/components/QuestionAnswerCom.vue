@@ -58,11 +58,11 @@ const options = computed(() => {
 </script>
 
 <template>
-  <view>
+  <div>
     <!-- do -->
     <template v-if="status === 'do'">
       <template v-if="['select', 'judge'].includes(question.type)">
-        <view
+        <div
           v-for="option in options" :key="option[0]"
           h-80 px-4
           class="question-option"
@@ -70,17 +70,17 @@ const options = computed(() => {
           :class="{ selected: isSelected(option[1]) }"
           @click="emits('changeAnswer', option[1])"
         >
-          <view flex-1>
+          <div flex-1>
             {{ `${option[0]}. ${option[1]}` }}
-          </view>
-        </view>
+          </div>
+        </div>
       </template>
     </template>
 
     <!-- edit -->
     <template v-else-if="status === 'edit'">
       <template v-if="['select', 'judge'].includes(question.type)">
-        <view
+        <div
           v-for="option in options"
           :key="option[0]" class="question-option"
           h-10 px-4
@@ -88,17 +88,17 @@ const options = computed(() => {
           :class="{ selected: isSelected(option[1]) }"
           @click="emits('changeCorrectAnswer', option[1])"
         >
-          <view flex-1>
+          <div flex-1>
             {{ `${option[0]}. ${option[1]}` }}
-          </view>
-        </view>
+          </div>
+        </div>
       </template>
     </template>
 
     <!-- done -->
     <template v-else-if="status === 'done'">
       <template v-if="['select', 'judge'].includes(question.type)">
-        <view
+        <div
           v-for="option in options"
           :key="option[0]" class="question-option"
           h-80 px-4
@@ -106,21 +106,21 @@ const options = computed(() => {
           :class="isCorrectOrError(option[1])"
           @click="emits('changeCorrectAnswer', option[1])"
         >
-          <view flex-1>
+          <div flex-1>
             {{ `${option[0]}. ${option[1]}` }}
-          </view>
-        </view>
-        <view mt-2>
-          <view text-xs font-semibold mr-2>
+          </div>
+        </div>
+        <div mt-2>
+          <div text-xs font-semibold mr-2>
             正确答案:
-          </view>
-          <view font-semibold text-sm>
+          </div>
+          <div font-semibold text-sm>
             {{ question.correctAnswer || '-' }}
-          </view>
-        </view>
+          </div>
+        </div>
       </template>
     </template>
-  </view>
+  </div>
 </template>
 
 <style lang="less">

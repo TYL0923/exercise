@@ -1,27 +1,21 @@
 <script setup lang="ts">
 import type { QuestionSet } from '@exercise/type'
-import { showConfirmDialog, showNotify } from 'vant'
-import { joinQuestionSetById, queryJoinableQuestionSet } from '../lib/api'
+import { queryJoinableQuestionSet } from '../lib/api'
 import { useDebounceFn } from '../lib/utils'
-import { useLoginState } from '../composables'
+import { useJoinConfirm, useLoginState } from '../composables'
 const loginState = useLoginState()
-
+const { joinConfirmCom, showJoin } = useJoinConfirm()
 const searchKeyWord = ref<string>('')
 
 const isLoading = ref<boolean>(false)
-const isJoinShow = ref<boolean>(false)
 
 const joinableQuestionSetList = ref<QuestionSet[]>([])
-const joinQuestionSet = ref<QuestionSet>()
 function leftCilck() {
   uni.navigateTo({
     url: '/pages/index',
   })
 }
-function showJoin(questionSet: QuestionSet) {
-  joinQuestionSet.value = questionSet
-  isJoinShow.value = true
-}
+
 const initjoinableQuestionSetList = useDebounceFn(async (key: string) => {
   const byIdPro = queryJoinableQuestionSet({
     id: key,
@@ -50,46 +44,6 @@ const initjoinableQuestionSetList = useDebounceFn(async (key: string) => {
     .finally(() => isLoading.value = false)
 }, 350)
 
-// function handleOpenJoinQuestionSet(questionSet: QuestionSet) {
-//   joinQuestionSet.value = questionSet
-//   popupRef.value.open('bottom')
-// }
-
-async function handleJoinQuestionSet() {
-  if (!joinQuestionSet.value)
-    return
-  showConfirmDialog({
-    title: '确认',
-    message: '确认加入题库',
-  })
-    .then(async () => {
-    // on confirm
-      isJoinShow.value = false
-      uni.showLoading({
-        title: '加入中',
-      })
-      const { err, data } = await joinQuestionSetById(joinQuestionSet.value!.id, loginState.account)
-      if (!err && data) {
-        showNotify({
-          type: 'success',
-          message: '加入成功',
-          duration: 350,
-        })
-      }
-      else {
-        showNotify({
-          type: 'danger',
-          message: '加入失败',
-          duration: 350,
-        })
-      }
-      initjoinableQuestionSetList('')
-      uni.hideLoading()
-    })
-    .catch(() => {
-    // on cancel
-    })
-}
 watch(
   searchKeyWord,
   (newKey) => {
@@ -102,13 +56,13 @@ watch(
 </script>
 
 <template>
-  <view bg-gray-100 h-screen overflow-y-auto>
-    <view flex items-center bg-white px-2 justify-around>
+  <div bg-gray-100 h-screen overflow-y-auto>
+    <div flex items-center bg-white px-2 justify-around>
       <van-icon name="arrow-left" size="24" @click="leftCilck" />
       <van-search v-model="searchKeyWord" class="w-80%" shape="round" placeholder="输入关键字搜索" />
-      <view>搜索</view>
-    </view>
-    <view px-2>
+      <div>搜索</div>
+    </div>
+    <div px-2>
       <template v-if="isLoading">
         <SkeletonCom type="questionSetCard" />
       </template>
@@ -120,23 +74,7 @@ watch(
           @click="showJoin(questionSet)"
         />
       </template>
-    </view>
-    <van-action-sheet v-model:show="isJoinShow">
-      <view p-4>
-        <view flex items-center justify-around mt-2 mb-4>
-          <van-button>
-            取消
-          </van-button>
-          <van-button type="primary" @click="handleJoinQuestionSet">
-            加入
-          </van-button>
-        </view>
-        <QuestionSetCardCom
-          v-if="joinQuestionSet"
-          :data="joinQuestionSet"
-          :is-shadow="false"
-        />
-      </view>
-    </van-action-sheet>
-  </view>
+    </div>
+    <joinConfirmCom />
+  </div>
 </template>

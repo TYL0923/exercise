@@ -2,6 +2,7 @@ import path from 'path'
 import { defineConfig } from 'vite'
 import uni from '@dcloudio/vite-plugin-uni'
 import Unocss from 'unocss/vite'
+import vueJsx from '@vitejs/plugin-vue-jsx'
 import { VantResolver } from 'unplugin-vue-components/resolvers'
 import Component from 'unplugin-vue-components/vite'
 import AutoImport from 'unplugin-auto-import/vite'
@@ -12,6 +13,7 @@ export default defineConfig({
   plugins: [
     uni(),
     Unocss(),
+    vueJsx(),
     AutoImport({
       imports: ['vue'],
       dts: path.resolve(pathSrc, 'typings/auto-import.d.ts'),

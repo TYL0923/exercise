@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onShow } from '@dcloudio/uni-app'
 import type { QuestionSet } from '@exercise/type'
-import { useLoginState, useTabBar } from '../composables'
+import { useLoginState, useStart } from '../composables'
 import { getCreatedQuestionSet, getJoinedQuestionSet } from '../lib/api'
 
 const tabActive = ref(0)
@@ -10,6 +10,7 @@ const loginState = useLoginState()
 const isLogin = computed(() => !!loginState.account)
 const createdQuestionSetList = ref<QuestionSet[]>([])
 const joinedQuestionSetList = ref<QuestionSet[]>([])
+const { StartCom, showStart } = useStart()
 const isLoading = ref<{
   created: boolean
   joined: boolean
@@ -17,6 +18,7 @@ const isLoading = ref<{
   created: false,
   joined: false,
 })
+
 async function initCreatedQuestionSetList() {
   if (!isLogin.value) {
     createdQuestionSetList.value = []
@@ -60,15 +62,15 @@ watchEffect(initJoinedQuestionSetList)
 </script>
 
 <template>
-  <view h-screen bg-gray-50 overflow-y-auto>
-    <view flex flex-col-reverse h-160px bg-white>
-      <view bg-transparent pb-1>
+  <div h-screen bg-gray-50 overflow-y-auto>
+    <div flex flex-col-reverse h-160px bg-white>
+      <div bg-transparent pb-1>
         <van-tabs v-model:active="tabActive" background="transparent" shrink>
           <van-tab v-for="item in tabItems" :key="item" :title="item" />
         </van-tabs>
-      </view>
-    </view>
-    <view px-3 pt-1 pb-100px>
+      </div>
+    </div>
+    <div px-3 pt-1 pb-100px>
       <template v-if="tabActive === 0">
         <template v-if="isLoading.created">
           <SkeletonCom type="questionSetCard" />
@@ -78,6 +80,7 @@ watchEffect(initJoinedQuestionSetList)
             v-for="questionSet in createdQuestionSetList"
             :key="questionSet.id"
             :data="questionSet"
+            @click="showStart"
           />
         </template>
       </template>
@@ -90,10 +93,12 @@ watchEffect(initJoinedQuestionSetList)
             v-for="questionSet in joinedQuestionSetList"
             :key="questionSet.id"
             :data="questionSet"
+            @click="showStart"
           />
         </template>
       </template>
-    </view>
+    </div>
+    <StartCom />
     <TabBarCom />
-  </view>
+  </div>
 </template>

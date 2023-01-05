@@ -19,14 +19,14 @@ function handleChangeFilter(index: FilterProps, value: string) {
 </script>
 
 <template>
-  <div flex flex-col my-4>
+  <div flex flex-col my-2>
     <div
       v-for="group, index in optionGroup" :key="index"
-      flex items-center my-4 gap-6
+      flex items-center my-2 gap-x-6
     >
       <span
         v-for="item, idx in group" :key="idx"
-        mx-2 text-sm text-gray-500 hover="cursor-pointer text-sky-500"
+        mx-2 text-xs text-gray-500 hover="cursor-pointer text-sky-500"
         :class="filter[index] === item.key ? 'text-sky-500' : ''"
         @click="handleChangeFilter(index, item.key)"
       >{{ item.label }}</span>

@@ -10,18 +10,18 @@ const props = withDefaults(
 </script>
 
 <template>
-  <view class="container">
+  <div class="container">
     <template v-if="type === 'questionSetCard'">
-      <view p-4 bg-white flex flex-col gap-y-3 rounded-2 my-2>
-        <view class="main" w-400 h-50 rounded-1 />
-        <view class="main" w-600 h-30 rounded-1 />
-        <view flex items-center>
-          <view class="main" w-60 h-60 rounded-full />
-          <view class="main" ml-2 w-200 h-30 rounded-1 />
-        </view>
-      </view>
+      <div p-4 bg-white flex flex-col gap-y-3 rounded-2 my-2>
+        <div class="main" w-400 h-50 rounded-1 />
+        <div class="main" w-600 h-30 rounded-1 />
+        <div flex items-center>
+          <div class="main" w-60 h-60 rounded-full />
+          <div class="main" ml-2 w-200 h-30 rounded-1 />
+        </div>
+      </div>
     </template>
-  </view>
+  </div>
 </template>
 
 <style scoped lang="scss">

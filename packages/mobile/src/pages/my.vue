@@ -110,61 +110,61 @@ function handleLogout() {
 </script>
 
 <template>
-  <view h-screen>
-    <view relative bg-stone-900 h-240px flex items-center justify-center>
-      <view>
-        <view v-if="isLogin">
-          <image w-100 h-100 rounded-full src="../static/logo.png" />
-          <view text-white pt-2 text-center>
+  <div h-screen>
+    <div relative bg-stone-900 h-240px flex items-center justify-center>
+      <div>
+        <div v-if="isLogin">
+          <img w-100 h-100 rounded-full src="../static/logo.png">
+          <div text-white pt-2 text-center>
             {{ loginState.name }}
-          </view>
-        </view>
-        <view v-else @click="handleGotoLogin">
+          </div>
+        </div>
+        <div v-else @click="handleGotoLogin">
           <van-icon name="user-circle-o" size="60" text-gray-200 />
-          <view text-white pt-2 text-center>
+          <div text-white pt-2 text-center>
             {{ '点击登录' }}
-          </view>
-        </view>
-      </view>
-      <view
+          </div>
+        </div>
+      </div>
+      <div
         flex items-center justify-around
         absolute bottom-0
         class="w-84% left-50% -translate-x-50% translate-y-50%"
         rounded-1 bg-white shadow-md p-4
       >
-        <view>
-          <view>题库</view>
-          <view mt-1 text-xs text-gray-400>
+        <div>
+          <div>题库</div>
+          <div mt-1 text-xs text-gray-400>
             创建题库 10个
-          </view>
-        </view>
-        <view>
-          <view>笔记</view>
-          <view mt-1 text-xs text-gray-400>
+          </div>
+        </div>
+        <div>
+          <div>笔记</div>
+          <div mt-1 text-xs text-gray-400>
             分享笔记 10篇
-          </view>
-        </view>
-      </view>
-    </view>
-    <view mt-50px p-4>
-      <view font-semibold mb-6>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div mt-50px p-4>
+      <div font-semibold mb-6>
         历史记录
-      </view>
-      <view />
-    </view>
-    <view p-4>
-      <view font-semibold mb-6>
+      </div>
+      <div />
+    </div>
+    <div p-4>
+      <div font-semibold mb-6>
         常用功能
-      </view>
-      <view grid grid-cols-4 gap-8>
-        <view v-for="i in 4" :key="i" flex flex-col items-center gap-2>
+      </div>
+      <div grid grid-cols-4 gap-8>
+        <div v-for="i in 4" :key="i" flex flex-col items-center gap-2>
           <van-icon name="star-o" size="26" />
-          <view text-xs>
+          <div text-xs>
             我的收藏
-          </view>
-        </view>
-      </view>
-    </view>
+          </div>
+        </div>
+      </div>
+    </div>
     <TabBarCom />
-  </view>
+  </div>
 </template>

@@ -34,7 +34,7 @@ const handleChangeTitle = useDebounceFn((e: Event) => {
 </script>
 
 <template>
-  <view mb-10>
+  <div mb-10>
     <!-- test -->
     <template v-if="status === 'do'">
       <text text-base text-gray-900>
@@ -57,12 +57,12 @@ const handleChangeTitle = useDebounceFn((e: Event) => {
       <!-- <div text-xs mt-2>
         {{ `正确答案: ` }}
       </div> -->
-      <view mt-20>
+      <div mt-20>
         <QuestionAnswerCom
           :question="question" :status="status" :mode="mode"
           @change-correct-answer="handleChangeCorrectAnswer"
         />
-      </view>
+      </div>
     </template>
-  </view>
+  </div>
 </template>

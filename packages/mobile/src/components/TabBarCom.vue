@@ -11,13 +11,13 @@ function changeItem(idx: string | number) {
 </script>
 
 <template>
-  <view>
+  <div>
     <van-tabbar v-model="active" @change="changeItem">
       <van-tabbar-item v-for="item in tabItems" :key="item.page" :icon="item.icon">
         {{ item.label }}
       </van-tabbar-item>
     </van-tabbar>
-  </view>
+  </div>
 </template>
 
 <style scoped lang="less">
