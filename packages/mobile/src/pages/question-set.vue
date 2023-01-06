@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import { onShow } from '@dcloudio/uni-app'
 import type { QuestionSet } from '@exercise/type'
+import { showNotify } from 'vant'
 import { useLoginState, useStart } from '../composables'
 import { getCreatedQuestionSet, getJoinedQuestionSet } from '../lib/api'
 
 const tabActive = ref(0)
 const tabItems = ref(['创建的题库', '加入的题库'])
 const loginState = useLoginState()
-const isLogin = computed(() => !!loginState.account)
+
 const createdQuestionSetList = ref<QuestionSet[]>([])
 const joinedQuestionSetList = ref<QuestionSet[]>([])
 const { StartCom, showStart } = useStart()
@@ -18,9 +19,33 @@ const isLoading = ref<{
   created: false,
   joined: false,
 })
-
+function goto() {
+  if (loginState.isLogin) {
+    switch (tabActive.value) {
+      case 0:
+        showNotify({
+          type: 'primary',
+          message: '移动端暂不支持创建',
+          duration: 800,
+        })
+        break
+      case 1:
+        uni.navigateTo({
+          url: '/pages/search',
+        })
+        break
+      default:
+        break
+    }
+  }
+  else {
+    uni.navigateTo({
+      url: '/pages/login',
+    })
+  }
+}
 async function initCreatedQuestionSetList() {
-  if (!isLogin.value) {
+  if (!loginState.isLogin) {
     createdQuestionSetList.value = []
     return
   }
@@ -31,7 +56,7 @@ async function initCreatedQuestionSetList() {
   isLoading.value.created = false
 }
 async function initJoinedQuestionSetList() {
-  if (!isLogin.value) {
+  if (!loginState.isLogin) {
     joinedQuestionSetList.value = []
     return
   }
@@ -76,12 +101,25 @@ watchEffect(initJoinedQuestionSetList)
           <SkeletonCom type="questionSetCard" />
         </template>
         <template v-else>
-          <QuestionSetCardCom
-            v-for="questionSet in createdQuestionSetList"
-            :key="questionSet.id"
-            :data="questionSet"
-            @click="showStart"
-          />
+          <template v-if="createdQuestionSetList.length > 0">
+            <QuestionSetCardCom
+              v-for="questionSet in createdQuestionSetList"
+              :key="questionSet.id"
+              :data="questionSet"
+              @click="showStart"
+            />
+          </template>
+          <template v-else>
+            <van-empty
+              image="../static/empty.png"
+              image-size="80"
+              :description="loginState.isLogin ? '题库为空' : '请先登录'"
+            >
+              <van-button round type="primary" w-160px @click="goto">
+                {{ loginState.isLogin ? '去创建' : '去登陆' }}
+              </van-button>
+            </van-empty>
+          </template>
         </template>
       </template>
       <template v-else-if="tabActive === 1">
@@ -89,12 +127,25 @@ watchEffect(initJoinedQuestionSetList)
           <SkeletonCom type="questionSetCard" />
         </template>
         <template v-else>
-          <QuestionSetCardCom
-            v-for="questionSet in joinedQuestionSetList"
-            :key="questionSet.id"
-            :data="questionSet"
-            @click="showStart"
-          />
+          <template v-if="joinedQuestionSetList.length > 0">
+            <QuestionSetCardCom
+              v-for="questionSet in joinedQuestionSetList"
+              :key="questionSet.id"
+              :data="questionSet"
+              @click="showStart"
+            />
+          </template>
+          <template v-else>
+            <van-empty
+              image="../static/empty.png"
+              image-size="80"
+              :description="loginState.isLogin ? '题库为空' : '请先登录'"
+            >
+              <van-button round type="primary" w-160px @click="goto">
+                {{ loginState.isLogin ? '去创建' : '去登陆' }}
+              </van-button>
+            </van-empty>
+          </template>
         </template>
       </template>
     </div>

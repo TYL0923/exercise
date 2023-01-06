@@ -20,6 +20,9 @@ const useLoginState = defineStore('loginState', {
       this.name = ''
     },
   },
+  getters: {
+    isLogin: state => state.account && state.name && state.token,
+  },
 })
 export {
   useLoginState,

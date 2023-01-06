@@ -3,7 +3,7 @@ import { useTabBar } from '../composables'
 
 const { active, tabItems } = useTabBar()
 function changeItem(idx: string | number) {
-  const path = `/pages/${tabItems.value[Number(idx)].page}`
+  const path = `${tabItems.value[Number(idx)].page}`
   uni.navigateTo({
     url: path,
   })
@@ -19,7 +19,3 @@ function changeItem(idx: string | number) {
     </van-tabbar>
   </div>
 </template>
-
-<style scoped lang="less">
-
-</style>

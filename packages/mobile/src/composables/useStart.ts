@@ -1,5 +1,5 @@
 import type { QuestionSet } from '@exercise/type'
-import { ActionSheet, Button as VantButton } from 'vant'
+import { ActionSheet, Button as VantButton, showNotify } from 'vant'
 import { FilterCom, QuestionSetCardCom } from '../components'
 import { resetQuestion } from '../lib/api'
 import { useLoginState } from './useLogin'
@@ -59,6 +59,17 @@ export function useStart() {
   async function start() {
     if (!startQuestionSet.value?.id)
       return
+    if (loginState.account.length === 0) {
+      showNotify({
+        type: 'primary',
+        message: '请先登录',
+        duration: 500,
+      })
+      isShow.value = false
+      return uni.navigateTo({
+        url: '/pages/login',
+      })
+    }
     if (filter.mode === 'test') {
       uni.showLoading({
         title: '生成试卷中',

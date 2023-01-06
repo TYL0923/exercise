@@ -2,9 +2,9 @@
 import type { QuestionSet } from '@exercise/type'
 import { queryJoinableQuestionSet } from '../lib/api'
 import { useDebounceFn } from '../lib/utils'
-import { useJoinConfirm, useLoginState } from '../composables'
+import { useJoin, useLoginState } from '../composables'
 const loginState = useLoginState()
-const { joinConfirmCom, showJoin } = useJoinConfirm()
+const { joinConfirmCom, showJoin } = useJoin()
 const searchKeyWord = ref<string>('')
 
 const isLoading = ref<boolean>(false)
@@ -67,12 +67,21 @@ watch(
         <SkeletonCom type="questionSetCard" />
       </template>
       <template v-else>
-        <QuestionSetCardCom
-          v-for="questionSet in joinableQuestionSetList"
-          :key="questionSet.id"
-          :data="questionSet"
-          @click="showJoin(questionSet)"
-        />
+        <template v-if="joinableQuestionSetList.length === 0 ">
+          <van-empty
+            image="../static/empty.png"
+            image-size="80"
+            description="无结果"
+          />
+        </template>
+        <template v-else>
+          <QuestionSetCardCom
+            v-for="questionSet in joinableQuestionSetList"
+            :key="questionSet.id"
+            :data="questionSet"
+            @click="showJoin(questionSet)"
+          />
+        </template>
       </template>
     </div>
     <joinConfirmCom />

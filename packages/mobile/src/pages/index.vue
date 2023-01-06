@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import type { QuestionSet } from '@exercise/type'
-import { useJoinConfirm, useLoginState } from '../composables'
+import { useJoin, useLoginState } from '../composables'
 import { queryJoinableQuestionSet } from '../lib/api'
 
 const tabActive = ref(0)
 const tabItems = ref(['推荐题库'])
+const isLoading = ref<boolean>(false)
 const loginState = useLoginState()
 const recommendQuestionSetList = ref<QuestionSet[]>([])
-const { joinConfirmCom, showJoin } = useJoinConfirm()
+const { joinConfirmCom, showJoin } = useJoin()
 
 function gotoSearch() {
   uni.navigateTo({
@@ -15,11 +16,13 @@ function gotoSearch() {
   })
 }
 async function initrecommendQuestionSetList() {
+  isLoading.value = true
   const { err, data } = await queryJoinableQuestionSet({
     account: loginState.account,
   })
   if (!err && data)
     recommendQuestionSetList.value = data
+  isLoading.value = false
 }
 watchEffect(initrecommendQuestionSetList)
 </script>
@@ -34,11 +37,25 @@ watchEffect(initrecommendQuestionSetList)
     </div>
     <div px-2>
       <template v-if="tabActive === 0">
-        <QuestionSetCardCom
-          v-for="questionSet in recommendQuestionSetList"
-          :key="questionSet" :data="questionSet"
-          @click="showJoin(questionSet)"
-        />
+        <template v-if="isLoading">
+          <SkeletonCom type="questionSetCard" />
+        </template>
+        <template v-else>
+          <template v-if="recommendQuestionSetList.length === 0 ">
+            <van-empty
+              image="../static/empty.png"
+              image-size="80"
+              description="暂无推荐"
+            />
+          </template>
+          <template v-else>
+            <QuestionSetCardCom
+              v-for="questionSet in recommendQuestionSetList"
+              :key="questionSet" :data="questionSet"
+              @click="showJoin(questionSet)"
+            />
+          </template>
+        </template>
       </template>
     </div>
     <joinConfirmCom />

@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { showNotify } from 'vant'
 import { passwordLogin } from '../lib/api'
-import { useLoginState } from '../composables'
+import { useLoginState, useTabBar } from '../composables'
 type LoginMode = 'password' | 'verificationCode' | 'weixin' | 'qq'
 const loginState = useLoginState()
 const mode = ref<LoginMode>('password')
+const { active } = useTabBar()
 const loginFrom = reactive({
   account: 'admin2',
   password: 'admin2',
@@ -33,6 +34,8 @@ async function login() {
         message: '登录成功',
         duration: 500,
       })
+      // uni.navigateBack()
+      active.value = 2
       uni.navigateTo({
         url: '/pages/my',
       })

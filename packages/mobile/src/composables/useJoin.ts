@@ -3,7 +3,7 @@ import { ActionSheet, Tag, Button as VantButton, showConfirmDialog, showNotify }
 import { QuestionSetCardCom } from '../components'
 import { joinQuestionSetById } from '../lib/api'
 import { useLoginState } from './useLogin'
-export function useJoinConfirm() {
+export function useJoin() {
   const loginState = useLoginState()
   const isShow = ref<boolean>(false)
   const joinQuestionSet = ref<QuestionSet>()
@@ -14,6 +14,17 @@ export function useJoinConfirm() {
   async function handleJoinQuestionSet() {
     if (!joinQuestionSet.value)
       return
+    if (loginState.account.length === 0) {
+      showNotify({
+        type: 'primary',
+        message: '请先登录',
+        duration: 500,
+      })
+      isShow.value = false
+      return uni.navigateTo({
+        url: '/pages/login',
+      })
+    }
     showConfirmDialog({
       title: '确认',
       message: '确认加入题库',
