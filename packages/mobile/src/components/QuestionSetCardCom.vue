@@ -51,7 +51,7 @@ const tagArr = computed(() => {
         </div>
       </div>
       <div flex flex-col items-center>
-        <img w-70 h-70 rounded-full src="../static/logo.png">
+        <img w-70 h-70 rounded-full src="../static/user.png">
         <div text-xs text-gray-600 mt-2>
           {{ data.author.name }}
         </div>

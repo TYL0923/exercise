@@ -16,7 +16,7 @@ dist-ssr
 # my
 note.md
 backup
-*.png
+
 
 # Editor directories and files
 .vscode/*

@@ -83,7 +83,7 @@ function logout() {
     <div relative bg-stone-900 h-240px flex items-center justify-center>
       <div>
         <div v-if="isLogin">
-          <img w-100 h-100 rounded-full src="../static/logo.png">
+          <img w-100 h-100 rounded-full src="../static/user.png">
           <div text-white pt-2 text-center>
             {{ loginState.name }}
           </div>
