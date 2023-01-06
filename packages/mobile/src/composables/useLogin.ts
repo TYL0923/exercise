@@ -3,9 +3,9 @@ import { defineStore } from 'pinia'
 const useLoginState = defineStore('loginState', {
   state: () => {
     return {
-      account: 'admin1',
-      name: 'admin1',
-      token: '1',
+      account: '',
+      name: '',
+      token: '',
     }
   },
   actions: {

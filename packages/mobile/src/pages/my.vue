@@ -1,111 +1,80 @@
 <script setup lang="ts">
-import { computed, reactive, ref, watchEffect } from 'vue'
-import type { QuestionSet } from '@exercise/type'
-import { onShow } from '@dcloudio/uni-app'
+import type { ActionSheetAction } from 'vant'
+import { showConfirmDialog, showNotify } from 'vant'
+
 import { useLoginState } from '../composables'
-import { getCreatedQuestionSet, getJoinedQuestionSet, resetQuestion } from '../lib/api'
-import QuestionSetCardCom from '../components/QuestionSetCardCom.vue'
-import SkeletonCom from '../components/SkeletonCom.vue'
-import FilterCom from '../components/FilterCom.vue'
 
 const loginState = useLoginState()
-const moreOperationPopupRef = ref<any>(null)
-const openQuestionSetPopupRef = ref<any>(null)
-const logoutPopupRef = ref<any>(null)
+const settingIsShow = ref<boolean>(false)
 const isLogin = computed(() => !!loginState.account)
-const current = ref<number>(0)
-const items = reactive(['创建的题库', '加入的题库'])
-
-const openQuestionSet = ref<QuestionSet>()
-const filter = reactive<{
-  mode: 'exercise' | 'test'
-  start: 'continue' | 'restart'
-  part: 'all' | 'error' | 'not'
-}>({
-  mode: 'test',
-  start: 'continue',
-  part: 'all',
-})
-const filterOptions = reactive({
-  mode: [
-    {
-      label: '刷题模式',
-      key: 'exercise',
-    },
-    {
-      label: '考试模式',
-      key: 'test',
-    },
-  ],
-  start: [
-    {
-      label: '继续刷题',
-      key: 'continue',
-    },
-    {
-      label: '重新开始',
-      key: 'restart',
-    },
-  ],
-  part: [
-    {
-      label: '全部',
-      key: 'all',
-    },
-    {
-      label: '错题',
-      key: 'error',
-    },
-    {
-      label: '未做',
-      key: 'not',
-    },
-  ],
-})
-
+const settingOperation = ref<ActionSheetAction[]>([
+  {
+    name: '退出登录',
+    color: '#ee0a24',
+  },
+])
+const commonOperation = ref<Record<'label' | 'pagePath' | 'icon', string>[]>([
+  {
+    label: '我的题库',
+    pagePath: '/pages/question-set',
+    icon: 'newspaper-o',
+  },
+  {
+    label: '加入题库',
+    pagePath: '/pages/question-set',
+    icon: 'add-o',
+  },
+  {
+    label: '搜索题库',
+    pagePath: '/pages/search',
+    icon: 'search',
+  },
+  {
+    label: '设置',
+    pagePath: '',
+    icon: 'setting-o',
+  },
+])
 function handleGotoLogin() {
   uni.navigateTo({
     url: '/pages/login',
   })
 }
-
-function handleOpenQuestionSet(questionSet: QuestionSet) {
-  openQuestionSet.value = questionSet
-  openQuestionSetPopupRef.value.open('bottom')
-}
-async function handleStart() {
-  if (!openQuestionSet.value?.id)
-    return
-  if (filter.mode === 'test') {
-    uni.showLoading({
-      title: '生成试卷中',
-    })
-    await resetQuestion(openQuestionSet.value.id, loginState.account, 'test')
-    uni.hideLoading()
-    uni.navigateTo({
-      url: `/pages/test?id=${openQuestionSet.value.id}`,
+function commom(item: Record<'label' | 'pagePath' | 'icon', string>) {
+  if (item.pagePath !== '') {
+    return uni.navigateTo({
+      url: item.pagePath,
     })
   }
-  else {
-    if (filter.start === 'restart') {
-      uni.showLoading({
-        title: '加载中',
+  switch (item.label) {
+    case '设置':
+      settingIsShow.value = true
+      break
+    default:
+      break
+  }
+}
+function settingSelected(action: ActionSheetAction) {
+  switch (action.name) {
+    case '退出登录':
+      logout()
+      break
+    default:
+      break
+  }
+}
+function logout() {
+  showConfirmDialog({
+    title: '是否退出登录?',
+  })
+    .then(async () => {
+      loginState.logout()
+      showNotify({
+        type: 'success',
+        message: '已退出登录',
+        duration: 500,
       })
-      const res = await resetQuestion(openQuestionSet.value.id, loginState.account, 'exercise')
-      uni.hideLoading()
-    }
-    uni.navigateTo({
-      url: `/pages/exercise?id=${openQuestionSet.value.id}&part=${filter.part}`,
     })
-  }
-  openQuestionSetPopupRef.value.close()
-}
-function handleOpenPopup() {
-  moreOperationPopupRef.value!.open('bottom')
-}
-function handleLogout() {
-  loginState.logout()
-  moreOperationPopupRef.value!.close()
 }
 </script>
 
@@ -157,14 +126,25 @@ function handleLogout() {
         常用功能
       </div>
       <div grid grid-cols-4 gap-8>
-        <div v-for="i in 4" :key="i" flex flex-col items-center gap-2>
-          <van-icon name="star-o" size="26" />
+        <div
+          v-for="item in commonOperation" :key="item.label"
+          flex flex-col items-center gap-2
+          @click="commom(item)"
+        >
+          <van-icon :name="item.icon" size="26" />
           <div text-xs>
-            我的收藏
+            {{ item.label }}
           </div>
         </div>
       </div>
     </div>
+    <van-action-sheet
+      v-model:show="settingIsShow"
+      :actions="settingOperation"
+      cancel-text="取消"
+      close-on-click-action
+      @select="settingSelected"
+    />
     <TabBarCom />
   </div>
 </template>
