@@ -306,13 +306,14 @@ export class QuestionSetService {
           }));
         let res = await builder.getMany();
         // 排除已加入
-        res = res.filter((questionSet) =>
-          user.answerKeys.find(
-            (answerKey) => answerKey.questionSet.id === questionSet.id,
-          )
-            ? false
-            : true,
-        );
+        options.account &&
+          (res = res.filter((questionSet) =>
+            user.answerKeys.find(
+              (answerKey) => answerKey.questionSet.id === questionSet.id,
+            )
+              ? false
+              : true,
+          ));
         if (res) {
           return resolve(
             res.reduce((pre, cur) => {
