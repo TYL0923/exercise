@@ -47,6 +47,11 @@ async function login() {
   }
   // todo verificationCode login
 }
+function back() {
+  uni.navigateTo({
+    url: '/pages/index',
+  })
+}
 function wxLogin() {
   showNotify({
     type: 'primary',
@@ -64,9 +69,14 @@ function qqLogin() {
 </script>
 
 <template>
-  <div p-4>
-    <div h-100 />
-    <van-form @submit="login">
+  <div>
+    <van-nav-bar
+      title="登录"
+      left-text="返回"
+      left-arrow
+      @click-left="back"
+    />
+    <van-form mt-4 p-4 @submit="login">
       <div h-120px>
         <van-field
           v-model="loginFrom.account"
