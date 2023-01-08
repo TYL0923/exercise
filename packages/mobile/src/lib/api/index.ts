@@ -1,6 +1,7 @@
 import type { Question } from '@exercise/type'
 
-const baseUrl = 'https://api.onlinexercise.top:8888'
+const baseUrl = 'http://localhost:8888'
+// const baseUrl = 'https://api.onlinexercise.top'
 const duration = 350 // ms
 interface Return {
   err?: string
