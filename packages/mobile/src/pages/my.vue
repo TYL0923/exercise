@@ -80,7 +80,7 @@ function logout() {
 
 <template>
   <div h-screen>
-    <div relative bg-stone-900 h-240px flex items-center justify-center>
+    <div relative class="bg" h-240px flex items-center justify-center>
       <div>
         <div v-if="isLogin">
           <img w-100 h-100 rounded-full src="../static/user.png">
@@ -104,13 +104,13 @@ function logout() {
         <div>
           <div>题库</div>
           <div mt-1 text-xs text-gray-400>
-            创建题库 10个
+            创建题库 - 个
           </div>
         </div>
         <div>
           <div>笔记</div>
           <div mt-1 text-xs text-gray-400>
-            分享笔记 10篇
+            分享笔记 - 篇
           </div>
         </div>
       </div>
@@ -148,3 +148,9 @@ function logout() {
     <TabBarCom />
   </div>
 </template>
+
+<style lang="less" scoped>
+.bg {
+  background: linear-gradient(to right, #667db6, #0082c8, #0082c8, #667db6); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+</style>

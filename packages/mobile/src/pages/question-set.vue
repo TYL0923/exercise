@@ -23,10 +23,8 @@ function goto() {
   if (loginState.isLogin) {
     switch (tabActive.value) {
       case 0:
-        showNotify({
-          type: 'primary',
-          message: '移动端暂不支持创建',
-          duration: 800,
+        uni.navigateTo({
+          url: '/pages/create',
         })
         break
       case 1:
@@ -88,7 +86,7 @@ watchEffect(initJoinedQuestionSetList)
 
 <template>
   <div h-screen bg-gray-50 overflow-y-auto>
-    <div flex flex-col-reverse h-160px bg-white>
+    <div flex flex-col-reverse class="bg" h-120px>
       <div bg-transparent pb-1>
         <van-tabs v-model:active="tabActive" background="transparent" shrink>
           <van-tab v-for="item in tabItems" :key="item" :title="item" />
@@ -153,3 +151,9 @@ watchEffect(initJoinedQuestionSetList)
     <TabBarCom />
   </div>
 </template>
+
+<style lang="less" scoped>
+.bg {
+  background: linear-gradient(to top, #E2E2E2, #C9D6FF); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+</style>
