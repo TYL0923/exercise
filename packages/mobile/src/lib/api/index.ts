@@ -1,7 +1,7 @@
 import type { Question } from '@exercise/type'
 
-const baseUrl = 'http://localhost:8888'
-// const baseUrl = 'https://api.onlinexercise.top'
+// const baseUrl = 'http://localhost:8888'
+const baseUrl = 'https://api.onlinexercise.top'
 const duration = 350 // ms
 interface Return {
   err?: string
@@ -95,6 +95,24 @@ export function passwordLogin(account: string, password: string): Promise<Return
   })
 }
 
+export function checkAccount(account: string): Promise<Return> {
+  const url = '/user/checkAccount'
+  return new Promise((resolve) => {
+    setTimeout(async () => {
+      const res = await get(url, { account })
+      resolve(res)
+    }, 0)
+  })
+}
+export function registerAccount(account: string, password: string): Promise<Return> {
+  const url = '/user/register'
+  return new Promise((resolve) => {
+    setTimeout(async () => {
+      const res = await post(url, { account, password })
+      resolve(res)
+    }, duration)
+  })
+}
 export async function getRecommendQuestionSet(): Promise<Return> {
   const url = '/questionSet/joinable'
   return new Promise((resolve) => {

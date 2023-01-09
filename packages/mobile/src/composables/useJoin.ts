@@ -1,5 +1,5 @@
 import type { QuestionSet } from '@exercise/type'
-import { ActionSheet, Tag, Button as VantButton, showConfirmDialog, showNotify } from 'vant'
+import { ActionSheet, Tag, Button as VantButton, closeToast, showConfirmDialog, showLoadingToast, showNotify } from 'vant'
 import { QuestionSetCardCom } from '../components'
 import { joinQuestionSetById } from '../lib/api'
 import { useLoginState } from './useLogin'
@@ -32,10 +32,12 @@ export function useJoin() {
       .then(async () => {
         // on confirm
         isShow.value = false
-        uni.showLoading({
-          title: '加入中',
+        showLoadingToast({
+          message: '加入中...',
+          forbidClick: true,
         })
         const { err, data } = await joinQuestionSetById(joinQuestionSet.value!.id, loginState.account)
+        closeToast()
         if (!err && data) {
           showNotify({
             type: 'success',
@@ -51,7 +53,6 @@ export function useJoin() {
           })
         }
         // initjoinableQuestionSetList('')
-        uni.hideLoading()
       })
       .catch(() => {
         // on cancel

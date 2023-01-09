@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Question, QuestionSet } from '@exercise/type'
 import { onLoad } from '@dcloudio/uni-app'
-import { showConfirmDialog } from 'vant'
+import { closeToast, showConfirmDialog, showLoadingToast } from 'vant'
 import { useLoginState } from '../composables'
 import { getQuestionSetDetail, updateQuestionAnswer, updateQuestions } from '../lib/api'
 
@@ -68,11 +68,12 @@ async function exitExercise() {
     message: '确定退出练习?',
   })
     .then(async () => {
-      uni.showLoading({
-        title: '保存中',
+      showLoadingToast({
+        message: '保存中...',
+        forbidClick: true,
       })
       await updateQuestions(questionSet.value!.questions)
-      uni.hideLoading()
+      closeToast()
       uni.navigateTo({
         url: '/pages/question-set',
       })

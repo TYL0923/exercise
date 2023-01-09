@@ -1,5 +1,5 @@
 import type { QuestionSet } from '@exercise/type'
-import { ActionSheet, Button as VantButton, showNotify } from 'vant'
+import { ActionSheet, Button as VantButton, closeToast, showLoadingToast, showNotify } from 'vant'
 import { FilterCom, QuestionSetCardCom } from '../components'
 import { resetQuestion } from '../lib/api'
 import { useLoginState } from './useLogin'
@@ -71,22 +71,24 @@ export function useStart() {
       })
     }
     if (filter.mode === 'test') {
-      uni.showLoading({
-        title: '生成试卷中',
+      showLoadingToast({
+        message: '生成试卷中...',
+        forbidClick: true,
       })
       await resetQuestion(startQuestionSet.value.id, loginState.account, 'test')
-      uni.hideLoading()
+      closeToast()
       uni.navigateTo({
         url: `/pages/test?id=${startQuestionSet.value.id}`,
       })
     }
     else {
       if (filter.start === 'restart') {
-        uni.showLoading({
-          title: '加载中',
+        showLoadingToast({
+          message: '加载中...',
+          forbidClick: true,
         })
         await resetQuestion(startQuestionSet.value.id, loginState.account, 'exercise')
-        uni.hideLoading()
+        closeToast()
       }
       uni.navigateTo({
         url: `/pages/exercise?id=${startQuestionSet.value.id}&part=${filter.part}`,

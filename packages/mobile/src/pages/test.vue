@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import type { Question, QuestionSet } from '@exercise/type'
 import { onLoad } from '@dcloudio/uni-app'
-import { showConfirmDialog } from 'vant'
+import { closeToast, showConfirmDialog, showLoadingToast } from 'vant'
 import { useLoginState } from '../composables'
-import { getQuestionSetDetail, updateQuestionAnswer, updateQuestions } from '../lib/api'
-import QuestionCom from '../components/QuestionCom.vue'
+import { getQuestionSetDetail, updateQuestions } from '../lib/api'
+import { QuestionCom } from '../components'
 
 const testState = ref<{
   id: string
@@ -63,12 +63,13 @@ async function submitPaper() {
     message: notDo.value ? `还有 ${notDo.value} 题未答, 是否提交` : '已全部作答, 是否提交',
   })
     .then(async () => {
-      uni.showLoading({
-        title: '批改中',
+      showLoadingToast({
+        message: '批改中...',
+        forbidClick: true,
       })
       testStatus.value = 'done'
       await updateQuestions(questionSet.value!.questions)
-      uni.hideLoading()
+      closeToast()
       answerKeyIsShow.value = true
     })
     .catch(() => {
