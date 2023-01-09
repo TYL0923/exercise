@@ -33,7 +33,7 @@ const tagArr = computed(() => {
         </div>
       </div>
       <div flex flex-col items-center>
-        <img w-16 h-16 rounded-full src="/using.jpeg" alt="">
+        <img w-10 h-10 rounded-full src="/using.jpeg" alt="">
         <p mt-2>
           {{ questionSet.author.name || '-' }}
         </p>

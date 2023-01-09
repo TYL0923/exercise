@@ -104,11 +104,20 @@ async function customRequest(file: any) {
   form.append('file', file.file)
   form.append('contractName', file.file.name)
   form.append('description', file.file.name)
+  message.loading({
+    content: '识别中...',
+    key: 'identify',
+  })
   const [err, data] = await identifyQuestionSet({
     param: form,
   })
   if (!err && data) {
     if (data.length > 0) {
+      message.success({
+        content: `识别出${data.length}道题`,
+        key: 'identify',
+        duration: 1,
+      })
       questionList.value = data
       status.value = 'edit'
     }
@@ -143,21 +152,41 @@ async function customRequest(file: any) {
     </div>
     <template v-if="status === 'add'">
       <div
-        bg-white w-100 h-100 rounded-1 absolute
+        flex justify-center
+        w-full h-100 rounded-1 absolute
         class="top-50% left-50% -translate-x-1/2 -translate-y-1/2"
       >
-        <a-upload-dragger
-          :show-upload-list="false"
-          :headers="{ 'Content-Type': 'multipart/form-data' }"
-          :custom-request="customRequest"
-        >
-          <p>
-            点击或拖拽上传
-          </p>
-          <p>
-            支持txt、doc、docx文件格式
-          </p>
-        </a-upload-dragger>
+        <div bg-white h-100 w-100>
+          <a-upload-dragger
+            :show-upload-list="false"
+            :headers="{ 'Content-Type': 'multipart/form-data' }"
+            :custom-request="customRequest"
+          >
+            <p>
+              点击或拖拽上传
+            </p>
+            <p>
+              支持txt、docx文件格式
+            </p>
+          </a-upload-dragger>
+        </div>
+        <div p-20 py-4 box-border>
+          <h3>注意</h3>
+          <ul>
+            <li>暂时只支持.txt和.docx文档</li>
+            <li>暂时只支持选择题和判断题的识别</li>
+            <li>每个题目之间至少间隔一个空行</li>
+            <li>最后一题后面要有一个空行</li>
+            <li>判断题后要有一个问号(?？)</li>
+          </ul>
+          <h3>标准题目格式图片样例</h3>
+          <div>
+            <a-image
+              :width="200"
+              src="/sample.jpg"
+            />
+          </div>
+        </div>
       </div>
     </template>
     <template v-else>
