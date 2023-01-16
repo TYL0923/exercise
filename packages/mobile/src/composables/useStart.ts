@@ -11,7 +11,7 @@ export function useStart() {
     start: 'continue' | 'restart'
     part: 'all' | 'error' | 'not'
   }>({
-    mode: 'test',
+    mode: 'exercise',
     start: 'continue',
     part: 'all',
   })

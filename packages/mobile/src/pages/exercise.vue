@@ -2,7 +2,7 @@
 import type { Question, QuestionSet } from '@exercise/type'
 import { onLoad } from '@dcloudio/uni-app'
 import { closeToast, showConfirmDialog, showLoadingToast } from 'vant'
-import { useLoginState } from '../composables'
+import { useLoginState, useSlide } from '../composables'
 import { getQuestionSetDetail, updateQuestionAnswer, updateQuestions } from '../lib/api'
 
 const exerciseState = ref<{
@@ -16,11 +16,12 @@ onLoad((option) => {
   exerciseState.value.id = option?.id || ''
   exerciseState.value.part = option?.part || 'all'
 })
+
+const touchRef = ref<HTMLElement | null>()
 const loginState = useLoginState()
 const questionSet = ref<QuestionSet>()
 const currentIdx = ref<number>(0)
 const answerKeyIsShow = ref<boolean>(false)
-
 const currentQuestion = computed(() => {
   return questionSet.value?.questions[currentIdx.value]
 })
@@ -40,6 +41,12 @@ const doneClass = computed(() => {
 })
 function openAnswerKey() {
   answerKeyIsShow.value = true
+}
+function next() {
+  currentIdx.value < questionSet.value!.questions.length - 1 && currentIdx.value++
+}
+function last() {
+  currentIdx.value > 0 && currentIdx.value--
 }
 function gotoQuestion(idx: number) {
   if (idx < 0 || idx >= questionSet.value!.questions.length)
@@ -102,6 +109,9 @@ async function initQuestionSet() {
   }
   questionSet.value = data
 }
+onMounted(() => {
+  useSlide(touchRef!.value!, { leftSlide: next, rightSlide: last })
+})
 watchEffect(initQuestionSet)
 </script>
 
@@ -113,7 +123,7 @@ watchEffect(initQuestionSet)
       left-arrow
       @click-left="exitExercise"
     />
-    <div p-4 flex-1 overflow-y-auto>
+    <div ref="touchRef" p-4 flex-1 overflow-y-auto>
       <QuestionCom
         v-if="currentQuestion"
         :question="currentQuestion"
@@ -131,7 +141,7 @@ watchEffect(initQuestionSet)
       <div
         col-start-1 col-end-2
         :class="currentIdx > 0 ? 'text-sky-500' : 'text-gray-300'"
-        @click="currentIdx > 0 && currentIdx--"
+        @click="last"
       >
         上一题
       </div>
@@ -143,7 +153,7 @@ watchEffect(initQuestionSet)
       <div
         col-start-5 col-end-6
         :class="currentIdx < questionSet!.questions.length - 1 ? 'text-sky-500' : 'text-gray-300'"
-        @click="currentIdx < questionSet!.questions.length - 1 && currentIdx++"
+        @click="next"
       >
         下一题
       </div>

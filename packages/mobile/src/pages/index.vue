@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { QuestionSet } from '@exercise/type'
-import { useJoin, useLoginState } from '../composables'
+import { useJoin, useLoginState, useSlide } from '../composables'
 import { queryJoinableQuestionSet } from '../lib/api'
 
 const tabActive = ref(0)
@@ -9,7 +9,6 @@ const isLoading = ref<boolean>(false)
 const loginState = useLoginState()
 const recommendQuestionSetList = ref<QuestionSet[]>([])
 const { joinConfirmCom, showJoin } = useJoin()
-
 function gotoSearch() {
   uni.navigateTo({
     url: '/pages/search',

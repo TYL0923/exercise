@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { onShow } from '@dcloudio/uni-app'
 import type { QuestionSet } from '@exercise/type'
-import { showNotify } from 'vant'
 import { useLoginState, useStart } from '../composables'
 import { getCreatedQuestionSet, getJoinedQuestionSet } from '../lib/api'
 
