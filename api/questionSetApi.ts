@@ -128,52 +128,52 @@ export function resetQuestion(
   return put(url, { id, account, mode })
 }
 
-// export function getQuestionSetSimple(
-//   id: string,
-//   delay = 0,
-// ): Return<Omit<QuestionSet, 'questions'>> {
-//   const url = '/questionSet/simple'
-//   return new Promise((resolve) => {
-//     setTimeout(async () => {
-//       const res = await a.get(url, { params: { id } })
-//       resolve([undefined, res.data])
-//     }, delay)
-//   })
-// }
+/**
+ * 获取题库简单信息
+ * @param id 题库id
+ * @returns
+ */
+export function getQuestionSetSimple(
+  id: string,
+): Return {
+  const url = '/questionSet/simple'
+  return get(url, { id })
+}
 
-// export function updateQuestionSet(
-//   questionSet: Omit<QuestionSet, 'createTime'>,
-// ): Return<QuestionSet> {
-//   const url = '/questionSet/update'
-//   return new Promise((resolve) => {
-//     setTimeout(async () => {
-//       const res = await a.put(url, questionSet)
-//       resolve([undefined, res.data])
-//     }, 350)
-//   })
-// }
+/**
+ * 更新题库
+ * @param questionSet 题库信息
+ * @returns
+ */
+export function updateQuestionSet(
+  questionSet: Omit<QuestionSet, 'createTime'>,
+): Return {
+  const url = '/questionSet/update'
+  return put(url, questionSet)
+}
 
-// export function removeQuestionSet(options: {
-//   id: string
-//   account: string
-// }): Return<QuestionSet> {
-//   const url = '/questionSet/remove'
-//   return new Promise((resolve) => {
-//     setTimeout(async () => {
-//       const res = await a.put(url, options)
-//       resolve([undefined, res.data])
-//     }, 350)
-//   })
-// }
-// export function exitQuestionSet(options: {
-//   id: string
-//   account: string
-// }): Return<boolean> {
-//   const url = '/questionSet/exit'
-//   return new Promise((resolve) => {
-//     setTimeout(async () => {
-//       const res = await a.put(url, options)
-//       resolve([undefined, res.data])
-//     }, 350)
-//   })
-// }
+/**
+ * 删除题库
+ * @param options 题库id、账号
+ * @returns
+ */
+export function removeQuestionSet(options: {
+  id: string
+  account: string
+}): Return {
+  const url = '/questionSet/remove'
+  return put(url, options)
+}
+
+/**
+ * 退出题库
+ * @param options 题库id、账号
+ * @returns
+ */
+export function exitQuestionSet(options: {
+  id: string
+  account: string
+}): Return {
+  const url = '/questionSet/exit'
+  return put(url, options)
+}
