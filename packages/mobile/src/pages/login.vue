@@ -37,26 +37,11 @@ function passwordValidator(val: string) {
 function confirmPasswordValidator(val: string) {
   return val.trim() !== registerFrom.password.trim() ? '两次输入密码不一致' : ''
 }
-// function a() {
-//   return new Promise((resolve) => {
-//     setTimeout(() => {
-//       resolve(false)
-//     }, 1000)
-//   })
-// }
-// function b() {
-//   return new Promise((resolve) => {
-//     setTimeout(() => {
-//       resolve(true)
-//     }, 1000)
-//   })
-// }
 async function register() {
   showLoadingToast({
     message: '验证账号中...',
     forbidClick: true,
   })
-  // const data = await a()
   const { data } = await checkAccount(registerFrom.account)
   if (data) {
     return showToast({
@@ -67,7 +52,6 @@ async function register() {
     message: '注册中...',
     forbidClick: true,
   })
-  // const d = await b()
   const { data: d } = await registerAccount(registerFrom.account, registerFrom.password)
   if (d) {
     showToast('注册成功')
@@ -98,7 +82,6 @@ async function login() {
         message: '登录成功',
         duration: 1000,
       })
-      // uni.navigateBack()
       active.value = 2
       uni.navigateTo({
         url: '/pages/my',
