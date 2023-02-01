@@ -1,38 +1,16 @@
 import type { Return } from './request'
-import a from './request'
+import { get, post } from './request'
 
-interface TRegisterParams {
-  readonly account: string
-  readonly password: string
+export function checkAccount(account: string): Return {
+  const url = '/user/checkAccount'
+  return get(url, { account })
 }
-export function register(
-  registerParams: TRegisterParams,
-): Return<boolean> {
+export function registerAccount(account: string, password: string): Return {
   const url = '/user/register'
-  return new Promise((resolve) => {
-    setTimeout(async () => {
-      const res = await a.post(url, registerParams)
-      resolve([undefined, res.data])
-    }, 1000)
-  })
+  return post(url, { account, password })
 }
-
-interface LoginParams {
-  readonly account: string
-  readonly password: string
-}
-interface LoginRes {
-  account: string
-  name: string
-  token: string
-}
-export function login(loginParams: LoginParams): Return<LoginRes> {
+export function passwordLogin(account: string, password: string): Return {
   const url = '/user/login'
-  return new Promise((resolve) => {
-    setTimeout(async () => {
-      const res = await a.post(url, loginParams)
-      resolve([undefined, res.data as LoginRes])
-    }, 1000)
-  })
+  return post(url, { account, password })
 }
 

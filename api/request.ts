@@ -1,19 +1,42 @@
-import type { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
 import axios from 'axios'
-// const URL = 'http://127.0.0.1:8000'
-const URL = 'https://api.onlinexercise.top'
+import type { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
+const baseURL = 'http://127.0.0.1:8000'
+// const baseURL = 'https://api.onlinexercise.top'
 const a: AxiosInstance = axios.create({
-  baseURL: URL,
+  baseURL,
   timeout: 10000,
 })
+const duration = 350 // ms
 
 export interface IResponse {
-  code: string
-  message: string
+  err?: string
   data: any
 }
-
-export type Return<T = any> = Promise<[string | null | undefined, T]>
+export type Return<T = IResponse> = Promise<T>
+export function get(url: string, params?: Record<string, any>, config?: AxiosRequestConfig): Return {
+  return new Promise((resolve) => {
+    setTimeout(async () => {
+      const res = await a.get(url, config || { params: { ...params } })
+      resolve(res)
+    }, duration)
+  })
+}
+export function post(url: string, params: Record<string, any>, config?: AxiosRequestConfig): Return {
+  return new Promise((resolve) => {
+    setTimeout(async () => {
+      const res = await a.post(url, { ...params }, config)
+      resolve(res)
+    }, duration)
+  })
+}
+export function put(url: string, params: Record<string, any>, config?: AxiosRequestConfig): Return {
+  return new Promise((resolve) => {
+    setTimeout(async () => {
+      const res = await a.put(url, { ...params }, config)
+      resolve(res)
+    }, duration)
+  })
+}
 const initInterceptors = () => {
   a.interceptors.request.use((config: AxiosRequestConfig) => {
     const token = localStorage.getItem('TOKEN')
@@ -29,4 +52,3 @@ const initInterceptors = () => {
   )
 }
 initInterceptors()
-export default a
