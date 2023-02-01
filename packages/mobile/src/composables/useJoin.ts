@@ -1,9 +1,10 @@
 import type { QuestionSet } from '@exercise/type'
 import { ActionSheet, Tag, Button as VantButton, closeToast, showConfirmDialog, showLoadingToast, showNotify } from 'vant'
+import { joinQuestionSetById } from '@exercise/api'
 import { QuestionSetCardCom } from '../components'
-import { joinQuestionSetById } from '../lib/api'
 import { useLoginState } from './useLogin'
 export function useJoin() {
+  const router = useRouter()
   const loginState = useLoginState()
   const isShow = ref<boolean>(false)
   const joinQuestionSet = ref<QuestionSet>()
@@ -21,9 +22,7 @@ export function useJoin() {
         duration: 500,
       })
       isShow.value = false
-      return uni.navigateTo({
-        url: '/pages/login',
-      })
+      router.push('/login')
     }
     showConfirmDialog({
       title: '确认',

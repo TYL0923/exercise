@@ -26,8 +26,8 @@ function handleChangeFilter(index: FilterProps, value: string) {
     >
       <span
         v-for="item, idx in group" :key="idx"
-        mx-2 text-xs text-gray-500 hover="cursor-pointer text-sky-500"
-        :class="filter[index] === item.key ? 'text-sky-500' : ''"
+        mx-2 text-xs hover="cursor-pointer text-sky-500"
+        :class="filter[index] === item.key ? 'text-sky-500' : 'text-gray-500'"
         @click="handleChangeFilter(index, item.key)"
       >{{ item.label }}</span>
     </div>

@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import type { QuestionSet } from '@exercise/type'
+import { queryJoinableQuestionSet } from '@exercise/api'
 import { useJoin, useLoginState, useSlide } from '../composables'
-import { queryJoinableQuestionSet } from '../lib/api'
 
+const router = useRouter()
 const tabActive = ref(0)
 const tabItems = ref(['推荐题库'])
 const isLoading = ref<boolean>(false)
@@ -10,9 +11,7 @@ const loginState = useLoginState()
 const recommendQuestionSetList = ref<QuestionSet[]>([])
 const { joinConfirmCom, showJoin } = useJoin()
 function gotoSearch() {
-  uni.navigateTo({
-    url: '/pages/search',
-  })
+  router.push('/search')
 }
 async function initrecommendQuestionSetList() {
   isLoading.value = true

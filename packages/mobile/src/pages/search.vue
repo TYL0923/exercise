@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import type { QuestionSet } from '@exercise/type'
-import { queryJoinableQuestionSet } from '../lib/api'
+import { queryJoinableQuestionSet } from '@exercise/api'
 import { useDebounceFn } from '../lib/utils'
 import { useJoin, useLoginState } from '../composables'
+
+const router = useRouter()
 const loginState = useLoginState()
 const { joinConfirmCom, showJoin } = useJoin()
 const searchKeyWord = ref<string>('')
@@ -11,9 +13,7 @@ const isLoading = ref<boolean>(false)
 
 const joinableQuestionSetList = ref<QuestionSet[]>([])
 function leftCilck() {
-  uni.navigateTo({
-    url: '/pages/index',
-  })
+  router.push('/')
 }
 
 const initjoinableQuestionSetList = useDebounceFn(async (key: string) => {

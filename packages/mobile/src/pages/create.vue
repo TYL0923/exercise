@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import { showToast } from 'vant'
 
+const router = useRouter()
 const url = 'onlinexercise.top'
 function back() {
-  uni.navigateTo({
-    url: '/pages/question-set',
-  })
+  router.push('/question-set')
 }
 function copyUrl() {
   const oInput = document.createElement('input')

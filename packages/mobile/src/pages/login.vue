@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import { closeToast, showFailToast, showLoadingToast, showNotify, showSuccessToast, showToast } from 'vant'
-import { checkAccount, passwordLogin, registerAccount } from '../lib/api'
+import { closeToast, showLoadingToast, showNotify, showToast } from 'vant'
+import { checkAccount, passwordLogin, registerAccount } from '@exercise/api'
 import { useLoginState, useTabBar } from '../composables'
 type LoginMode = 'password' | 'verificationCode' | 'weixin' | 'qq'
+
+const router = useRouter()
 const loginState = useLoginState()
 const mode = ref<LoginMode>('password')
 const page = ref<'login' | 'register'>('login')
@@ -83,14 +85,12 @@ async function login() {
         duration: 1000,
       })
       active.value = 2
-      uni.navigateTo({
-        url: '/pages/my',
-      })
+      router.push('/my')
     }
     else {
       showNotify({
         type: 'danger',
-        message: '登录失败',
+        message: '账号或密码错误',
         duration: 1000,
       })
     }
@@ -98,9 +98,7 @@ async function login() {
   // todo verificationCode login
 }
 function back() {
-  uni.navigateTo({
-    url: '/pages/index',
-  })
+  router.push('/')
 }
 function wxLogin() {
   showNotify({
@@ -171,7 +169,7 @@ function qqLogin() {
       </div>
       <div my-10 flex flex-col items-center>
         <div w-400 border-t-1 border-gray-200 relative>
-          <div text-xs text-gray-400 absolute bg-white px-1 class="-top-18 left-50% -translate-x-50%">
+          <div text-xs text-gray-400 absolute bg-white px-1 class="-top-2 left-50% -translate-x-50%">
             第三方登录
           </div>
         </div>

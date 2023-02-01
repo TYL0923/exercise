@@ -4,6 +4,7 @@ import { showConfirmDialog, showNotify } from 'vant'
 
 import { useLoginState } from '../composables'
 
+const router = useRouter()
 const loginState = useLoginState()
 const settingIsShow = ref<boolean>(false)
 const isLogin = computed(() => !!loginState.account)
@@ -16,17 +17,17 @@ const settingOperation = ref<ActionSheetAction[]>([
 const commonOperation = ref<Record<'label' | 'pagePath' | 'icon', string>[]>([
   {
     label: '我的题库',
-    pagePath: '/pages/question-set',
+    pagePath: '/question-set',
     icon: 'newspaper-o',
   },
   {
     label: '加入题库',
-    pagePath: '/pages/question-set',
+    pagePath: '/question-set',
     icon: 'add-o',
   },
   {
     label: '搜索题库',
-    pagePath: '/pages/search',
+    pagePath: '/search',
     icon: 'search',
   },
   {
@@ -36,16 +37,11 @@ const commonOperation = ref<Record<'label' | 'pagePath' | 'icon', string>[]>([
   },
 ])
 function handleGotoLogin() {
-  uni.navigateTo({
-    url: '/pages/login',
-  })
+  router.push('/login')
 }
 function commom(item: Record<'label' | 'pagePath' | 'icon', string>) {
-  if (item.pagePath !== '') {
-    return uni.navigateTo({
-      url: item.pagePath,
-    })
-  }
+  if (item.pagePath !== '')
+    router.push(item.pagePath)
   switch (item.label) {
     case '设置':
       settingIsShow.value = true
@@ -83,7 +79,7 @@ function logout() {
     <div relative class="bg" h-240px flex items-center justify-center>
       <div>
         <div v-if="isLogin" flex flex-col items-center>
-          <img w-100 h-100 rounded-full src="../static/user.png">
+          <img w-20 h-20 rounded-full src="../static/user.png">
           <div text-white pt-2 text-center>
             {{ loginState.name }}
           </div>

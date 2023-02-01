@@ -1,27 +1,22 @@
 <script setup lang="ts">
 import type { Question, QuestionSet } from '@exercise/type'
-import { onLoad } from '@dcloudio/uni-app'
 import { closeToast, showConfirmDialog, showLoadingToast } from 'vant'
+import { getQuestionSetDetail, updateQuestions } from '@exercise/api'
 import { useLoginState } from '../composables'
-import { getQuestionSetDetail, updateQuestions } from '../lib/api'
 import { QuestionCom } from '../components'
-
+const route = useRoute()
+const router = useRouter()
 const testState = ref<{
   id: string
 }>({
-  id: '2fe3b6fe-f0c1-45f9-a360-f8dba4378272',
-})
-onLoad((option) => {
-  testState.value.id = option?.id || '2fe3b6fe-f0c1-45f9-a360-f8dba4378272'
+  id: (route.query.id as string) || '2fe3b6fe-f0c1-45f9-a360-f8dba4378272',
 })
 
 const loginState = useLoginState()
 const questionSet = ref<QuestionSet>()
 const testStatus = ref<'do' | 'done'>('do')
 const currentIdx = ref<number>(0)
-
 const answerKeyIsShow = ref<boolean>(false)
-
 const currentQuestion = computed(() => {
   return questionSet.value?.questions[currentIdx.value]
 })
@@ -82,9 +77,7 @@ async function exitTest() {
     message: '确定退出?',
   })
     .then(async () => {
-      uni.navigateTo({
-        url: '/pages/my',
-      })
+      router.push('/my')
     })
     .catch(() => {
       // on cancel
@@ -101,7 +94,7 @@ watchEffect(initQuestionSet)
 </script>
 
 <template>
-  <div h-screen bg-gray-100 flex flex-col>
+  <div h-screen bg-gray-50 flex flex-col>
     <van-nav-bar
       :title="questionSet?.title"
       left-text="退出"
@@ -120,7 +113,7 @@ watchEffect(initQuestionSet)
     </div>
     <div
       v-if="questionSet"
-      h-100 w-full px-2 box-border bg-white
+      h-14 w-full px-2 box-border bg-white
       grid grid-cols-5 justify-items-center content-center
     >
       <div

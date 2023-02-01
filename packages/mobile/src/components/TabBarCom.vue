@@ -1,12 +1,11 @@
 <script setup lang="ts">
 import { useTabBar } from '../composables'
 
+const router = useRouter()
 const { active, tabItems } = useTabBar()
 function changeItem(idx: string | number) {
   const path = `${tabItems.value[Number(idx)].page}`
-  uni.navigateTo({
-    url: path,
-  })
+  router.push(path)
 }
 </script>
 

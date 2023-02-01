@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { onShow } from '@dcloudio/uni-app'
 import type { QuestionSet } from '@exercise/type'
+import { getCreatedQuestionSet, getJoinedQuestionSet } from '@exercise/api'
 import { useLoginState, useStart } from '../composables'
-import { getCreatedQuestionSet, getJoinedQuestionSet } from '../lib/api'
 
+const router = useRouter()
 const tabActive = ref(0)
 const tabItems = ref(['创建的题库', '加入的题库'])
 const loginState = useLoginState()
@@ -22,23 +22,17 @@ function goto() {
   if (loginState.isLogin) {
     switch (tabActive.value) {
       case 0:
-        uni.navigateTo({
-          url: '/pages/create',
-        })
+        router.push('/create')
         break
       case 1:
-        uni.navigateTo({
-          url: '/pages/search',
-        })
+        router.push('/search')
         break
       default:
         break
     }
   }
   else {
-    uni.navigateTo({
-      url: '/pages/login',
-    })
+    router.push('/login')
   }
 }
 async function initCreatedQuestionSetList() {
@@ -75,10 +69,11 @@ watch(tabActive, (value) => {
       break
   }
 })
-onShow(() => {
-  initCreatedQuestionSetList()
-  initJoinedQuestionSetList()
-})
+// todo
+// onShow(() => {
+//   initCreatedQuestionSetList()
+//   initJoinedQuestionSetList()
+// })
 watchEffect(initCreatedQuestionSetList)
 watchEffect(initJoinedQuestionSetList)
 </script>

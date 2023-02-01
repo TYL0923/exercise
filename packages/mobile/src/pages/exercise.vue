@@ -1,20 +1,17 @@
 <script setup lang="ts">
 import type { Question, QuestionSet } from '@exercise/type'
-import { onLoad } from '@dcloudio/uni-app'
 import { closeToast, showConfirmDialog, showLoadingToast } from 'vant'
+import { getQuestionSetDetail, updateQuestionAnswer, updateQuestions } from '@exercise/api'
 import { useLoginState, useSlide } from '../composables'
-import { getQuestionSetDetail, updateQuestionAnswer, updateQuestions } from '../lib/api'
 
+const router = useRouter()
+const route = useRoute()
 const exerciseState = ref<{
   id: string
   part: 'all' | 'error' | 'not'
 }>({
-  id: '',
-  part: 'all',
-})
-onLoad((option) => {
-  exerciseState.value.id = option?.id || ''
-  exerciseState.value.part = option?.part || 'all'
+  id: (route.query.id as string) || '',
+  part: (route.query.part as 'all' | 'error' | 'not') || 'all',
 })
 
 const touchRef = ref<HTMLElement | null>()
@@ -81,9 +78,7 @@ async function exitExercise() {
       })
       await updateQuestions(questionSet.value!.questions)
       closeToast()
-      uni.navigateTo({
-        url: '/pages/question-set',
-      })
+      router.push('/question-set')
     })
     .catch(() => {
       // on cancel
@@ -135,7 +130,7 @@ watchEffect(initQuestionSet)
     </div>
     <div
       v-if="questionSet"
-      h-100 w-full px-4 box-border bg-white
+      h-14 w-full px-4 box-border bg-white
       grid grid-cols-5 justify-items-center content-center
     >
       <div

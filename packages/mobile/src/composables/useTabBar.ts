@@ -3,17 +3,17 @@ const url = window.location.hash.slice(1)
 const tabItems = ref([
   {
     label: '首页',
-    page: '/pages/index',
+    page: '/',
     icon: 'home-o',
   },
   {
     label: '题库',
-    page: '/pages/question-set',
+    page: '/question-set',
     icon: 'orders-o',
   },
   {
     label: '我的',
-    page: '/pages/my',
+    page: '/my',
     icon: 'user-o',
   },
 ])

@@ -1,9 +1,10 @@
 import type { QuestionSet } from '@exercise/type'
 import { ActionSheet, Button as VantButton, closeToast, showLoadingToast, showNotify } from 'vant'
+import { resetQuestion } from '@exercise/api'
 import { FilterCom, QuestionSetCardCom } from '../components'
-import { resetQuestion } from '../lib/api'
 import { useLoginState } from './useLogin'
 export function useStart() {
+  const router = useRouter()
   const loginState = useLoginState()
   const isShow = ref<boolean>(false)
   const filter = reactive<{
@@ -66,9 +67,7 @@ export function useStart() {
         duration: 500,
       })
       isShow.value = false
-      return uni.navigateTo({
-        url: '/pages/login',
-      })
+      router.push('/login')
     }
     if (filter.mode === 'test') {
       showLoadingToast({
@@ -77,8 +76,11 @@ export function useStart() {
       })
       await resetQuestion(startQuestionSet.value.id, loginState.account, 'test')
       closeToast()
-      uni.navigateTo({
-        url: `/pages/test?id=${startQuestionSet.value.id}`,
+      router.push({
+        path: '/test',
+        query: {
+          id: startQuestionSet.value.id,
+        },
       })
     }
     else {
@@ -90,8 +92,12 @@ export function useStart() {
         await resetQuestion(startQuestionSet.value.id, loginState.account, 'exercise')
         closeToast()
       }
-      uni.navigateTo({
-        url: `/pages/exercise?id=${startQuestionSet.value.id}&part=${filter.part}`,
+      router.push({
+        path: '/exercise',
+        query: {
+          id: startQuestionSet.value.id,
+          part: filter.part,
+        },
       })
     }
   }

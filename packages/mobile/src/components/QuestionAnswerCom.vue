@@ -64,7 +64,7 @@ const options = computed(() => {
       <template v-if="['select', 'judge'].includes(question.type)">
         <div
           v-for="option in options" :key="option[0]"
-          h-80 px-4
+          h-12 px-4
           class="question-option"
           flex items-center hover="bg-sky-50 cursor-pointer"
           :class="{ selected: isSelected(option[1]) }"
@@ -83,7 +83,7 @@ const options = computed(() => {
         <div
           v-for="option in options"
           :key="option[0]" class="question-option"
-          h-10 px-4
+          h-12 px-4
           flex items-center hover="bg-sky-50 cursor-pointer"
           :class="{ selected: isSelected(option[1]) }"
           @click="emits('changeCorrectAnswer', option[1])"
@@ -101,7 +101,7 @@ const options = computed(() => {
         <div
           v-for="option in options"
           :key="option[0]" class="question-option"
-          h-80 px-4
+          h-12 px-4
           flex items-center hover="bg-sky-50 cursor-pointer"
           :class="isCorrectOrError(option[1])"
           @click="emits('changeCorrectAnswer', option[1])"
