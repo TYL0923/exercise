@@ -65,7 +65,7 @@ function handleSubmit() {
           return `${pre}${cur}`
         else return `${pre},${cur}`
       }, '')
-      const [err, data] = await addQuestionSet({
+      const { err, data } = await addQuestionSet({
         title: value.title,
         createTime: new Date().toLocaleString(),
         account: (value.author as string) || '',
@@ -108,7 +108,7 @@ async function customRequest(file: any) {
     content: '识别中...',
     key: 'identify',
   })
-  const [err, data] = await identifyQuestionSet({
+  const { err, data } = await identifyQuestionSet({
     param: form,
   })
   if (!err && data) {

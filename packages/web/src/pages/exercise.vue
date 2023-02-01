@@ -53,7 +53,7 @@ async function saveQuestion() {
   })
   if (!questionSet.value?.questions)
     return true
-  const [, data] = await updateQuestions(questionSet.value?.questions)
+  const { err, data } = await updateQuestions(questionSet.value?.questions)
   message.success({
     content: '保存成功',
     key: 'save',
@@ -62,11 +62,11 @@ async function saveQuestion() {
   return data
 }
 async function initQuestionList() {
-  const [err, data] = await getQuestionSetDetail(exerciseState.value.id, loginState.account.value)
+  const { err, data } = await getQuestionSetDetail(exerciseState.value.id, loginState.account.value)
   if (!err && data) {
     if (exerciseState.value.part === 'error') {
-      data.questions = data.questions.filter(question => question.isError)
-      data.questions.forEach((question) => {
+      data.questions = (data.questions as Question[]).filter(question => question.isError)
+      ;(data.questions as Question[]).forEach((question) => {
         // todo
         question.isError = 0
         question.isDo = 0
@@ -74,7 +74,7 @@ async function initQuestionList() {
       })
     }
     else if (exerciseState.value.part === 'not') {
-      data.questions = data.questions.filter(question => !question.isDo)
+      data.questions = (data.questions as Question[]).filter(question => !question.isDo)
     }
   }
   questionSet.value = data

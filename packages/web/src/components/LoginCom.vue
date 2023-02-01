@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { login } from '@exercise/api'
+import { passwordLogin } from '@exercise/api'
 import { message } from 'ant-design-vue/es'
 const props = defineProps<{
   isShow: boolean
@@ -12,8 +12,8 @@ interface LoginForm {
 const router = useRouter()
 const loginState = useLogin()
 const loginForm = reactive<LoginForm>({
-  account: 'admin1',
-  password: 'admin1',
+  account: 'admin2',
+  password: 'admin2',
   isLocal: false,
 })
 const onFinish = async (values: LoginForm) => {
@@ -21,10 +21,10 @@ const onFinish = async (values: LoginForm) => {
     content: `${values.account}登录中`,
     key: 'login',
   })
-  const [err, data] = await login({
-    account: values.account,
-    password: values.password,
-  })
+  const { err, data } = await passwordLogin(
+    values.account,
+    values.password,
+  )
   if (!err && data) {
     message.success({
       content: '登录成功',

@@ -47,9 +47,9 @@ function handleRefresh(event: Event) {
 }
 async function initQuestionList() {
   isLoad.value = true
-  const [e, d] = await resetQuestion(route.query.id as string, loginState.account.value, 'test')
+  const { err: e, data: d } = await resetQuestion(route.query.id as string, loginState.account.value, 'test')
   if (!e && d) {
-    const [err, data] = await getQuestionSetDetail(route.query.id as string, loginState.account.value)
+    const { err, data } = await getQuestionSetDetail(route.query.id as string, loginState.account.value)
     if (!err && data) {
       questionSet.value = data
       questions.value = data.questions

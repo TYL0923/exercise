@@ -92,7 +92,7 @@ const filterOptions = reactive({
 
 const initSearchQuestionSet = useDebounceFn(async (option: Partial<Record<'id' | 'keyWord' | 'author', string>>) => {
   isLoad.joinable = true
-  const [err, data] = await queryJoinableQuestionSet({
+  const { err, data } = await queryJoinableQuestionSet({
     ...option,
     account: loginState.account.value,
   })
@@ -123,7 +123,7 @@ function handleJoinQuestionSet(question: QuestionSet) {
         content: '加入题库中',
         key: 'join',
       })
-      const [err, data] = await joinQuestionSetById(question.id, loginState.account.value)
+      const { err, data } = await joinQuestionSetById(question.id, loginState.account.value)
       if (!err && data) {
         message.success({
           content: '加入成功',
@@ -160,7 +160,7 @@ async function handleStart() {
   }
   else {
     if (filter.start === 'restart') {
-      const [, isReset] = await resetQuestion(prepareOpenQuestionSet.value.id, loginState.account.value, 'exercise')
+      const { err, data: isReset } = await resetQuestion(prepareOpenQuestionSet.value.id, loginState.account.value, 'exercise')
     }
     router.push({
       path: '/exercise',
@@ -178,7 +178,7 @@ function openJoinQuestionSetModal() {
 }
 async function initCreateQuestionSet() {
   isLoad.my = true
-  const [err, data] = await getCreatedQuestionSet(loginState.account.value)
+  const { err, data } = await getCreatedQuestionSet(loginState.account.value)
   if (!err && data)
     createQuestionSet.value = data
   isLoad.my = false
@@ -186,7 +186,7 @@ async function initCreateQuestionSet() {
 
 async function initJoinQuestionSet() {
   isLoad.join = true
-  const [err, data] = await getJoinedQuestionSet(loginState.account.value)
+  const { err, data } = await getJoinedQuestionSet(loginState.account.value)
   if (!err && data)
     joinQuestionSet.value = data
   isLoad.join = false
