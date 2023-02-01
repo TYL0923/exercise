@@ -1,9 +1,9 @@
 import type { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
 import axios from 'axios'
-// const DEV_URL = 'http://127.0.0.1:8000'
-const PRO_URL = 'https://api.onlinexercise.top'
+// const URL = 'http://127.0.0.1:8000'
+const URL = 'https://api.onlinexercise.top'
 const a: AxiosInstance = axios.create({
-  baseURL: PRO_URL,
+  baseURL: URL,
   timeout: 10000,
 })
 
