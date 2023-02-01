@@ -15,7 +15,14 @@ export function identifyQuestionSet(
   },
 ): Return {
   const url = '/questionSet/identify'
-  return post(url, options.param, options.config)
+  return new Promise((resolve) => {
+    setTimeout(async () => {
+      const res = await post(url, options.param, options.config)
+      resolve(res)
+    }, 0)
+  })
+  // const url = '/questionSet/identify'
+  // return post(url, options.param, options.config)
 }
 
 /**

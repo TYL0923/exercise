@@ -13,26 +13,28 @@ export interface IResponse {
   data: any
 }
 export type Return<T = IResponse> = Promise<T>
-export function get(url: string, params?: Record<string, any>, config?: AxiosRequestConfig): Return {
+export function get(url: string, params?: any, config?: AxiosRequestConfig): Return {
+  if (config)
+    config.params = params
   return new Promise((resolve) => {
     setTimeout(async () => {
-      const res = await a.get(url, config || { params: { ...params } })
+      const res = await a.get(url, config || { params })
       resolve(res)
     }, duration)
   })
 }
-export function post(url: string, params: Record<string, any>, config?: AxiosRequestConfig): Return {
+export function post(url: string, params: any, config?: AxiosRequestConfig): Return {
   return new Promise((resolve) => {
     setTimeout(async () => {
-      const res = await a.post(url, { ...params }, config)
+      const res = await a.post(url, params, config)
       resolve(res)
     }, duration)
   })
 }
-export function put(url: string, params: Record<string, any>, config?: AxiosRequestConfig): Return {
+export function put(url: string, params: any, config?: AxiosRequestConfig): Return {
   return new Promise((resolve) => {
     setTimeout(async () => {
-      const res = await a.put(url, { ...params }, config)
+      const res = await a.put(url, params, config)
       resolve(res)
     }, duration)
   })
