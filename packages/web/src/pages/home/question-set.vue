@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { getCreatedQuestionSet, getJoinedQuestionSet, joinQuestionSetById, queryJoinableQuestionSet, resetQuestion } from '@exercise/api'
 import type { QuestionSet } from '@exercise/type'
 import { useDebounceFn } from '@vueuse/core'
 import { Modal, message } from 'ant-design-vue'
 
 const router = useRouter()
+const { getCreatedQuestionSet, getJoinedQuestionSet, joinQuestionSetById, queryJoinableQuestionSet, resetQuestion } = useApi()
 const loginState = useLogin()
 const drawerVisible = ref<boolean>(false)
 const joinQuestionVisible = ref<boolean>(false)
@@ -94,7 +94,7 @@ const initSearchQuestionSet = useDebounceFn(async (option: Partial<Record<'id' |
   isLoad.joinable = true
   const { err, data } = await queryJoinableQuestionSet({
     ...option,
-    account: loginState.account.value,
+    account: loginState.account,
   })
   if (!err && data)
     searchQuestionSet.value = data
@@ -123,7 +123,7 @@ function handleJoinQuestionSet(question: QuestionSet) {
         content: '加入题库中',
         key: 'join',
       })
-      const { err, data } = await joinQuestionSetById(question.id, loginState.account.value)
+      const { err, data } = await joinQuestionSetById(question.id, loginState.account)
       if (!err && data) {
         message.success({
           content: '加入成功',
@@ -160,7 +160,7 @@ async function handleStart() {
   }
   else {
     if (filter.start === 'restart') {
-      const { err, data: isReset } = await resetQuestion(prepareOpenQuestionSet.value.id, loginState.account.value, 'exercise')
+      const { err, data: isReset } = await resetQuestion(prepareOpenQuestionSet.value.id, loginState.account, 'exercise')
     }
     router.push({
       path: '/exercise',
@@ -178,7 +178,7 @@ function openJoinQuestionSetModal() {
 }
 async function initCreateQuestionSet() {
   isLoad.my = true
-  const { err, data } = await getCreatedQuestionSet(loginState.account.value)
+  const { err, data } = await getCreatedQuestionSet(loginState.account)
   if (!err && data)
     createQuestionSet.value = data
   isLoad.my = false
@@ -186,7 +186,7 @@ async function initCreateQuestionSet() {
 
 async function initJoinQuestionSet() {
   isLoad.join = true
-  const { err, data } = await getJoinedQuestionSet(loginState.account.value)
+  const { err, data } = await getJoinedQuestionSet(loginState.account)
   if (!err && data)
     joinQuestionSet.value = data
   isLoad.join = false

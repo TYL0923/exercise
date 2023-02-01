@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { getQuestionSetDetail, resetQuestion } from '@exercise/api'
 import type { Question, QuestionSet } from '@exercise/type'
 
 import { Modal } from 'ant-design-vue'
 
+const { getQuestionSetDetail, resetQuestion } = useApi()
 const route = useRoute()
 const router = useRouter()
 const loginState = useLogin()
@@ -47,9 +47,9 @@ function handleRefresh(event: Event) {
 }
 async function initQuestionList() {
   isLoad.value = true
-  const { err: e, data: d } = await resetQuestion(route.query.id as string, loginState.account.value, 'test')
+  const { err: e, data: d } = await resetQuestion(route.query.id as string, loginState.account, 'test')
   if (!e && d) {
-    const { err, data } = await getQuestionSetDetail(route.query.id as string, loginState.account.value)
+    const { err, data } = await getQuestionSetDetail(route.query.id as string, loginState.account)
     if (!err && data) {
       questionSet.value = data
       questions.value = data.questions

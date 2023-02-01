@@ -1,6 +1,7 @@
 import type { Question, QuestionType } from '@exercise/type'
 import type { Ref } from 'vue'
-import { updateQuestionAnswer } from '@exercise/api'
+import { useApi } from './useApi'
+const { updateQuestionAnswer } = useApi()
 const useQuestion = (questions: Ref<Question[]>, option: { isSync: boolean }) => {
   const handleChangeAnswer = (id: string, answer: string, answerType: 'correct' | 'test' | 'exercise') => {
     questions.value.forEach((question) => {

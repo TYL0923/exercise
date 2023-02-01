@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { passwordLogin } from '@exercise/api'
 import { message } from 'ant-design-vue/es'
 const props = defineProps<{
   isShow: boolean
@@ -9,6 +8,7 @@ interface LoginForm {
   password: string
   isLocal: false
 }
+const { passwordLogin } = useApi()
 const router = useRouter()
 const loginState = useLogin()
 const loginForm = reactive<LoginForm>({
@@ -31,15 +31,12 @@ const onFinish = async (values: LoginForm) => {
       key: 'login',
       duration: 1,
     })
-    loginState.login(data.account, data.name, data.token)
-    router.push('/home')
-  }
-  else {
-    message.error({
-      content: '登录失败',
-      key: 'login',
-      duration: 1,
+    loginState.login(loginForm.isLocal, {
+      account: data.account,
+      name: data.name,
+      token: data.token,
     })
+    router.push('/home/question-set')
   }
 }
 const onFinishFailed = () => {}
@@ -72,9 +69,7 @@ const onFinishFailed = () => {}
               size="large"
               :bordered="false"
             >
-              <template #prefix>
-                <Icon icon="ph:user" width="26px" />
-              </template>
+              <template #prefix />
             </a-input>
           </div>
         </a-form-item>
@@ -89,9 +84,7 @@ const onFinishFailed = () => {}
               type="password"
               :bordered="false"
             >
-              <template #prefix>
-                <Icon icon="ph:lock-simple" width="26px" />
-              </template>
+              <template #prefix />
             </a-input>
           </div>
         </a-form-item>

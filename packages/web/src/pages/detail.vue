@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import type { FormInstance, UploadChangeParam } from 'ant-design-vue/es'
 import { message } from 'ant-design-vue/es'
-import { addQuestionSet, identifyQuestionSet } from '@exercise/api'
 import type { Question } from '@exercise/type'
 import router from '../router'
 
+const { addQuestionSet, identifyQuestionSet } = useApi()
 const route = useRoute()
 const oForm = ref<FormInstance | null>(null)
 const loginState = useLogin()
@@ -16,7 +16,7 @@ const questionSetForm = ref<{
   tags: string[]
 }>({
   title: '',
-  author: loginState.account.value || '',
+  author: loginState.account || '',
   tags: [],
 })
 const questionList = ref<Question[]>([])

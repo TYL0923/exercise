@@ -1,17 +1,20 @@
-import type { Ref } from 'vue'
-import { useStorage } from '@vueuse/core'
-
-interface NavState {
-  activeMenuItem: []
-}
-const navState: Ref<NavState> = useStorage('nav', {
-  activeMenuItem: [],
+import { defineStore } from 'pinia'
+const useNav = defineStore('nav', {
+  // other options...
+  state: () => {
+    const data: {
+      activeItem: string[]
+    } = JSON.parse(sessionStorage.getItem('nav') || 'null') || {
+      activeItem: [],
+    }
+    return data
+  },
+  actions: {
+    change(activeItem: string[]) {
+      this.activeItem = activeItem
+    },
+  },
 })
-const useNav = () => {
-  return {
-    ...toRefs(navState.value),
-  }
-}
 
 export default useNav
 

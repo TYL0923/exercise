@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { getQuestionSetDetail, updateQuestionAnswer, updateQuestions } from '@exercise/api'
 import type { Question, QuestionSet } from '@exercise/type'
-
 import { message } from 'ant-design-vue'
+
+const { getQuestionSetDetail, updateQuestionAnswer, updateQuestions } = useApi()
 type QuestionPart = 'all' | 'error' | 'not'
 const router = useRouter()
 const route = useRoute()
@@ -62,7 +62,7 @@ async function saveQuestion() {
   return data
 }
 async function initQuestionList() {
-  const { err, data } = await getQuestionSetDetail(exerciseState.value.id, loginState.account.value)
+  const { err, data } = await getQuestionSetDetail(exerciseState.value.id, loginState.account)
   if (!err && data) {
     if (exerciseState.value.part === 'error') {
       data.questions = (data.questions as Question[]).filter(question => question.isError)

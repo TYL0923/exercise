@@ -1,7 +1,8 @@
 <script setup lang="ts">
 const router = useRouter()
 const loginState = useLogin()
-const selectedKeys = ref<Array<string>>([])
+const navState = useNav()
+const selectedKeys = ref<Array<string>>(['/home/question-set'])
 const navOptions = [
   {
     key: '/home/question-set',
@@ -17,6 +18,7 @@ const navOptions = [
   },
 ]
 function handleClick(key: string) {
+  navState.change(selectedKeys.value)
   router.push(key)
 }
 function handleLogout() {
@@ -42,7 +44,7 @@ function handleLogout() {
         <a-dropdown :trigger="['click']">
           <div cursor-pointer>
             <img w-10 h-10 rounded-full bg-cover bg-center src="/using.jpeg" alt="">
-            <span mx-1>{{ loginState.name.value }}</span>
+            <span mx-1>{{ loginState.name }}</span>
           </div>
           <template #overlay>
             <a-menu>
