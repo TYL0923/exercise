@@ -102,7 +102,7 @@ watchEffect(initJoinedQuestionSetList)
           </template>
           <template v-else>
             <van-empty
-              image="empty.png"
+              image="/empty.png"
               image-size="80"
               :description="loginState.isLogin ? '题库为空' : '请先登录'"
             >
@@ -128,7 +128,7 @@ watchEffect(initJoinedQuestionSetList)
           </template>
           <template v-else>
             <van-empty
-              image="empty.png"
+              image="/empty.png"
               image-size="80"
               :description="loginState.isLogin ? '题库为空' : '请先登录'"
             >

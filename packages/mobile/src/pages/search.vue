@@ -68,7 +68,7 @@ watch(
       <template v-else>
         <template v-if="joinableQuestionSetList.length === 0 ">
           <van-empty
-            image="empty.png"
+            image="/empty.png"
             image-size="80"
             description="无结果"
           />

@@ -40,7 +40,7 @@ watchEffect(initrecommendQuestionSetList)
         <template v-else>
           <template v-if="recommendQuestionSetList.length === 0 ">
             <van-empty
-              image="empty.png"
+              image="/empty.png"
               image-size="80"
               description="暂无推荐"
             />
