@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import type { QuestionSet } from '@exercise/type'
-import { queryJoinableQuestionSet } from '@exercise/api'
 import { useDebounceFn } from '../lib/utils'
-import { useJoin, useLoginState } from '../composables'
 
+const { queryJoinableQuestionSet } = useApi()
 const router = useRouter()
 const loginState = useLoginState()
 const { joinConfirmCom, showJoin } = useJoin()

@@ -1,8 +1,8 @@
 import type { QuestionSet } from '@exercise/type'
 import { ActionSheet, Button as VantButton, closeToast, showLoadingToast, showNotify } from 'vant'
-import { resetQuestion } from '@exercise/api'
 import { FilterCom, QuestionSetCardCom } from '../components'
-import { useLoginState } from './useLogin'
+
+const { resetQuestion } = useApi()
 export function useStart() {
   const router = useRouter()
   const loginState = useLoginState()

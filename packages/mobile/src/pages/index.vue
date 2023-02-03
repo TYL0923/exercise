@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import type { QuestionSet } from '@exercise/type'
-import { queryJoinableQuestionSet } from '@exercise/api'
-import { useJoin, useLoginState, useSlide } from '../composables'
 
+const { queryJoinableQuestionSet } = useApi()
 const router = useRouter()
 const tabActive = ref(0)
 const tabItems = ref(['推荐题库'])
@@ -49,7 +48,7 @@ watchEffect(initrecommendQuestionSetList)
           <template v-else>
             <QuestionSetCardCom
               v-for="questionSet in recommendQuestionSetList"
-              :key="questionSet" :data="questionSet"
+              :key="questionSet.id" :data="questionSet"
               @click="showJoin(questionSet)"
             />
           </template>

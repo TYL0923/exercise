@@ -1,8 +1,7 @@
 import type { QuestionSet } from '@exercise/type'
 import { ActionSheet, Tag, Button as VantButton, closeToast, showConfirmDialog, showLoadingToast, showNotify } from 'vant'
-import { joinQuestionSetById } from '@exercise/api'
 import { QuestionSetCardCom } from '../components'
-import { useLoginState } from './useLogin'
+const { joinQuestionSetById } = useApi()
 export function useJoin() {
   const router = useRouter()
   const loginState = useLoginState()

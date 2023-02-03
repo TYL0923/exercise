@@ -2,8 +2,6 @@
 import type { ActionSheetAction } from 'vant'
 import { showConfirmDialog, showNotify } from 'vant'
 
-import { useLoginState } from '../composables'
-
 const router = useRouter()
 const loginState = useLoginState()
 const settingIsShow = ref<boolean>(false)

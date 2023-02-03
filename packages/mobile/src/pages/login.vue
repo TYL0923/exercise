@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import { closeToast, showLoadingToast, showNotify, showToast } from 'vant'
-import { checkAccount, passwordLogin, registerAccount } from '@exercise/api'
-import { useLoginState, useTabBar } from '../composables'
-type LoginMode = 'password' | 'verificationCode' | 'weixin' | 'qq'
 
+type LoginMode = 'password' | 'verificationCode' | 'weixin' | 'qq'
+const { checkAccount, passwordLogin, registerAccount } = useApi()
 const router = useRouter()
 const loginState = useLoginState()
 const mode = ref<LoginMode>('password')
@@ -12,6 +11,7 @@ const { active } = useTabBar()
 const loginFrom = reactive({
   account: 'admin2',
   password: 'admin2',
+  isLocal: false,
   verificationCode: '',
 })
 const registerFrom = reactive({
@@ -78,7 +78,11 @@ async function login() {
     const { err, data } = await passwordLogin(loginFrom.account, loginFrom.password)
     closeToast()
     if (!err && data) {
-      loginState.login(data.account, data.name, data.token)
+      loginState.login(loginFrom.isLocal, {
+        account: data.account,
+        name: data.name,
+        token: data.token,
+      })
       showNotify({
         type: 'success',
         message: '登录成功',
@@ -151,6 +155,11 @@ function qqLogin() {
           </van-field>
         </div>
         <div mt-6>
+          <div text-xs mb-2 px-4>
+            <van-checkbox v-model="loginFrom.isLocal" icon-size="16px" shape="square">
+              记住我
+            </van-checkbox>
+          </div>
           <van-button round block type="primary" native-type="submit">
             登录
           </van-button>

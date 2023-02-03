@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { QuestionSet } from '@exercise/type'
-import { computed } from 'vue'
 
 const props = withDefaults(
   defineProps<{

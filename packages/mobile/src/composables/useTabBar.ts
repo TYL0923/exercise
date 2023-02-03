@@ -1,6 +1,8 @@
-const url = window.location.hash.slice(1)
+import { defineStore } from 'pinia'
 
-const tabItems = ref([
+// const url = window.location.hash.slice(1)
+
+const tabItems = shallowRef([
   {
     label: '首页',
     page: '/',
@@ -17,11 +19,23 @@ const tabItems = ref([
     icon: 'user-o',
   },
 ])
-const activeIdx = tabItems.value.findIndex(item => item.page === url)
-const active = ref(activeIdx >= 0 ? activeIdx : 0)
-export function useTabBar() {
-  return {
-    active,
-    tabItems,
-  }
-}
+export const useTabBar = defineStore('tabBar', {
+  state: () => {
+    const data: {
+      activeIdx: number
+    } = JSON.parse(sessionStorage.getItem('tabBar') || localStorage.getItem('tabBar') || 'null') || {
+      activeIdx: 0,
+    }
+    return {
+      ...data,
+      tabItems,
+    }
+  },
+  getters: {
+    activeItem: (state) => {
+      const item = state.tabItems[state.activeIdx]
+      return item || state.tabItems[0]
+    },
+  },
+})
+

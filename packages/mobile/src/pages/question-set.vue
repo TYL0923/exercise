@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { QuestionSet } from '@exercise/type'
-import { getCreatedQuestionSet, getJoinedQuestionSet } from '@exercise/api'
-import { useLoginState, useStart } from '../composables'
+const { getCreatedQuestionSet, getJoinedQuestionSet } = useApi()
 
 const router = useRouter()
 const tabActive = ref(0)

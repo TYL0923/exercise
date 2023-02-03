@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import type { Question, QuestionSet } from '@exercise/type'
 import { closeToast, showConfirmDialog, showLoadingToast } from 'vant'
-import { getQuestionSetDetail, updateQuestions } from '@exercise/api'
-import { useLoginState } from '../composables'
 import { QuestionCom } from '../components'
+
+const { getQuestionSetDetail, updateQuestions } = useApi()
 const route = useRoute()
 const router = useRouter()
 const testState = ref<{

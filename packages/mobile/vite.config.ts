@@ -19,6 +19,7 @@ export default defineConfig({
     }),
     AutoImport({
       imports: ['vue', 'vue-router'],
+      dirs: [path.resolve(pathSrc, 'composables/**')],
       dts: path.resolve(pathSrc, 'typings/auto-import.d.ts'),
     }),
     Component({

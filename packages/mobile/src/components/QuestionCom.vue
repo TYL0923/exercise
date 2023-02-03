@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Question, QuestionType } from '@exercise/type'
+import type { Question } from '@exercise/type'
 import { useDebounceFn } from '../lib/utils'
 import QuestionAnswerCom from './QuestionAnswerCom.vue'
 const props = withDefaults(

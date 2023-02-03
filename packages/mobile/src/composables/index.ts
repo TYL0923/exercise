@@ -1,8 +1,14 @@
 import { createPinia } from 'pinia'
 const pinia = createPinia()
+watch(
+  pinia.state,
+  (state) => {
+    Object.entries(state).forEach(([key, value]) => {
+      sessionStorage.setItem(key, JSON.stringify(value))
+    })
+  },
+  {
+    deep: true,
+  },
+)
 export default pinia
-export * from './useLogin'
-export * from './useTabBar'
-export * from './useJoin'
-export * from './useStart'
-export * from './useSlide'
