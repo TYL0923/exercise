@@ -4,10 +4,10 @@ import { closeToast, showLoadingToast, showNotify, showToast } from 'vant'
 type LoginMode = 'password' | 'verificationCode' | 'weixin' | 'qq'
 const { checkAccount, passwordLogin, registerAccount } = useApi()
 const router = useRouter()
-const loginState = useLoginState()
+const loginState = useLogin()
 const mode = ref<LoginMode>('password')
 const page = ref<'login' | 'register'>('login')
-const { active } = useTabBar()
+const tabBarState = useTabBar()
 const loginFrom = reactive({
   account: 'admin2',
   password: 'admin2',
@@ -88,7 +88,7 @@ async function login() {
         message: '登录成功',
         duration: 1000,
       })
-      active.value = 2
+      tabBarState.activeIdx = 2
       router.push('/my')
     }
     else {

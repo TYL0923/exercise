@@ -4,7 +4,7 @@ import { QuestionSetCardCom } from '../components'
 const { joinQuestionSetById } = useApi()
 export function useJoin() {
   const router = useRouter()
-  const loginState = useLoginState()
+  const loginState = useLogin()
   const isShow = ref<boolean>(false)
   const joinQuestionSet = ref<QuestionSet>()
   function showJoin(questionSet: QuestionSet) {
@@ -14,14 +14,14 @@ export function useJoin() {
   async function handleJoinQuestionSet() {
     if (!joinQuestionSet.value)
       return
-    if (loginState.account.length === 0) {
+    if (!loginState.isLogin) {
       showNotify({
         type: 'primary',
         message: '请先登录',
         duration: 500,
       })
       isShow.value = false
-      router.push('/login')
+      return router.push('/login')
     }
     showConfirmDialog({
       title: '确认',

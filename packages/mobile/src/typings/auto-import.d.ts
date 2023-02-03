@@ -54,7 +54,7 @@ declare global {
   const useCssVars: typeof import('vue')['useCssVars']
   const useJoin: typeof import('../composables/useJoin')['useJoin']
   const useLink: typeof import('vue-router')['useLink']
-  const useLoginState: typeof import('../composables/useLogin')['useLoginState']
+  const useLogin: typeof import('../composables/useLogin')['useLogin']
   const useRoute: typeof import('vue-router')['useRoute']
   const useRouter: typeof import('vue-router')['useRouter']
   const useSlide: typeof import('../composables/useSlide')['useSlide']

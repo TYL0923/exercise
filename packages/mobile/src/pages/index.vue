@@ -6,7 +6,7 @@ const router = useRouter()
 const tabActive = ref(0)
 const tabItems = ref(['推荐题库'])
 const isLoading = ref<boolean>(false)
-const loginState = useLoginState()
+const loginState = useLogin()
 const recommendQuestionSetList = ref<QuestionSet[]>([])
 const { joinConfirmCom, showJoin } = useJoin()
 function gotoSearch() {

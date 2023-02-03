@@ -4,9 +4,20 @@ const router = createRouter({
   history: createWebHistory(),
   routes,
 })
-
-// router.beforeEach((to, from, next) => {
-//   const loginState = useLogin()
-//   next()
-// })
+const routerWhite = [
+  '/',
+  '/ctrate',
+  '/login',
+  '/my',
+  '/question-set',
+  '/search',
+]
+router.beforeEach((to, from, next) => {
+  const loginState = useLogin()
+  if (routerWhite.includes(to.path))
+    return next()
+  if (loginState.isLogin)
+    return next()
+  next('/login')
+})
 export default router

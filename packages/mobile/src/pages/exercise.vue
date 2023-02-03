@@ -14,7 +14,7 @@ const exerciseState = ref<{
 })
 
 const touchRef = ref<HTMLElement | null>()
-const loginState = useLoginState()
+const loginState = useLogin()
 const questionSet = ref<QuestionSet>()
 const currentIdx = ref<number>(0)
 const answerKeyIsShow = ref<boolean>(false)

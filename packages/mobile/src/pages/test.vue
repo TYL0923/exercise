@@ -12,7 +12,7 @@ const testState = ref<{
   id: (route.query.id as string) || '2fe3b6fe-f0c1-45f9-a360-f8dba4378272',
 })
 
-const loginState = useLoginState()
+const loginState = useLogin()
 const questionSet = ref<QuestionSet>()
 const testStatus = ref<'do' | 'done'>('do')
 const currentIdx = ref<number>(0)

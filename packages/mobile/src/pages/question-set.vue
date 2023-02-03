@@ -5,7 +5,7 @@ const { getCreatedQuestionSet, getJoinedQuestionSet } = useApi()
 const router = useRouter()
 const tabActive = ref(0)
 const tabItems = ref(['创建的题库', '加入的题库'])
-const loginState = useLoginState()
+const loginState = useLogin()
 
 const createdQuestionSetList = ref<QuestionSet[]>([])
 const joinedQuestionSetList = ref<QuestionSet[]>([])

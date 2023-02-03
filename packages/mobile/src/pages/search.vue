@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import type { QuestionSet } from '@exercise/type'
-import { useDebounceFn } from '../lib/utils'
+import { useDebounceFn } from '@vueuse/core'
 
 const { queryJoinableQuestionSet } = useApi()
 const router = useRouter()
-const loginState = useLoginState()
+const loginState = useLogin()
 const { joinConfirmCom, showJoin } = useJoin()
 const searchKeyWord = ref<string>('')
 

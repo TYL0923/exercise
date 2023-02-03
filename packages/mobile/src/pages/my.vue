@@ -3,7 +3,7 @@ import type { ActionSheetAction } from 'vant'
 import { showConfirmDialog, showNotify } from 'vant'
 
 const router = useRouter()
-const loginState = useLoginState()
+const loginState = useLogin()
 const settingIsShow = ref<boolean>(false)
 const isLogin = computed(() => !!loginState.account)
 const settingOperation = ref<ActionSheetAction[]>([

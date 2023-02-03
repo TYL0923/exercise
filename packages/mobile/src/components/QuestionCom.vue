@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Question } from '@exercise/type'
-import { useDebounceFn } from '../lib/utils'
+import { useDebounceFn } from '@vueuse/core'
 import QuestionAnswerCom from './QuestionAnswerCom.vue'
 const props = withDefaults(
   defineProps<{

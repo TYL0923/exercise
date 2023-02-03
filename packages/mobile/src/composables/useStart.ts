@@ -5,7 +5,7 @@ import { FilterCom, QuestionSetCardCom } from '../components'
 const { resetQuestion } = useApi()
 export function useStart() {
   const router = useRouter()
-  const loginState = useLoginState()
+  const loginState = useLogin()
   const isShow = ref<boolean>(false)
   const filter = reactive<{
     mode: 'exercise' | 'test'
