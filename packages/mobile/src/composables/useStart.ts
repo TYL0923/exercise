@@ -131,7 +131,7 @@ export function useStart() {
             h(VantButton, { type: 'primary', onClick: start }, () => '开始'),
           ]),
           h('div', { style: { height: '100px' } }, h(FilterCom, { filter, options: filterOptions })),
-          startQuestionSet.value ? h(QuestionSetCardCom, { data: startQuestionSet.value, isShadow: false }) : '',
+          startQuestionSet.value ? h(QuestionSetCardCom, { data: startQuestionSet.value }) : '',
         ]),
       )
     },

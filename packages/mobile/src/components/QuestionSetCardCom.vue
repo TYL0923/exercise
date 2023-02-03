@@ -7,7 +7,7 @@ const props = withDefaults(
     isShadow?: boolean
   }>(),
   {
-    isShadow: true,
+    isShadow: false,
   },
 )
 const emits = defineEmits<{
@@ -30,7 +30,7 @@ const tagArr = computed(() => {
       'shadow': isShadow,
       'border-1 border-gray-100': !isShadow,
     }"
-    p-4 bg-white my-2 rounded-1
+    p-4 bg-white my-2 rounded-2
     flex flex-col
     @click="emits('click', data)"
   >
